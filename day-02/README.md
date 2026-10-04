@@ -421,9 +421,9 @@ class Program
 }
 ```
 
-# Problem 2
+### Problem 2
 
-## Description
+### Description
 
 Write a C# program to calculate a ride fare and check discount eligibility.
 
