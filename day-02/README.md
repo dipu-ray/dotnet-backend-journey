@@ -3,6 +3,7 @@
 Notes on **arithmetic**, **comparison**, and **logical** operators with runnable examples.
 
 ## Table of Contents
+
 - [What is an Operator?](#what-is-an-operator)
 - [Arithmetic Operators](#arithmetic-operators)
 - [Comparison Operators](#comparison-operators)
@@ -27,11 +28,11 @@ int result = 10 + 5;
 //           operand
 ```
 
-| Category | Purpose | Result type |
-|----------|---------|-------------|
-| Arithmetic | Math calculations | number |
-| Comparison | Compare two values | `bool` |
-| Logical | Combine `bool` values | `bool` |
+| Category   | Purpose               | Result type |
+| ---------- | --------------------- | ----------- |
+| Arithmetic | Math calculations     | number      |
+| Comparison | Compare two values    | `bool`      |
+| Logical    | Combine `bool` values | `bool`      |
 
 ---
 
@@ -39,15 +40,15 @@ int result = 10 + 5;
 
 Used for mathematical calculations.
 
-| Operator | Name | Example | Result |
-|----------|------|---------|--------|
-| `+` | Addition | `10 + 3` | `13` |
-| `-` | Subtraction | `10 - 3` | `7` |
-| `*` | Multiplication | `10 * 3` | `30` |
-| `/` | Division | `10 / 3` | `3` (int) |
-| `%` | Modulus (remainder) | `10 % 3` | `1` |
-| `++` | Increment | `x++` | `x + 1` |
-| `--` | Decrement | `x--` | `x - 1` |
+| Operator | Name                | Example  | Result    |
+| -------- | ------------------- | -------- | --------- |
+| `+`      | Addition            | `10 + 3` | `13`      |
+| `-`      | Subtraction         | `10 - 3` | `7`       |
+| `*`      | Multiplication      | `10 * 3` | `30`      |
+| `/`      | Division            | `10 / 3` | `3` (int) |
+| `%`      | Modulus (remainder) | `10 % 3` | `1`       |
+| `++`     | Increment           | `x++`    | `x + 1`   |
+| `--`     | Decrement           | `x--`    | `x - 1`   |
 
 ```csharp
 int a = 10;
@@ -133,14 +134,14 @@ Console.WriteLine("Age: " + 25);         // Age: 25
 
 Compare two values. The result is always a **`bool`** (`true` or `false`).
 
-| Operator | Meaning | Example | Result |
-|----------|---------|---------|--------|
-| `==` | Equal to | `5 == 5` | `true` |
-| `!=` | Not equal to | `5 != 3` | `true` |
-| `>` | Greater than | `5 > 3` | `true` |
-| `<` | Less than | `5 < 3` | `false` |
-| `>=` | Greater than or equal to | `5 >= 5` | `true` |
-| `<=` | Less than or equal to | `4 <= 3` | `false` |
+| Operator | Meaning                  | Example  | Result  |
+| -------- | ------------------------ | -------- | ------- |
+| `==`     | Equal to                 | `5 == 5` | `true`  |
+| `!=`     | Not equal to             | `5 != 3` | `true`  |
+| `>`      | Greater than             | `5 > 3`  | `true`  |
+| `<`      | Less than                | `5 < 3`  | `false` |
+| `>=`     | Greater than or equal to | `5 >= 5` | `true`  |
+| `<=`     | Less than or equal to    | `4 <= 3` | `false` |
 
 ```csharp
 int a = 10;
@@ -195,38 +196,38 @@ else
 
 Combine or invert **`bool`** values.
 
-| Operator | Name | Meaning |
-|----------|------|---------|
-| `&&` | AND | `true` only if **both** sides are `true` |
-| `\|\|` | OR | `true` if **at least one** side is `true` |
-| `!` | NOT | Reverses the value |
+| Operator | Name | Meaning                                   |
+| -------- | ---- | ----------------------------------------- |
+| `&&`     | AND  | `true` only if **both** sides are `true`  |
+| `\|\|`   | OR   | `true` if **at least one** side is `true` |
+| `!`      | NOT  | Reverses the value                        |
 
 ### Truth tables
 
 **AND (`&&`)**
 
-| A | B | A && B |
-|---|---|--------|
-| true | true | **true** |
-| true | false | false |
-| false | true | false |
-| false | false | false |
+| A     | B     | A && B   |
+| ----- | ----- | -------- |
+| true  | true  | **true** |
+| true  | false | false    |
+| false | true  | false    |
+| false | false | false    |
 
 **OR (`||`)**
 
-| A | B | A \|\| B |
-|---|---|----------|
-| true | true | **true** |
-| true | false | **true** |
-| false | true | **true** |
-| false | false | false |
+| A     | B     | A \|\| B |
+| ----- | ----- | -------- |
+| true  | true  | **true** |
+| true  | false | **true** |
+| false | true  | **true** |
+| false | false | false    |
 
 **NOT (`!`)**
 
-| A | !A |
-|---|----|
-| true | false |
-| false | true |
+| A     | !A    |
+| ----- | ----- |
+| true  | false |
+| false | true  |
 
 ```csharp
 bool hasId = true;
@@ -281,16 +282,16 @@ else
 
 Operators with higher precedence run first. When unsure, use parentheses `()`.
 
-| Order | Operators |
-|-------|-----------|
-| 1 (highest) | `()` |
-| 2 | `!`, `++`, `--` |
-| 3 | `*`, `/`, `%` |
-| 4 | `+`, `-` |
-| 5 | `<`, `>`, `<=`, `>=` |
-| 6 | `==`, `!=` |
-| 7 | `&&` |
-| 8 (lowest) | `\|\|` |
+| Order       | Operators            |
+| ----------- | -------------------- |
+| 1 (highest) | `()`                 |
+| 2           | `!`, `++`, `--`      |
+| 3           | `*`, `/`, `%`        |
+| 4           | `+`, `-`             |
+| 5           | `<`, `>`, `<=`, `>=` |
+| 6           | `==`, `!=`           |
+| 7           | `&&`                 |
+| 8 (lowest)  | `\|\|`               |
 
 ```csharp
 Console.WriteLine(2 + 3 * 4);    // 14  (multiplication first)
@@ -340,6 +341,7 @@ class Program
 ```
 
 **Output**
+
 ```
 Total      : 900
 In budget  : True
@@ -370,6 +372,7 @@ Can buy    : True
 ### Problem 1
 
 ### Description
+
 Write a C# program to check an order's balance and decide the delivery status.
 
 1. Declare variables for the total cost, premium member status, and account balance.
@@ -380,7 +383,7 @@ Write a C# program to check an order's balance and decide the delivery status.
    - Otherwise, display "Paid Delivery".
 5. If the minimum balance is not available, display "Order Failed: Insufficient account balance."
 
-## Code
+### Code
 
 ```csharp
 using System;
@@ -413,6 +416,60 @@ class Program
         else
         {
             Console.WriteLine("Order Failed: Insufficient account balance.");
+        }
+    }
+}
+```
+
+# Problem 2
+
+## Description
+
+Write a C# program to calculate a ride fare and check discount eligibility.
+
+1. Declare variables for the base fare, distance, rating, VIP status, and peak hour status.
+2. If it is peak hour, add a 50 TK fee to the base fare and display the total fare with the peak hour fee. Otherwise, display the normal total fare.
+3. A customer is eligible for a discount if the distance is more than 10 and the rating is more than 4.5, **or** the customer is a VIP. Display whether the customer is eligible.
+4. If eligible, display "Congratulations! You got a discount." Otherwise, display "Regular Fare Applied."
+
+### Code
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        decimal baseFare = 250m;
+        int distance = 12;
+        double rating = 4.7;
+        bool isVIP = false;
+        bool isPeakHour = true;
+
+        decimal totalFare = baseFare;
+
+        if (isPeakHour == true)
+        {
+            totalFare = baseFare + 50m;
+            Console.WriteLine($"Total Fare (with Peak Hour fee): {totalFare} TK");
+        }
+        else
+        {
+            Console.WriteLine($"Total Fare: {totalFare} TK");
+        }
+
+        bool isEligibleForDiscount = (distance > 10 && rating > 4.5) || isVIP == true;
+
+        Console.WriteLine($"Is eligible for discount? {isEligibleForDiscount}");
+
+        if (isEligibleForDiscount == true)
+        {
+            Console.WriteLine("Congratulations! You got a discount.");
+        }
+        else
+        {
+            Console.WriteLine("Regular Fare Applied.");
         }
     }
 }
