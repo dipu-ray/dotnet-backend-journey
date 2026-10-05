@@ -14,7 +14,6 @@ Notes on **variables** and the basic data types **`int`**, **`string`**, **`bool
 - [decimal](#decimal)
 - [Quick Comparison](#quick-comparison)
 - [var and const](#var-and-const)
-- [Practice Tasks](#practice-tasks)
 - [Problem Solving](#problem-solving)
 
 ---
@@ -292,15 +291,6 @@ const int MaxUsers = 100;
 
 ---
 
-## Practice Tasks
-
-1. Create variables for your name (`string`), age (`int`), student status (`bool`), and monthly allowance (`decimal`), then print them with string interpolation.
-2. Write a program that takes `price` and `quantity` and prints the total using `decimal`.
-3. Check if a number stored in an `int` variable is even and store the result in a `bool`.
-4. Show the difference between `0.1 + 0.2` using `double` and `decimal`.
-
----
-
 ## Summary
 
 - A **variable** is a named storage location for a value.
@@ -323,7 +313,7 @@ Write a C# program to store and display the information of a product.
 4. Display the price (2 decimal places).
 5. Display whether the product is in stock.
 
-## Code
+### Code
 
 ```csharp
 using System;
@@ -358,7 +348,7 @@ Write a C# program to create a profile for a freelancer and convert their earnin
 3. Display the freelancer's name, completed projects, monthly earnings (2 decimal places), and top rated status.
 4. Display the converted total earnings in BDT (2 decimal places).
 
-## Code
+### Code
 
 ```csharp
 using System;

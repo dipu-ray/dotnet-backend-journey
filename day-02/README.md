@@ -10,7 +10,6 @@ Notes on **arithmetic**, **comparison**, and **logical** operators with runnable
 - [Logical Operators](#logical-operators)
 - [Operator Precedence](#operator-precedence)
 - [All Together](#all-together)
-- [Practice Tasks](#practice-tasks)
 - [Summary](#summary)
 - [Problem Solving](#problem-solving)
 
@@ -347,16 +346,6 @@ Total      : 900
 In budget  : True
 Can buy    : True
 ```
-
----
-
-## Practice Tasks
-
-1. Take two numbers and print their sum, difference, product, quotient (as `decimal`), and remainder.
-2. Check whether a number is even or odd using `%`.
-3. Take an `age` and print whether the person is a child (`< 13`), teenager (`13-19`), or adult (`>= 20`) using comparison and logical operators.
-4. Check if a year is a leap year: divisible by 4 and not by 100, or divisible by 400.
-5. Predict the output before running: `Console.WriteLine(10 + 2 * 5 > 15 && !(4 == 5));`
 
 ---
 
