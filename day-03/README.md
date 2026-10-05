@@ -410,3 +410,53 @@ if (x > 3);            // Bug: empty statement, block below always runs
 ---
 
 ## Problem Solving
+
+### Problem 1
+
+### Description
+
+Write a C# program that takes a student's grade as input and displays the letter grade.
+
+1. Take the grade (integer) as input from the user.
+2. Display the letter grade based on the following ranges:
+   - 80 to 100: `A`
+   - 60 to 79: `B`
+   - 40 to 59: `C`
+   - 0 to 39: `F`
+3. If the grade is outside the range 0 to 100, display "Invalid Grade".
+
+### Code
+
+```csharp
+using System;
+
+class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.Write("Enter your Grade: ");
+        int grade = Convert.ToInt32(Console.ReadLine());
+
+        if (grade >= 80 && grade <= 100)
+        {
+            Console.WriteLine("A");
+        }
+        else if (grade >= 60 && grade <= 79)
+        {
+            Console.WriteLine("B");
+        }
+        else if (grade >= 40 && grade <= 59)
+        {
+            Console.WriteLine("C");
+        }
+        else if (grade < 40 && grade >= 0)
+        {
+            Console.WriteLine("F");
+        }
+        else
+        {
+            Console.WriteLine("Invalid Grade");
+        }
+    }
+}
+```
