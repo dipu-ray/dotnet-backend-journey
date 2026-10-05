@@ -356,6 +356,8 @@ Can buy    : True
 - **Logical** (`&& || !`): combine `bool` values; `&&` and `||` short-circuit.
 - Use `()` to make the order of evaluation clear.
 
+---
+
 ## Problem Solving
 
 ### Problem 1

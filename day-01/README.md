@@ -337,6 +337,8 @@ class Program
 }
 ```
 
+---
+
 ### Problem 2: Mid-Level
 
 ### Description

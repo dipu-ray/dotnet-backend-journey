@@ -15,6 +15,7 @@ Notes on decision making with **`if`**, **`else if`**, **`else`**, and **`switch
 - [if/else vs switch](#ifelse-vs-switch)
 - [Common Mistakes](#common-mistakes)
 - [Summary](#summary)
+- [Problem Solving](#problem-solving)
 
 ---
 
@@ -405,3 +406,7 @@ if (x > 3);            // Bug: empty statement, block below always runs
 - **`switch`** matches one value against many cases; each case needs `break`, and `default` handles no match.
 - **Switch expressions** (`=>`) are a short form that returns a value.
 - Use `if/else` for ranges and complex conditions, `switch` for exact matches.
+
+---
+
+## Problem Solving
