@@ -16,8 +16,8 @@ Notes on the five core SQL commands with runnable examples. The syntax works in 
 - [DELETE](#delete)
 - [Safe Practice Tips](#safe-practice-tips)
 - [Quick Reference](#quick-reference)
-- [Summary](#summary)
-- [Problem Solving](#problem-solving)
+- [SQL Summary](#sql-summary)
+- [SQL Problem Solving](#sql-problem-solving)
 
 ---
 
@@ -441,7 +441,7 @@ DELETE FROM students;   -- deletes ALL rows (the table structure remains)
 
 ---
 
-## Summary
+## SQL Summary
 
 - **`SELECT`** reads data; use column names instead of `*` when possible.
 - **`WHERE`** filters rows using `=`, `>`, `<`, `AND`, `OR`, `NOT`, `BETWEEN`, `IN`, `LIKE`, `IS NULL`.
@@ -452,7 +452,7 @@ DELETE FROM students;   -- deletes ALL rows (the table structure remains)
 
 ---
 
-## Problem Solving
+## SQL Problem Solving
 
 ### Problem 1: Easy
 
@@ -530,6 +530,7 @@ Notes on repeating code with the **`for`**, **`while`**, and **`do-while`** loop
 - [Comparison: for vs while vs do-while](#comparison-for-vs-while-vs-do-while)
 - [Common Mistakes](#common-mistakes)
 - [Summary](#summary)
+- [Problem Solving](#problem-solving)
 
 ---
 
