@@ -1004,3 +1004,172 @@ for (int i = 0; i < 3; i++) { }
 - **`do-while`**: condition is checked last, so it runs **at least once**. Remember the `;` at the end.
 - **`break`** exits the loop, **`continue`** skips to the next round.
 - Always make sure the condition can become `false`, or you get an infinite loop.
+
+---
+
+## Problem Solving
+
+### Problem 1: Easy
+
+### The Countdown Challenge
+
+### The Problem
+
+Write a program that takes a positive integer `N` as input from the user. Then, using a single `for` loop, print the numbers in descending order from `N` down to `1`, and finally display the text `"Liftoff!"`.
+
+### Example
+
+**Input:**
+
+```
+5
+```
+
+**Expected Output:**
+
+```
+5
+4
+3
+2
+1
+Liftoff!
+```
+
+### Conditions
+
+- A `for` loop must be used to print the numbers.
+- The loop must count backwards, from the larger number to the smaller number.
+
+### Solution
+
+### Using `for` loop
+
+```csharp
+using System;
+
+class Test
+{
+    public static void Main(string[] args)
+    {
+        Console.Write("Enter input: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        for (int i = n; i > 0; i--)
+        {
+            Console.WriteLine($"{i}");
+        }
+        Console.WriteLine("Liftoff!");
+    }
+}
+```
+
+### Using `while` loop
+
+```csharp
+using System;
+
+class Test
+{
+    public static void Main(string[] args)
+    {
+        Console.Write("Enter input: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        int i = n;
+        while (i > 0)
+        {
+            Console.WriteLine($"{i}");
+            i--;
+        }
+        Console.WriteLine("Liftoff!");
+    }
+}
+```
+
+### Using `do-while` loop
+
+```csharp
+using System;
+
+class Test
+{
+    public static void Main(string[] args)
+    {
+        Console.Write("Enter input: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        int i = n;
+        do
+        {
+            Console.WriteLine($"{i}");
+            i--;
+        } while (i > 0);
+        Console.WriteLine("Liftoff!");
+    }
+}
+```
+
+> **Note:** The `do-while` version runs the loop body at least once, so it would print `0` if the input were `0` or negative. Since the problem guarantees a positive integer, this is fine here.
+
+### Problem 2: Medium
+
+### The Odd-Even Battle
+
+### The Problem
+
+Take a positive integer `N` as input from the user. Then, using a `for` loop, check all the numbers from `1` to `N`. Here is the twist:
+
+- If the number is **odd**, multiply it by `2` and print the result.
+- If the number is **even**, add `5` to it and print the result.
+
+### Example
+
+**Input:**
+
+```
+4
+```
+
+**Expected Output:**
+
+```
+2    (because 1 is odd, so 1 * 2 = 2)
+7    (because 2 is even, so 2 + 5 = 7)
+6    (because 3 is odd, so 3 * 2 = 6)
+9    (because 4 is even, so 4 + 5 = 9)
+```
+
+### Conditions
+
+- Use only a single `for` loop to go from `1` to `N`.
+- Use a condition inside the loop to determine whether the number is even or odd.
+
+### Solution
+
+```csharp
+using System;
+
+class Test
+{
+    public static void Main(string[] args)
+    {
+        Console.Write("Enter input: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        for (int i = 1; i <= n; i++)
+        {
+            if (i % 2 == 0)
+            {
+                int sum = i + 5;
+                Console.WriteLine($"{sum}");
+            }
+            else
+            {
+                int product = i * 2;
+                Console.WriteLine($"{product}");
+            }
+        }
+    }
+}
+```
