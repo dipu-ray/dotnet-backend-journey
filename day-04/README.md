@@ -6,6 +6,7 @@ Notes on the five core SQL commands with runnable examples. The syntax works in 
 
 ## Table of Contents
 
+- [Go to C# Section](#loops-in-c-sharp)
 - [What is SQL?](#what-is-sql)
 - [Sample Table](#sample-table)
 - [SELECT](#select)
@@ -508,3 +509,498 @@ SELECT ProductName, Stock
 FROM Products
 WHERE Category = 'Electronics' AND Price > 80000;
 ```
+
+---
+
+# Loops in C Sharp
+
+# Loops in C# (for, while, do-while)
+
+Notes on repeating code with the **`for`**, **`while`**, and **`do-while`** loops, with runnable examples.
+
+## Table of Contents
+
+- [What is a Loop?](#what-is-a-loop)
+- [for Loop](#for-loop)
+- [while Loop](#while-loop)
+- [do-while Loop](#do-while-loop)
+- [break and continue](#break-and-continue)
+- [Nested Loops](#nested-loops)
+- [Infinite Loops](#infinite-loops)
+- [Comparison: for vs while vs do-while](#comparison-for-vs-while-vs-do-while)
+- [Common Mistakes](#common-mistakes)
+- [Summary](#summary)
+
+---
+
+## What is a Loop?
+
+A **loop** repeats a block of code as long as a condition is `true`. Without loops, you would have to write the same line again and again.
+
+```csharp
+// Without a loop
+Console.WriteLine("Hello");
+Console.WriteLine("Hello");
+Console.WriteLine("Hello");
+
+// With a loop
+for (int i = 0; i < 3; i++)
+{
+    Console.WriteLine("Hello");
+}
+```
+
+Every loop has three parts:
+
+| Part               | Purpose                                       |
+| ------------------ | --------------------------------------------- |
+| **Initialization** | Starting value of the counter (`int i = 0`)   |
+| **Condition**      | Loop continues while this is `true` (`i < 3`) |
+| **Update**         | Changes the counter each time (`i++`)         |
+
+---
+
+## for Loop
+
+Best when you **know how many times** to repeat.
+
+**Syntax**
+
+```csharp
+for (initialization; condition; update)
+{
+    // code to repeat
+}
+```
+
+**Example: print 1 to 5**
+
+```csharp
+for (int i = 1; i <= 5; i++)
+{
+    Console.WriteLine(i);
+}
+```
+
+**Output**
+
+```
+1
+2
+3
+4
+5
+```
+
+### How it runs
+
+1. `int i = 1` runs **once** at the start.
+2. `i <= 5` is checked. If `false`, the loop ends.
+3. The body runs.
+4. `i++` runs.
+5. Go back to step 2.
+
+### Counting down
+
+```csharp
+for (int i = 5; i >= 1; i--)
+{
+    Console.WriteLine(i);
+}
+// 5 4 3 2 1
+```
+
+### Changing the step
+
+```csharp
+// Even numbers from 2 to 10
+for (int i = 2; i <= 10; i += 2)
+{
+    Console.WriteLine(i);
+}
+// 2 4 6 8 10
+```
+
+### Sum of numbers
+
+```csharp
+int sum = 0;
+
+for (int i = 1; i <= 10; i++)
+{
+    sum += i;
+}
+
+Console.WriteLine("Sum: " + sum); // Sum: 55
+```
+
+### Multiplication table
+
+```csharp
+int n = 5;
+
+for (int i = 1; i <= 10; i++)
+{
+    Console.WriteLine($"{n} x {i} = {n * i}");
+}
+// 5 x 1 = 5
+// 5 x 2 = 10
+// ...
+// 5 x 10 = 50
+```
+
+### Looping through a string or array
+
+```csharp
+string word = "Hello";
+
+for (int i = 0; i < word.Length; i++)
+{
+    Console.WriteLine(word[i]);
+}
+// H e l l o (each on a new line)
+```
+
+> Index starts from `0`, so the last index is `Length - 1`. That is why the condition is `i < word.Length`, not `<=`.
+
+---
+
+## while Loop
+
+Best when you **do not know** how many times to repeat. It keeps going until a condition becomes `false`. The condition is checked **before** each run, so the body may run **zero times**.
+
+**Syntax**
+
+```csharp
+while (condition)
+{
+    // code to repeat
+}
+```
+
+**Example: print 1 to 5**
+
+```csharp
+int i = 1;                // initialization (outside)
+
+while (i <= 5)            // condition
+{
+    Console.WriteLine(i);
+    i++;                  // update (inside, do not forget)
+}
+```
+
+### Runs zero times
+
+```csharp
+int x = 10;
+
+while (x < 5)
+{
+    Console.WriteLine("This never prints");
+}
+```
+
+### Sum of digits
+
+```csharp
+int number = 1234;
+int sum = 0;
+
+while (number > 0)
+{
+    int digit = number % 10;   // last digit
+    sum += digit;
+    number /= 10;              // remove last digit
+}
+
+Console.WriteLine("Sum of digits: " + sum); // 10
+```
+
+### Reverse a number
+
+```csharp
+int number = 1234;
+int reversed = 0;
+
+while (number > 0)
+{
+    reversed = reversed * 10 + number % 10;
+    number /= 10;
+}
+
+Console.WriteLine(reversed); // 4321
+```
+
+### Repeat until valid input
+
+```csharp
+int age = -1;
+
+while (age < 0 || age > 120)
+{
+    Console.Write("Enter a valid age (0-120): ");
+    age = int.Parse(Console.ReadLine());
+}
+
+Console.WriteLine("Age: " + age);
+```
+
+---
+
+## do-while Loop
+
+Like `while`, but the condition is checked **after** the body. So the body runs **at least once**, even if the condition is `false` from the start.
+
+**Syntax**
+
+```csharp
+do
+{
+    // code to repeat
+}
+while (condition);     // note the semicolon
+```
+
+**Example: print 1 to 5**
+
+```csharp
+int i = 1;
+
+do
+{
+    Console.WriteLine(i);
+    i++;
+}
+while (i <= 5);
+```
+
+### Runs at least once
+
+```csharp
+int x = 10;
+
+do
+{
+    Console.WriteLine("This prints once");
+}
+while (x < 5);
+// Output: This prints once
+```
+
+### Menu that repeats until the user exits
+
+```csharp
+int choice;
+
+do
+{
+    Console.WriteLine("1. Say Hello");
+    Console.WriteLine("2. Say Bye");
+    Console.WriteLine("0. Exit");
+    Console.Write("Choose: ");
+    choice = int.Parse(Console.ReadLine());
+
+    switch (choice)
+    {
+        case 1:
+            Console.WriteLine("Hello!");
+            break;
+        case 2:
+            Console.WriteLine("Bye!");
+            break;
+        case 0:
+            Console.WriteLine("Exiting...");
+            break;
+        default:
+            Console.WriteLine("Invalid choice.");
+            break;
+    }
+}
+while (choice != 0);
+```
+
+A menu must show **at least once**, which makes `do-while` a natural fit.
+
+---
+
+## break and continue
+
+| Keyword    | Effect                                                |
+| ---------- | ----------------------------------------------------- |
+| `break`    | Stops the loop immediately                            |
+| `continue` | Skips the rest of this round and goes to the next one |
+
+```csharp
+// break: stop when i is 4
+for (int i = 1; i <= 10; i++)
+{
+    if (i == 4)
+    {
+        break;
+    }
+    Console.WriteLine(i);
+}
+// 1 2 3
+
+// continue: skip i = 3
+for (int i = 1; i <= 5; i++)
+{
+    if (i == 3)
+    {
+        continue;
+    }
+    Console.WriteLine(i);
+}
+// 1 2 4 5
+```
+
+---
+
+## Nested Loops
+
+A loop inside another loop. The inner loop runs fully for **each** round of the outer loop.
+
+```csharp
+for (int i = 1; i <= 3; i++)
+{
+    for (int j = 1; j <= 3; j++)
+    {
+        Console.Write(i * j + "\t");
+    }
+    Console.WriteLine();
+}
+```
+
+**Output**
+
+```
+1	2	3
+2	4	6
+3	6	9
+```
+
+**Pattern: right triangle**
+
+```csharp
+for (int i = 1; i <= 4; i++)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write("* ");
+    }
+    Console.WriteLine();
+}
+```
+
+```
+*
+* *
+* * *
+* * * *
+```
+
+---
+
+## Infinite Loops
+
+A loop whose condition never becomes `false` runs forever.
+
+```csharp
+// Forgot to update i
+int i = 1;
+while (i <= 5)
+{
+    Console.WriteLine(i);
+    // i++ is missing -> infinite loop
+}
+
+// Intentional infinite loop (exit with break)
+while (true)
+{
+    Console.Write("Type 'exit' to stop: ");
+    string input = Console.ReadLine();
+
+    if (input == "exit")
+    {
+        break;
+    }
+}
+```
+
+> Press `Ctrl + C` in the console to stop an unwanted infinite loop.
+
+---
+
+## Comparison: for vs while vs do-while
+
+|                   | `for`                   | `while`                   | `do-while`                            |
+| ----------------- | ----------------------- | ------------------------- | ------------------------------------- |
+| Condition checked | Before each run         | Before each run           | **After** each run                    |
+| Minimum runs      | 0                       | 0                         | **1**                                 |
+| Best for          | Known number of repeats | Unknown number of repeats | Must run at least once (menus, input) |
+| Counter setup     | In the loop header      | Outside the loop          | Outside the loop                      |
+| Typical use       | Counting, arrays        | Reading until a condition | Menu, validation                      |
+
+The same task (print 1 to 3) in all three:
+
+```csharp
+// for
+for (int i = 1; i <= 3; i++)
+{
+    Console.WriteLine(i);
+}
+
+// while
+int a = 1;
+while (a <= 3)
+{
+    Console.WriteLine(a);
+    a++;
+}
+
+// do-while
+int b = 1;
+do
+{
+    Console.WriteLine(b);
+    b++;
+}
+while (b <= 3);
+```
+
+---
+
+## Common Mistakes
+
+```csharp
+// 1. Off-by-one error
+for (int i = 1; i < 5; i++) { }    // prints 1-4, not 1-5. Use i <= 5.
+
+// 2. Forgetting the update (infinite loop)
+// while (i < 5) { Console.WriteLine(i); }
+
+// 3. Semicolon after for/while header
+for (int i = 0; i < 3; i++);       // empty loop body!
+{
+    Console.WriteLine("Runs only once");
+}
+
+// 4. Missing semicolon after do-while
+// do { } while (x < 5)            // Error: needs ;
+
+// 5. Using the counter outside a for loop
+for (int i = 0; i < 3; i++) { }
+// Console.WriteLine(i);           // Error: i exists only inside the loop
+```
+
+---
+
+## Summary
+
+- A **loop** repeats code while a condition is `true`.
+- **`for`**: use when you know the number of repeats. Setup, condition, and update are in one line.
+- **`while`**: use when the number of repeats is unknown. Condition is checked first, so it can run **0 times**.
+- **`do-while`**: condition is checked last, so it runs **at least once**. Remember the `;` at the end.
+- **`break`** exits the loop, **`continue`** skips to the next round.
+- Always make sure the condition can become `false`, or you get an infinite loop.
