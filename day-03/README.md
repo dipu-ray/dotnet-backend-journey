@@ -1,5 +1,7 @@
 # Conditional Statements in C# (if/else, switch)
 
+**Date:** October 5, 2026
+
 Notes on decision making with **`if`**, **`else if`**, **`else`**, and **`switch`**, with runnable examples.
 
 ## Table of Contents
@@ -411,7 +413,7 @@ if (x > 3);            // Bug: empty statement, block below always runs
 
 ## Problem Solving
 
-### Problem 1
+### Problem 1: Easy
 
 ### Description
 
@@ -456,6 +458,80 @@ class Program
         else
         {
             Console.WriteLine("Invalid Grade");
+        }
+    }
+}
+```
+
+### Problem 2: Medium
+
+### Description
+
+Write a C# program that calculates the final bill of a customer based on their membership type.
+
+1. Take the bill amount and the membership type (1, 2, or 3) as input from the user.
+2. Apply the discount according to the membership type using a `switch` statement:
+   - **1 (Regular):** 5% discount only if the bill is more than 1000. Otherwise, no discount.
+   - **2 (Premium):** 10% discount if the bill is more than 1000. Otherwise, 5% discount.
+   - **3 (VIP):** 20% discount on any bill amount.
+3. Display the final bill as an integer (decimal part removed).
+4. For any other membership type, display "Invalid Membership Type".
+
+## Code
+
+```csharp
+using System;
+
+class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.Write("Your Bill: ");
+        int bill = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter Membership Type (1, 2, 3): ");
+        int membershipType = Convert.ToInt32(Console.ReadLine());
+
+        decimal discountBill;
+        int finalBillInt;
+
+        switch (membershipType)
+        {
+            case 1: // Regular
+                if (bill > 1000)
+                {
+                    discountBill = bill * 0.95m;
+                    finalBillInt = (int)discountBill;
+                    Console.WriteLine($"Final Bill: {finalBillInt}");
+                }
+                else
+                {
+                    Console.WriteLine($"Final Bill: {bill}");
+                }
+                break;
+
+            case 2: // Premium
+                if (bill > 1000)
+                {
+                    discountBill = bill * 0.90m;
+                }
+                else
+                {
+                    discountBill = bill * 0.95m;
+                }
+                finalBillInt = (int)discountBill;
+                Console.WriteLine($"Final Bill: {finalBillInt}");
+                break;
+
+            case 3: // VIP
+                discountBill = bill * 0.80m;
+                finalBillInt = (int)discountBill;
+                Console.WriteLine($"Final Bill: {finalBillInt}");
+                break;
+
+            default:
+                Console.WriteLine("Invalid Membership Type");
+                break;
         }
     }
 }

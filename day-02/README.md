@@ -1,5 +1,7 @@
 # Operators in C# (Arithmetic, Comparison, Logical)
 
+**Date:** October 4, 2026
+
 Notes on **arithmetic**, **comparison**, and **logical** operators with runnable examples.
 
 ## Table of Contents
@@ -360,7 +362,7 @@ Can buy    : True
 
 ## Problem Solving
 
-### Problem 1
+### Problem 1: Easy
 
 ### Description
 
@@ -412,7 +414,7 @@ class Program
 }
 ```
 
-### Problem 2
+### Problem 2: Medium
 
 ### Description
 

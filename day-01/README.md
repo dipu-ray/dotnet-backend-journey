@@ -1,5 +1,7 @@
 # Variables & Data Types in C#
 
+**Date:** October 3, 2026
+
 Notes on **variables** and the basic data types **`int`**, **`string`**, **`bool`**, and **`decimal`**, with runnable examples.
 
 ## Table of Contents
@@ -301,7 +303,7 @@ const int MaxUsers = 100;
 
 ## Problem Solving
 
-### Problem 1: Beginner Level
+### Problem 1: Easy
 
 ### Description
 
@@ -339,7 +341,7 @@ class Program
 
 ---
 
-### Problem 2: Mid-Level
+### Problem 2: Medium
 
 ### Description
 
