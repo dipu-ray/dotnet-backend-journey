@@ -1,6 +1,6 @@
 # Operators in C# (Arithmetic, Comparison, Logical)
 
-**Date:** October 4, 2026
+**Date:** 4 October 2026
 
 Notes on **arithmetic**, **comparison**, and **logical** operators with runnable examples.
 

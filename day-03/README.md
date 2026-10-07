@@ -1,6 +1,6 @@
 # Conditional Statements in C# (if/else, switch)
 
-**Date:** October 5, 2026
+**Date:** 5 October 2026
 
 Notes on decision making with **`if`**, **`else if`**, **`else`**, and **`switch`**, with runnable examples.
 

@@ -1,6 +1,6 @@
 # Variables & Data Types in C#
 
-**Date:** October 3, 2026
+**Date:** 3 October 2026
 
 Notes on **variables** and the basic data types **`int`**, **`string`**, **`bool`**, and **`decimal`**, with runnable examples.
 

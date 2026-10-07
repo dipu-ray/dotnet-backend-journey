@@ -10,10 +10,9 @@
 - Communication rules and regular updates
 - Setting expectations (scope, timeline, cost, revisions)
 - Handling difficult clients
-- Do's and Don'ts
 
 ## Part 2: Documentation / Project Brief
-- What is a project brief (Brief, BRD, SRS, MoM)
+- What is a project brief
 - Why we need it
 - Requirement gathering process
 - Questions to ask the client
