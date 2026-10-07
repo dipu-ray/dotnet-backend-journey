@@ -477,7 +477,7 @@ Write a C# program that calculates the final bill of a customer based on their m
 3. Display the final bill as an integer (decimal part removed).
 4. For any other membership type, display "Invalid Membership Type".
 
-## Code
+### Code
 
 ```csharp
 using System;
