@@ -1,27 +1,14 @@
-# Topics: Client Handling & Project Brief
+# Topics: Client Handling, Recap SQL and Install Visual Studio
 
 **Date:** 7 October 2026
 
-## Part 1: Client Handling
-- Why client handling matters
-- Before the meeting (research, questions, agenda)
-- During the meeting (listen, ask, be honest, simple language)
-- After the meeting (MoM, follow-up email)
-- Communication rules and regular updates
-- Setting expectations (scope, timeline, cost, revisions)
-- Handling difficult clients
+## 1. Client Handling
 
-## Part 2: Documentation / Project Brief
-- What is a project brief
-- Why we need it
-- Requirement gathering process
-- Questions to ask the client
-- Documents to collect from the client
-- Project brief template
-- Scope creep and change requests
-- Written sign-off and approval
-
-## Extras
-- Follow-up email template
-- Client meeting checklist
-- Client Project Documentation Using Excel Sheet
+- **Active Listening:** Carefully listening to and understanding exactly what the client wants.
+- **Clear & Prompt Communication:** Regularly sharing work updates and responding quickly to messages or emails.
+- **Professionalism:** Maintaining a calm, polite, and respectful demeanor in any situation.
+- **Setting Expectations:** Defining the scope of work, deadline, and budget clearly right from the start.
+- **Punctuality:** Delivering the project within the promised timeframe.
+- **Problem-Solving Attitude:** Resolving any of the client's objections or complaints in a logical manner.
+- **Honesty & Transparency:** Admitting mistakes or issues directly instead of hiding them.
+- **Handling Feedback:** • Accepting the client's revisions or corrections with a positive attitude.
