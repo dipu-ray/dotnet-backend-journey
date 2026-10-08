@@ -1,4 +1,4 @@
-# Topics: Company Task, Client Meeting
+# Topics: Company Task & Client Meeting
 
 **Date:** 8 October 2026
 
