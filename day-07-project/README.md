@@ -32,3 +32,11 @@ Choose an option:
 - **Even/Odd Check (6):** Checks whether a given number is even or odd.
 - **Find Largest Number (7):** Compares multiple numbers to find the maximum value.
 - **Exit (8):** Safely terminates the program execution.
+
+## 🚀 Getting Started
+
+Follow these instructions to clone the project and run it on your local machine.
+
+### 📥 Prerequisites
+
+Before running the program, ensure you have the appropriate runtime or compiler installed on your system (e.g., GCC for C/C++, JDK for Java, or Python standard environment).
