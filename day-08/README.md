@@ -8,4 +8,4 @@
 
 ## 2. Projects
 
-- Ongoing...
+- Work on the Day 7 project and the entire project.
