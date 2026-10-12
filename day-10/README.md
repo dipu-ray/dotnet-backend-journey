@@ -361,3 +361,13 @@ INNER JOIN departments d ON s.dept_id = d.dept_id;
 ```
 
 > `AS` is optional (`products p` works too), but writing it makes the query clearer.
+
+---
+
+## Summary
+
+- **Aggregate functions** (`MIN`, `MAX`, `COUNT`, `SUM`, `AVG`) turn many rows into one value and **ignore `NULL`** (except `COUNT(*)`).
+- **`LIKE`** searches text patterns, using **wildcards**: `%` (many characters) and `_` (one character). `[ ]` works in SQL Server.
+- **`IN`** matches any value in a list, and `NOT IN` excludes them.
+- **`BETWEEN`** selects an **inclusive** range, for numbers, text, and dates.
+- **Aliases** (`AS`) give columns and tables temporary, readable names.
