@@ -2,30 +2,8 @@
 
 **Date:** 13 October 2026
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# SQL: Joins, UNION, GROUP BY, HAVING, EXISTS
-
-**Date:** 6 October 2026
-
-Notes with simple examples on `JOIN` (inner, left, right, full, self), `UNION`, `UNION ALL`, `GROUP BY`, `HAVING`, and `EXISTS`.
-
 ## Table of Contents
+
 - [Sample Tables](#sample-tables)
 - [SQL Joins](#sql-joins)
 - [INNER JOIN](#inner-join)
@@ -38,7 +16,6 @@ Notes with simple examples on `JOIN` (inner, left, right, full, self), `UNION`, 
 - [GROUP BY](#group-by)
 - [HAVING](#having)
 - [EXISTS](#exists)
-- [Quick Reference](#quick-reference)
 - [Practice Tasks](#practice-tasks)
 - [Summary](#summary)
 
@@ -49,24 +26,25 @@ Notes with simple examples on `JOIN` (inner, left, right, full, self), `UNION`, 
 **departments**
 
 | dept_id | dept_name |
-|---------|-----------|
-| 1 | IT |
-| 2 | HR |
-| 3 | Finance |
-| 4 | Marketing |
+| ------- | --------- |
+| 1       | IT        |
+| 2       | HR        |
+| 3       | Finance   |
+| 4       | Marketing |
 
 **employees**
 
-| emp_id | name | dept_id | manager_id | salary |
-|--------|------|---------|------------|--------|
-| 1 | Rahim | 1 | NULL | 90000 |
-| 2 | Karim | 1 | 1 | 60000 |
-| 3 | Nusrat | 2 | 1 | 50000 |
-| 4 | Sadia | 3 | 1 | 55000 |
-| 5 | Tanvir | NULL | 2 | 40000 |
-| 6 | Mitu | 1 | 2 | 45000 |
+| emp_id | name   | dept_id | manager_id | salary |
+| ------ | ------ | ------- | ---------- | ------ |
+| 1      | Rahim  | 1       | NULL       | 90000  |
+| 2      | Karim  | 1       | 1          | 60000  |
+| 3      | Nusrat | 2       | 1          | 50000  |
+| 4      | Sadia  | 3       | 1          | 55000  |
+| 5      | Tanvir | NULL    | 2          | 40000  |
+| 6      | Mitu   | 1       | 2          | 45000  |
 
 Things to notice:
+
 - **Tanvir** has **no department** (`dept_id` is `NULL`).
 - **Marketing** has **no employees**.
 - `manager_id` points to another row in the **same table** (used for the self join).
@@ -110,13 +88,13 @@ JOIN table2
     ON table1.column = table2.column;
 ```
 
-| Join | Returns |
-|------|---------|
-| **INNER JOIN** | Only rows that **match** in both tables |
-| **LEFT JOIN** | **All rows from the left table** + matching rows from the right |
+| Join           | Returns                                                         |
+| -------------- | --------------------------------------------------------------- |
+| **INNER JOIN** | Only rows that **match** in both tables                         |
+| **LEFT JOIN**  | **All rows from the left table** + matching rows from the right |
 | **RIGHT JOIN** | **All rows from the right table** + matching rows from the left |
-| **FULL JOIN** | **All rows from both tables** (matched or not) |
-| **SELF JOIN** | A table joined **with itself** |
+| **FULL JOIN**  | **All rows from both tables** (matched or not)                  |
+| **SELF JOIN**  | A table joined **with itself**                                  |
 
 > Where there is no match, the missing side shows `NULL`.
 
@@ -133,13 +111,13 @@ INNER JOIN departments d
     ON e.dept_id = d.dept_id;
 ```
 
-| name | dept_name |
-|------|-----------|
-| Rahim | IT |
-| Karim | IT |
-| Nusrat | HR |
-| Sadia | Finance |
-| Mitu | IT |
+| name   | dept_name |
+| ------ | --------- |
+| Rahim  | IT        |
+| Karim  | IT        |
+| Nusrat | HR        |
+| Sadia  | Finance   |
+| Mitu   | IT        |
 
 Tanvir (no department) and Marketing (no employees) are **not** in the result.
 
@@ -158,14 +136,14 @@ LEFT JOIN departments d
     ON e.dept_id = d.dept_id;
 ```
 
-| name | dept_name |
-|------|-----------|
-| Rahim | IT |
-| Karim | IT |
-| Nusrat | HR |
-| Sadia | Finance |
-| Tanvir | **NULL** |
-| Mitu | IT |
+| name   | dept_name |
+| ------ | --------- |
+| Rahim  | IT        |
+| Karim  | IT        |
+| Nusrat | HR        |
+| Sadia  | Finance   |
+| Tanvir | **NULL**  |
+| Mitu   | IT        |
 
 ### Find rows with no match
 
@@ -176,6 +154,7 @@ LEFT JOIN departments d
     ON e.dept_id = d.dept_id
 WHERE d.dept_id IS NULL;
 ```
+
 Result: `Tanvir` (employees without a department)
 
 > `LEFT JOIN` is also written `LEFT OUTER JOIN`.
@@ -193,13 +172,13 @@ RIGHT JOIN departments d
     ON e.dept_id = d.dept_id;
 ```
 
-| name | dept_name |
-|------|-----------|
-| Rahim | IT |
-| Karim | IT |
-| Mitu | IT |
-| Nusrat | HR |
-| Sadia | Finance |
+| name     | dept_name |
+| -------- | --------- |
+| Rahim    | IT        |
+| Karim    | IT        |
+| Mitu     | IT        |
+| Nusrat   | HR        |
+| Sadia    | Finance   |
 | **NULL** | Marketing |
 
 Marketing appears even though it has no employees. (Row order may vary.)
@@ -219,14 +198,14 @@ FULL JOIN departments d
     ON e.dept_id = d.dept_id;
 ```
 
-| name | dept_name |
-|------|-----------|
-| Rahim | IT |
-| Karim | IT |
-| Mitu | IT |
-| Nusrat | HR |
-| Sadia | Finance |
-| Tanvir | **NULL** |
+| name     | dept_name |
+| -------- | --------- |
+| Rahim    | IT        |
+| Karim    | IT        |
+| Mitu     | IT        |
+| Nusrat   | HR        |
+| Sadia    | Finance   |
+| Tanvir   | **NULL**  |
 | **NULL** | Marketing |
 
 > Written as `FULL OUTER JOIN` too. **MySQL does not support `FULL JOIN`.** Use a `LEFT JOIN` combined with a `RIGHT JOIN` using `UNION`:
@@ -255,14 +234,14 @@ LEFT JOIN employees m
     ON e.manager_id = m.emp_id;
 ```
 
-| employee | manager |
-|----------|---------|
-| Rahim | **NULL** |
-| Karim | Rahim |
-| Nusrat | Rahim |
-| Sadia | Rahim |
-| Tanvir | Karim |
-| Mitu | Karim |
+| employee | manager  |
+| -------- | -------- |
+| Rahim    | **NULL** |
+| Karim    | Rahim    |
+| Nusrat   | Rahim    |
+| Sadia    | Rahim    |
+| Tanvir   | Karim    |
+| Mitu     | Karim    |
 
 - `e` is the **employee** copy and `m` is the **manager** copy.
 - Rahim has no manager (`NULL`). Use `INNER JOIN` to hide such rows.
@@ -274,23 +253,24 @@ LEFT JOIN employees m
 `UNION` combines the results of **two or more `SELECT` statements** into one result and **removes duplicates**.
 
 **Rules**
+
 - Each `SELECT` must have the **same number of columns**.
 - Columns must have **compatible data types**, in the **same order**.
 - Column names come from the **first** `SELECT`.
 
 **Sample tables for UNION**
 
-| customers: name | city |
-|-----------------|------|
-| Ayesha | Dhaka |
-| Bashir | Chattogram |
-| Chitra | Dhaka |
+| customers: name | city       |
+| --------------- | ---------- |
+| Ayesha          | Dhaka      |
+| Bashir          | Chattogram |
+| Chitra          | Dhaka      |
 
-| suppliers: name | city |
-|-----------------|------|
-| Delta Traders | Dhaka |
-| Eastern Co | Sylhet |
-| Faruk Ltd | Chattogram |
+| suppliers: name | city       |
+| --------------- | ---------- |
+| Delta Traders   | Dhaka      |
+| Eastern Co      | Sylhet     |
+| Faruk Ltd       | Chattogram |
 
 ```sql
 SELECT city FROM customers
@@ -298,11 +278,11 @@ UNION
 SELECT city FROM suppliers;
 ```
 
-| city |
-|------|
-| Dhaka |
+| city       |
+| ---------- |
+| Dhaka      |
 | Chattogram |
-| Sylhet |
+| Sylhet     |
 
 Duplicates are removed, so each city appears once. (Row order is not guaranteed. Add `ORDER BY` if needed.)
 
@@ -325,20 +305,20 @@ UNION ALL
 SELECT city FROM suppliers;
 ```
 
-| city |
-|------|
-| Dhaka |
+| city       |
+| ---------- |
+| Dhaka      |
 | Chattogram |
-| Dhaka |
-| Dhaka |
-| Sylhet |
+| Dhaka      |
+| Dhaka      |
+| Sylhet     |
 | Chattogram |
 
-| | `UNION` | `UNION ALL` |
-|---|---------|-------------|
-| Duplicates | Removed | **Kept** |
-| Speed | Slower | **Faster** |
-| Rows in the example above | 3 | 6 |
+|                           | `UNION` | `UNION ALL` |
+| ------------------------- | ------- | ----------- |
+| Duplicates                | Removed | **Kept**    |
+| Speed                     | Slower  | **Faster**  |
+| Rows in the example above | 3       | 6           |
 
 ---
 
@@ -354,12 +334,13 @@ GROUP BY d.dept_name;
 ```
 
 | dept_name | total_employees | avg_salary |
-|-----------|-----------------|------------|
-| IT | 3 | 65000 |
-| HR | 1 | 50000 |
-| Finance | 1 | 55000 |
+| --------- | --------------- | ---------- |
+| IT        | 3               | 65000      |
+| HR        | 1               | 50000      |
+| Finance   | 1               | 55000      |
 
 **Rules**
+
 - Every column in `SELECT` must be **either in `GROUP BY` or inside an aggregate function**.
 - `WHERE` comes **before** `GROUP BY`. `ORDER BY` comes **after**.
 
@@ -372,10 +353,10 @@ ORDER BY total_salary DESC;
 ```
 
 | dept_name | total_salary |
-|-----------|--------------|
-| IT | 195000 |
-| Finance | 55000 |
-| HR | 50000 |
+| --------- | ------------ |
+| IT        | 195000       |
+| Finance   | 55000        |
+| HR        | 50000        |
 
 ---
 
@@ -392,16 +373,16 @@ HAVING COUNT(*) > 1;
 ```
 
 | dept_name | total_employees |
-|-----------|-----------------|
-| IT | 3 |
+| --------- | --------------- |
+| IT        | 3               |
 
 ### WHERE vs HAVING
 
-| | `WHERE` | `HAVING` |
-|---|---------|----------|
-| Filters | **Rows**, before grouping | **Groups**, after grouping |
-| Can use aggregate functions? | No | **Yes** |
-| Position | Before `GROUP BY` | After `GROUP BY` |
+|                              | `WHERE`                   | `HAVING`                   |
+| ---------------------------- | ------------------------- | -------------------------- |
+| Filters                      | **Rows**, before grouping | **Groups**, after grouping |
+| Can use aggregate functions? | No                        | **Yes**                    |
+| Position                     | Before `GROUP BY`         | After `GROUP BY`           |
 
 Using both:
 
@@ -415,8 +396,8 @@ HAVING COUNT(*) >= 2;            -- 3. then filter groups
 ```
 
 | dept_name | total_employees |
-|-----------|-----------------|
-| IT | 2 |
+| --------- | --------------- |
+| IT        | 2               |
 
 Order of execution: `FROM / JOIN` -> `WHERE` -> `GROUP BY` -> `HAVING` -> `SELECT` -> `ORDER BY`.
 
@@ -438,10 +419,10 @@ WHERE EXISTS (
 ```
 
 | dept_name |
-|-----------|
-| IT |
-| HR |
-| Finance |
+| --------- |
+| IT        |
+| HR        |
+| Finance   |
 
 ### NOT EXISTS
 
@@ -455,6 +436,7 @@ WHERE NOT EXISTS (
     WHERE e.dept_id = d.dept_id
 );
 ```
+
 Result: `Marketing`
 
 ### Another example: employees who manage someone
@@ -468,29 +450,14 @@ WHERE EXISTS (
     WHERE e.manager_id = m.emp_id
 );
 ```
+
 Result: `Rahim`, `Karim`
 
 ### Notes
+
 - The subquery is **correlated**: it uses a column from the outer query (`d.dept_id`).
 - `SELECT 1` is common because only the **existence** of a row matters, not its data.
 - **`NOT IN` with `NULL` is dangerous.** `WHERE dept_id NOT IN (SELECT dept_id FROM employees)` returns **no rows** because the subquery contains `NULL` (Tanvir). `NOT EXISTS` works correctly.
-
----
-
-## Quick Reference
-
-| Need | Use |
-|------|-----|
-| Only matching rows | `INNER JOIN` |
-| All from the left table | `LEFT JOIN` |
-| All from the right table | `RIGHT JOIN` |
-| All from both tables | `FULL JOIN` |
-| Table with itself (hierarchy) | `SELF JOIN` (aliases) |
-| Combine results, remove duplicates | `UNION` |
-| Combine results, keep duplicates | `UNION ALL` |
-| Summarize per group | `GROUP BY` |
-| Filter groups | `HAVING` |
-| Check if related rows exist | `EXISTS` / `NOT EXISTS` |
 
 ---
 
