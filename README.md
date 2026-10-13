@@ -65,11 +65,12 @@ dotnet-backend-journey/
 
 ---
 
-<!-- ## 📝 Weekly Log
+<!--
+## 📝 Weekly Log
 
 | Week | Topic                          | Notes                              |
 | :--- | :----------------------------- | :--------------------------------- |
-| 01   | Onboarding & environment setup | [docs/week-01.md](docs/week-01.md) |
+| 01   | C# Basic & SQL | [docs/week-01.md](docs/week-01.md) |
 | 02   | _Coming soon_                  | -                                  |
 
 ---
@@ -78,10 +79,8 @@ dotnet-backend-journey/
 
 | Project                     | Description                      | Stack                 |
 | :-------------------------- | :------------------------------- | :-------------------- |
-| [TodoApi](projects/TodoApi) | Basic CRUD REST API with EF Core | ASP.NET Core, EF Core |
-| _Next project_              | _Planned_                        | -                     |
-
---- -->
+| [Calculator](projects/calculator) | Basic CRUD REST API with EF Core | ASP.NET Core, EF Core |
+| _Next project_              | _Planned_                        | -                     | -->
 
 ## 📬 Contact
 
@@ -93,8 +92,7 @@ dotnet-backend-journey/
 
 <p align="center"><sub>Built while learning. Updated regularly.</sub></p>
 
----
-
+<!--
 # Quick Notes:
 
 ## Command Summary
@@ -104,4 +102,4 @@ dotnet-backend-journey/
 | Start SQL Server   | CMD (Administrator)    | `net start MSSQL$SQLEXPRESS`   |
 | Stop SQL Server    | CMD (Administrator)    | `net stop MSSQL$SQLEXPRESS`    |
 | List all tables    | SQL query window       | `SELECT name FROM sys.tables;` |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
+| New C# console app | VS Code terminal / CMD | `dotnet new console`           | -->
