@@ -17,6 +17,7 @@
 - [HAVING](#having)
 - [EXISTS](#exists)
 - [Summary](#summary)
+- [Problem Solving](#problem-solving)
 
 ---
 
@@ -467,3 +468,218 @@ Result: `Rahim`, `Karim`
 - **GROUP BY** groups rows so aggregate functions work per group.
 - **HAVING** filters groups. **WHERE** filters rows before grouping.
 - **EXISTS** checks if a subquery returns any row. Prefer `NOT EXISTS` over `NOT IN` when `NULL` values are possible.
+
+---
+
+## Problem Solving
+
+This repository contains practice problems on key SQL concepts (Self Join, Parent-Child Relationship, BETWEEN, EXISTS) along with their solutions. Each problem includes a description, table and data setup, the solution code, the expected output, and an explanation of how the code works.
+
+## Table of Contents
+
+1. [Self Join (Manager & Employee Relationship)](#1-self-join-manager--employee-relationship)
+2. [Parent & Child Relationship](#2-parent--child-relationship)
+3. [Filter with Date Range (BETWEEN)](#3-filter-with-date-range-between)
+4. [EXISTS Operator with Dummy Select (`SELECT 5`)](#8-exists-operator-with-dummy-select-select-5)
+
+---
+
+## 1. Self Join (Manager & Employee Relationship)
+
+### Problem
+
+An `Employees` table stores each employee's `EmployeeID`, `EmployeeName`, and the ID of their manager in `ManagerID`. A manager is also an employee, so the manager's details live in the same table.
+
+**Task:** Show each employee's name alongside their manager's name. Employees with no manager (`ManagerID` is `NULL`) must still appear in the result, with `NULL` in the manager column.
+
+**Concept:** A self join joins a table to itself. Here the same table is used twice under two aliases: `e` (employee) and `m` (manager).
+
+### Setup
+
+```sql
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    EmployeeName VARCHAR(50),
+    ManagerID INT
+);
+
+INSERT INTO Employees (EmployeeID, EmployeeName, ManagerID) VALUES
+(1, 'Anik', 3),
+(2, 'Banik', 3),
+(3, 'Chris', NULL),
+(4, 'Devin', 1);
+```
+
+### Solution
+
+```sql
+SELECT e.employeename AS employee, m.employeename AS manager
+FROM employees AS e
+LEFT JOIN employees AS m ON e.managerid = m.employeeid;
+```
+
+### Expected Output
+
+| employee | manager |
+| -------- | ------- |
+| Anik     | Chris   |
+| Banik    | Chris   |
+| Chris    | NULL    |
+| Devin    | Anik    |
+
+### Explanation
+
+- `employees AS e` represents the employees, and `employees AS m` represents the managers (same table, different alias).
+- The condition `e.managerid = m.employeeid` matches each employee's `ManagerID` to the manager's `EmployeeID`.
+- `LEFT JOIN` keeps Chris in the result even though he has no manager. An `INNER JOIN` would have dropped him.
+
+---
+
+## 2. Parent & Child Relationship
+
+### Problem
+
+A `Family` table stores each person's `PersonID`, `PersonName`, and their parent's ID in `ParentID`. A person whose `ParentID` is `NULL` is the root of the family tree.
+
+**Task:** List every parent-child pair in the table, showing the parent's name and the child's name in each row.
+
+**Concept:** This is also a self join, where the same table plays the roles of both parent and child.
+
+### Setup
+
+```sql
+CREATE TABLE Family (
+    PersonID INT PRIMARY KEY,
+    PersonName VARCHAR(50),
+    ParentID INT
+);
+
+INSERT INTO Family (PersonID, PersonName, ParentID) VALUES
+(1, 'Kalam', NULL),
+(2, 'Abir', 1),
+(3, 'Sultana', 1),
+(4, 'Nila', 2),
+(5, 'Rony', 2),
+(6, 'Sajid', 3);
+```
+
+### Solution
+
+```sql
+SELECT a.personname AS parent, b.personname AS child
+FROM family a
+JOIN family b
+ON a.personid = b.parentid;
+```
+
+### Expected Output
+
+| parent  | child   |
+| ------- | ------- |
+| Kalam   | Abir    |
+| Kalam   | Sultana |
+| Abir    | Nila    |
+| Abir    | Rony    |
+| Sultana | Sajid   |
+
+---
+
+## 3. Filter with Date Range (BETWEEN)
+
+### Problem
+
+A `ProductSales` table records the sale date (`SaleDate`) and amount (`Amount`) for various products.
+
+**Task:** Show only the sales made between **2026-10-05** and **2026-10-12**.
+
+**Concept:** The `BETWEEN` operator filters values within a range. It is **inclusive**, meaning both the start and end values are included in the result.
+
+### Setup
+
+```sql
+CREATE TABLE ProductSales (
+    SaleID INT PRIMARY KEY,
+    ProductName VARCHAR(50),
+    SaleDate DATE,
+    Amount INT
+);
+
+INSERT INTO ProductSales (SaleID, ProductName, SaleDate, Amount) VALUES
+(1, 'Laptop', '2026-10-01', 50000),
+(2, 'Mouse', '2026-10-03', 1500),
+(3, 'Keyboard', '2026-10-05', 2500),
+(4, 'Monitor', '2026-10-08', 12000),
+(5, 'Phone', '2026-10-10', 25000),
+(6, 'Headphones', '2026-10-12', 3500),
+(7, 'Tablet', '2026-10-15', 18000),
+(8, 'RAM', '2026-10-20', 4500);
+```
+
+### Solution
+
+```sql
+SELECT * FROM productsales
+WHERE saledate BETWEEN '2026-10-05' AND '2026-10-12';
+```
+
+### Expected Output
+
+| SaleID | ProductName | SaleDate   | Amount |
+| ------ | ----------- | ---------- | ------ |
+| 3      | Keyboard    | 2026-10-05 | 2500   |
+| 4      | Monitor     | 2026-10-08 | 12000  |
+| 5      | Phone       | 2026-10-10 | 25000  |
+| 6      | Headphones  | 2026-10-12 | 3500   |
+
+---
+
+## 8. EXISTS Operator with Dummy Select (`SELECT 5`)
+
+### Problem
+
+There are two tables: `Students` (a list of students) and `LibraryBorrows` (which student borrowed which book).
+
+**Task:** Show the names of students who have borrowed at least one book from the library. Use `SELECT 5` inside the `EXISTS` subquery.
+
+**Concept:** `EXISTS` only checks whether the subquery returns any row (true/false). What the subquery selects does not matter, so `SELECT 1`, `SELECT 5`, `SELECT *`, or `SELECT 'abc'` all give the same result. Here, `5` is just a dummy value.
+
+### Setup
+
+```sql
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    StudentName VARCHAR(50)
+);
+
+CREATE TABLE LibraryBorrows (
+    BorrowID INT PRIMARY KEY,
+    StudentID INT,
+    BookName VARCHAR(50)
+);
+
+INSERT INTO Students (StudentID, StudentName) VALUES
+(1, 'Anik'), (2, 'Banik'), (3, 'Evan'), (4, 'Chris');
+
+INSERT INTO LibraryBorrows (BorrowID, StudentID, BookName) VALUES
+(101, 1, 'SQL Basics'),
+(102, 3, 'Data Science'),
+(103, 1, 'Java Programming');
+```
+
+### Solution
+
+```sql
+SELECT studentname
+FROM students
+WHERE EXISTS (
+    SELECT 5 FROM libraryborrows
+    WHERE libraryborrows.studentid = students.studentid
+);
+```
+
+### Expected Output
+
+| studentname |
+| ----------- |
+| Anik        |
+| Evan        |
