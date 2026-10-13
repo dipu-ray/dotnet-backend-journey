@@ -16,7 +16,6 @@
 - [GROUP BY](#group-by)
 - [HAVING](#having)
 - [EXISTS](#exists)
-- [Practice Tasks](#practice-tasks)
 - [Summary](#summary)
 
 ---
@@ -458,23 +457,6 @@ Result: `Rahim`, `Karim`
 - The subquery is **correlated**: it uses a column from the outer query (`d.dept_id`).
 - `SELECT 1` is common because only the **existence** of a row matters, not its data.
 - **`NOT IN` with `NULL` is dangerous.** `WHERE dept_id NOT IN (SELECT dept_id FROM employees)` returns **no rows** because the subquery contains `NULL` (Tanvir). `NOT EXISTS` works correctly.
-
----
-
-## Practice Tasks
-
-Use the tables above.
-
-1. Show each employee's name with their department name (`INNER JOIN`).
-2. Show **all employees**, even those without a department (`LEFT JOIN`).
-3. Show **all departments**, even those without employees (`RIGHT JOIN`).
-4. Find employees who have **no department** (`LEFT JOIN` + `IS NULL`).
-5. Show each employee with their **manager's name** (`SELF JOIN`).
-6. List all distinct cities from customers and suppliers using `UNION`, then again with `UNION ALL`. Compare the row counts.
-7. Find the **number of employees** and the **highest salary** in each department.
-8. Show only departments whose **average salary is above 52000** (`HAVING`).
-9. Find the **total salary per department**, only for employees earning **more than 40000**, and show only departments with total **above 100000**.
-10. Use `EXISTS` to list the departments that have at least one employee earning **more than 80000**.
 
 ---
 
