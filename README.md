@@ -72,15 +72,15 @@ dotnet-backend-journey/
 
 <br>
 
-| Day | Topic                                      | Notes                       |
-| :-- | :----------------------------------------- | :-------------------------- |
-| 01  | Variables & Data Types in C#               | [day-01.md](week-01/day-01) |
-| 02  | Operators in C#                            | [day-02.md](week-01/day-02) |
-| 03  | Conditional Statements in C#               | [day-03.md](week-01/day-03) |
-| 04  | SQL Basics                                 | [day-04.md](week-01/day-04) |
-| 05  | Recap SQL + New and Install Visual Studio  | [day-05.md](week-01/day-05) |
-| 06  | Company Task & Client Meeting - Trained Me | [day-06.md](week-01/day-06) |
-| 07  | Project: Full Calculator with Menu         | [day-07.md](week-01/day-07) |
+| Day | Topic                                      | Notes                    |
+| :-- | :----------------------------------------- | :----------------------- |
+| 01  | Variables & Data Types in C#               | [Day-01](week-01/day-01) |
+| 02  | Operators in C#                            | [Day-02](week-01/day-02) |
+| 03  | Conditional Statements in C#               | [Day-03](week-01/day-03) |
+| 04  | SQL Basics                                 | [Day-04](week-01/day-04) |
+| 05  | Recap SQL + New and Install Visual Studio  | [Day-05](week-01/day-05) |
+| 06  | Company Task & Client Meeting - Trained Me | [Day-06](week-01/day-06) |
+| 07  | Project: Full Calculator with Menu         | [Day-07](week-01/day-07) |
 
 </details>
 
@@ -89,12 +89,12 @@ dotnet-backend-journey/
 
 <br>
 
-| Day | Topic                                         | Notes                       |
-| :-- | :-------------------------------------------- | :-------------------------- |
-| 08  | Work on Business and Projects                 | [day-08.md](week-02/day-08) |
-| 09  | Software visit, Work on Data and Practice SQL | [day-09.md](week-02/day-09) |
-| 10  | Practice SQL                                  | [day-10.md](week-02/day-10) |
-| 11  | Practice SQL                                  | [day-11.md](week-02/day-11) |
+| Day | Topic                                         | Notes                    |
+| :-- | :-------------------------------------------- | :----------------------- |
+| 08  | Work on Business and Projects                 | [Day-08](week-02/day-08) |
+| 09  | Software visit, Work on Data and Practice SQL | [Day-09](week-02/day-09) |
+| 10  | Practice SQL                                  | [Day-10](week-02/day-10) |
+| 11  | Practice SQL                                  | [Day-11](week-02/day-11) |
 
 </details>
 
@@ -102,10 +102,10 @@ dotnet-backend-journey/
 
 ## 🧪 Projects
 
-| Project                              | Description            | Stack                |
-| :----------------------------------- | :--------------------- | :------------------- |
-| [Calculator](week-01/day-07-project) | C# console application | C# Conditions, Loops |
-| _Next project_                       | _Planned_              | -                    |
+| Project                              | Description         | Stack |
+| :----------------------------------- | :------------------ | :---- |
+| [Calculator](week-01/day-07-project) | Console Application | C#    |
+| _Next project_                       | _Planned_           | -     |
 
 ---
 
