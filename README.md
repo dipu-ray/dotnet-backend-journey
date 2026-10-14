@@ -85,7 +85,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 02</b> — <i>Coming soon</i></summary>
+<summary><b>Week 02</b> — SQL Intermediate & Advanced</summary>
 
 <br>
 
