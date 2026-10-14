@@ -89,12 +89,13 @@ dotnet-backend-journey/
 
 <br>
 
-| Day | Topic                                         | Notes                    |
-| :-- | :-------------------------------------------- | :----------------------- |
-| 08  | Work on Business and Projects                 | [Day-08](week-02/day-08) |
-| 09  | Software visit, Work on Data and Practice SQL | [Day-09](week-02/day-09) |
-| 10  | Practice SQL                                  | [Day-10](week-02/day-10) |
-| 11  | Practice SQL                                  | [Day-11](week-02/day-11) |
+| Day | Topic                                       | Notes                    |
+| :-- | :------------------------------------------ | :----------------------- |
+| 08  | Work on Business and Projects               | [Day-08](week-02/day-08) |
+| 09  | Software visit, Work on Data and SQL Basics | [Day-09](week-02/day-09) |
+| 10  | SQL Intermediate                            | [Day-10](week-02/day-10) |
+| 11  | SQL Intermediate                            | [Day-11](week-02/day-11) |
+| 12  | SQL Advanced                                | [Day-12](week-02/day-12) |
 
 </details>
 
