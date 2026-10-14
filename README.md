@@ -65,22 +65,49 @@ dotnet-backend-journey/
 
 ---
 
-<!--
 ## 📝 Weekly Log
 
-| Week | Topic                          | Notes                              |
-| :--- | :----------------------------- | :--------------------------------- |
-| 01   | C# Basic & SQL | [docs/week-01.md](docs/week-01.md) |
-| 02   | _Coming soon_                  | -                                  |
+<details>
+<summary><b>Week 01</b> — C# Basics & SQL</summary>
+
+<br>
+
+| Day | Topic                                      | Notes                       |
+| :-- | :----------------------------------------- | :-------------------------- |
+| 01  | Variables & Data Types in C#               | [day-01.md](week-01/day-01) |
+| 02  | Operators in C#                            | [day-02.md](week-01/day-02) |
+| 03  | Conditional Statements in C#               | [day-03.md](week-01/day-03) |
+| 04  | SQL Basics                                 | [day-04.md](week-01/day-04) |
+| 05  | Recap SQL + New and Install Visual Studio  | [day-05.md](week-01/day-05) |
+| 06  | Company Task & Client Meeting - Trained Me | [day-06.md](week-01/day-06) |
+| 07  | Project: Full Calculator with Menu         | [day-07.md](week-01/day-07) |
+
+</details>
+
+<details>
+<summary><b>Week 02</b> — <i>Coming soon</i></summary>
+
+<br>
+
+| Day | Topic                                         | Notes                       |
+| :-- | :-------------------------------------------- | :-------------------------- |
+| 08  | Work on Business and Projects                 | [day-08.md](week-02/day-08) |
+| 09  | Software visit, Work on Data and Practice SQL | [day-09.md](week-02/day-09) |
+| 10  | Practice SQL                                  | [day-10.md](week-02/day-10) |
+| 11  | Practice SQL                                  | [day-11.md](week-02/day-11) |
+
+</details>
 
 ---
 
 ## 🧪 Projects
 
-| Project                     | Description                      | Stack                 |
-| :-------------------------- | :------------------------------- | :-------------------- |
-| [Calculator](projects/calculator) | Basic CRUD REST API with EF Core | ASP.NET Core, EF Core |
-| _Next project_              | _Planned_                        | -                     | -->
+| Project                              | Description            | Stack                |
+| :----------------------------------- | :--------------------- | :------------------- |
+| [Calculator](week-01/day-07-project) | C# console application | C# Conditions, Loops |
+| _Next project_                       | _Planned_              | -                    |
+
+---
 
 ## 📬 Contact
 
