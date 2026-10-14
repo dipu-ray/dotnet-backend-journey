@@ -130,36 +130,3 @@ dotnet-backend-journey/
 | Stop SQL Server    | CMD (Administrator)    | `net stop MSSQL$SQLEXPRESS`    |
 | List all tables    | SQL query window       | `SELECT name FROM sys.tables;` |
 | New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
