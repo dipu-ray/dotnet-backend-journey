@@ -96,6 +96,7 @@ dotnet-backend-journey/
 | 10  | SQL Intermediate                            | [Day-10](week-02/day-10) |
 | 11  | SQL Intermediate                            | [Day-11](week-02/day-11) |
 | 12  | SQL Advanced                                | [Day-12](week-02/day-12) |
+| 13  | SQL Recap                                   | [Day-13](week-02/day-13) |
 
 </details>
 
@@ -124,9 +125,8 @@ dotnet-backend-journey/
 
 ## Command Summary
 
-| Task               | Where to run           | Command                        |
-| ------------------ | ---------------------- | ------------------------------ |
-| Start SQL Server   | CMD (Administrator)    | `net start MSSQL$SQLEXPRESS`   |
-| Stop SQL Server    | CMD (Administrator)    | `net stop MSSQL$SQLEXPRESS`    |
-| List all tables    | SQL query window       | `SELECT name FROM sys.tables;` |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`           |
+| Task               | Where to run           | Command                      |
+| ------------------ | ---------------------- | ---------------------------- |
+| Start SQL Server   | CMD (Administrator)    | `net start MSSQL$SQLEXPRESS` |
+| Stop SQL Server    | CMD (Administrator)    | `net stop MSSQL$SQLEXPRESS`  |
+| New C# console app | VS Code terminal / CMD | `dotnet new console`         |
