@@ -1,4 +1,4 @@
-# SQL Recap
+# Recap SQL (Structured Query Language)
 
 **Date:** 15 October 2026
 
