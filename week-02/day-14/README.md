@@ -12,7 +12,6 @@ Documentation of today's work: restoring a SQL Server `.bak` backup file, explor
 - [Part 3: The Three Tables](#part-3-the-three-tables)
 - [Part 4: Queries](#part-4-queries)
 - [Common Problems and Fixes](#common-problems-and-fixes)
-- [Practice Tasks](#practice-tasks)
 - [Summary](#summary)
 
 ---
@@ -485,21 +484,6 @@ SELECT * FROM vw_product_sales ORDER BY total_sold DESC;
 | **Date range misses the last day**                                                 | `BETWEEN` on `DATETIME` stops at midnight. Use `>= start AND < next day`.                                                |
 | **"Invalid column name"**                                                          | The column name is different. Check with `INFORMATION_SCHEMA.COLUMNS`.                                                   |
 | **Query is slow on large data**                                                    | Select only needed columns, filter early with `WHERE`, and avoid `SELECT *`.                                             |
-
----
-
-## Practice Tasks
-
-1. Restore the `.bak` file using both the GUI and `RESTORE DATABASE`.
-2. List all tables in the database and find the columns of `customers`, `purchases`, and `invoices`.
-3. Show all purchases made between two dates of your choice.
-4. Find the **highest selling product** and the **lowest selling product** by quantity.
-5. Find the highest and lowest selling product **within a date range**.
-6. List the **top 5 customers** by total amount spent.
-7. Show all invoices **sorted by amount** in descending order, then in ascending order.
-8. Find customers who have **no purchases**.
-9. Create a **monthly sales summary** from `invoices`.
-10. Save the product sales query as a **view**.
 
 ---
 
