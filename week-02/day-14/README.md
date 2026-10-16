@@ -11,7 +11,6 @@ Documentation of today's work: restoring a SQL Server `.bak` backup file, explor
 - [Part 2: Explore the Database](#part-2-explore-the-database)
 - [Part 3: The Three Tables](#part-3-the-three-tables)
 - [Part 4: Queries](#part-4-queries)
-- [Common Problems and Fixes](#common-problems-and-fixes)
 - [Summary](#summary)
 
 ---
@@ -469,21 +468,6 @@ GROUP BY product_name;
 
 SELECT * FROM vw_product_sales ORDER BY total_sold DESC;
 ```
-
----
-
-## Common Problems and Fixes
-
-| Problem                                                                            | Cause and fix                                                                                                            |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **"Cannot open backup device" / "Operating system error 5"**                       | SQL Server has no permission to read the folder. Move the `.bak` to a folder like `C:\Backup\` or grant read permission. |
-| **"The backup set holds a backup of a database other than the existing database"** | Restoring over a different database. Use a new database name, or tick **WITH REPLACE**.                                  |
-| **"Exclusive access could not be obtained because the database is in use"**        | Close other connections, or run `ALTER DATABASE MyDatabase SET SINGLE_USER WITH ROLLBACK IMMEDIATE;` before the restore. |
-| **Backup is from a newer SQL Server version**                                      | You cannot restore it on an older version. Install the same or a newer version.                                          |
-| **File path errors during restore**                                                | Use `RESTORE FILELISTONLY` and `WITH MOVE` to set valid paths.                                                           |
-| **Date range misses the last day**                                                 | `BETWEEN` on `DATETIME` stops at midnight. Use `>= start AND < next day`.                                                |
-| **"Invalid column name"**                                                          | The column name is different. Check with `INFORMATION_SCHEMA.COLUMNS`.                                                   |
-| **Query is slow on large data**                                                    | Select only needed columns, filter early with `WHERE`, and avoid `SELECT *`.                                             |
 
 ---
 
