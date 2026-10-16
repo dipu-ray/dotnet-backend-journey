@@ -7,6 +7,7 @@ Documentation of today's work: restoring a SQL Server `.bak` backup file, explor
 > **Note:** The column names in this document (for example `purchase_date`, `product_name`, `quantity`) are **example names**. Replace them with the real column names from your database. Check them with the [Explore the Database](#explore-the-database) queries.
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Part 1: Restore the .bak File](#part-1-restore-the-bak-file)
 - [Part 2: Explore the Database](#part-2-explore-the-database)
@@ -20,13 +21,13 @@ Documentation of today's work: restoring a SQL Server `.bak` backup file, explor
 
 ## Overview
 
-| Item | Details |
-|------|---------|
-| Backup file | `.bak` (SQL Server backup) |
-| Tool | SQL Server Management Studio (SSMS) |
-| Database size | About 15 to 20 tables |
-| Tables used | `customers`, `purchases`, `invoices` |
-| Tasks | Date range data, highest and lowest selling product, sorting (`DESC` / `ASC`), and smaller operations |
+| Item          | Details                                                                                               |
+| ------------- | ----------------------------------------------------------------------------------------------------- |
+| Backup file   | `.bak` (SQL Server backup)                                                                            |
+| Tool          | SQL Server Management Studio (SSMS)                                                                   |
+| Database size | About 15 to 20 tables                                                                                 |
+| Tables used   | `customers`, `purchases`, `invoices`                                                                  |
+| Tasks         | Date range data, highest and lowest selling product, sorting (`DESC` / `ASC`), and smaller operations |
 
 ---
 
@@ -52,13 +53,16 @@ A `.bak` file is a **backup of a SQL Server database**. Restoring it recreates t
 ## Method 2: Using T-SQL
 
 **Step 1: See what is inside the backup (logical file names)**
+
 ```sql
 RESTORE FILELISTONLY
 FROM DISK = 'C:\Backup\mydatabase.bak';
 ```
+
 Note the **LogicalName** values (one for data, one for log).
 
 **Step 2: Restore the database**
+
 ```sql
 RESTORE DATABASE MyDatabase
 FROM DISK = 'C:\Backup\mydatabase.bak'
@@ -69,15 +73,16 @@ WITH
     STATS = 10;
 ```
 
-| Part | Meaning |
-|------|---------|
-| `RESTORE DATABASE name` | The new (or existing) database name |
-| `FROM DISK` | Path of the `.bak` file |
-| `MOVE ... TO ...` | New location for the data (`.mdf`) and log (`.ldf`) files |
-| `REPLACE` | Overwrite an existing database with the same name |
-| `STATS = 10` | Show progress every 10 percent |
+| Part                    | Meaning                                                   |
+| ----------------------- | --------------------------------------------------------- |
+| `RESTORE DATABASE name` | The new (or existing) database name                       |
+| `FROM DISK`             | Path of the `.bak` file                                   |
+| `MOVE ... TO ...`       | New location for the data (`.mdf`) and log (`.ldf`) files |
+| `REPLACE`               | Overwrite an existing database with the same name         |
+| `STATS = 10`            | Show progress every 10 percent                            |
 
 **Step 3: Check the result**
+
 ```sql
 USE MyDatabase;
 SELECT name FROM sys.tables ORDER BY name;
@@ -90,6 +95,7 @@ SELECT name FROM sys.tables ORDER BY name;
 Before writing queries, understand what is in the database.
 
 **List all tables**
+
 ```sql
 SELECT TABLE_SCHEMA, TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES
@@ -98,6 +104,7 @@ ORDER BY TABLE_NAME;
 ```
 
 **See the columns of one table**
+
 ```sql
 SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE
 FROM INFORMATION_SCHEMA.COLUMNS
@@ -105,11 +112,13 @@ WHERE TABLE_NAME = 'purchases';
 ```
 
 **Quick shortcut for table structure**
+
 ```sql
 EXEC sp_help 'purchases';
 ```
 
 **Peek at the data**
+
 ```sql
 SELECT TOP 10 * FROM customers;
 SELECT TOP 10 * FROM purchases;
@@ -117,6 +126,7 @@ SELECT TOP 10 * FROM invoices;
 ```
 
 **Count rows**
+
 ```sql
 SELECT COUNT(*) AS total_customers FROM customers;
 SELECT COUNT(*) AS total_purchases FROM purchases;
@@ -131,36 +141,37 @@ Example structure (adjust to your real columns):
 
 **customers**
 
-| Column | Type | Meaning |
-|--------|------|---------|
-| `customer_id` | INT (PK) | Unique customer ID |
-| `customer_name` | VARCHAR | Customer name |
-| `email` | VARCHAR | Email |
-| `phone` | VARCHAR | Phone |
-| `city` | VARCHAR | City |
+| Column          | Type     | Meaning            |
+| --------------- | -------- | ------------------ |
+| `customer_id`   | INT (PK) | Unique customer ID |
+| `customer_name` | VARCHAR  | Customer name      |
+| `email`         | VARCHAR  | Email              |
+| `phone`         | VARCHAR  | Phone              |
+| `city`          | VARCHAR  | City               |
 
 **purchases**
 
-| Column | Type | Meaning |
-|--------|------|---------|
-| `purchase_id` | INT (PK) | Unique purchase ID |
-| `customer_id` | INT (FK) | Links to `customers` |
-| `product_name` | VARCHAR | Product name |
-| `quantity` | INT | Units bought |
-| `unit_price` | DECIMAL | Price per unit |
-| `purchase_date` | DATETIME | Date of purchase |
+| Column          | Type     | Meaning              |
+| --------------- | -------- | -------------------- |
+| `purchase_id`   | INT (PK) | Unique purchase ID   |
+| `customer_id`   | INT (FK) | Links to `customers` |
+| `product_name`  | VARCHAR  | Product name         |
+| `quantity`      | INT      | Units bought         |
+| `unit_price`    | DECIMAL  | Price per unit       |
+| `purchase_date` | DATETIME | Date of purchase     |
 
 **invoices**
 
-| Column | Type | Meaning |
-|--------|------|---------|
-| `invoice_id` | INT (PK) | Unique invoice ID |
-| `purchase_id` | INT (FK) | Links to `purchases` |
-| `customer_id` | INT (FK) | Links to `customers` |
-| `invoice_date` | DATETIME | Invoice date |
-| `total_amount` | DECIMAL | Invoice total |
+| Column         | Type     | Meaning              |
+| -------------- | -------- | -------------------- |
+| `invoice_id`   | INT (PK) | Unique invoice ID    |
+| `purchase_id`  | INT (FK) | Links to `purchases` |
+| `customer_id`  | INT (FK) | Links to `customers` |
+| `invoice_date` | DATETIME | Invoice date         |
+| `total_amount` | DECIMAL  | Invoice total        |
 
 **Relationships**
+
 ```
 customers (1) ----< purchases (many)
 purchases (1) ----< invoices  (many or one)
@@ -183,6 +194,7 @@ WHERE purchase_date >= '2026-01-01'
 ```
 
 Using `BETWEEN`:
+
 ```sql
 SELECT *
 FROM purchases
@@ -192,6 +204,7 @@ WHERE purchase_date BETWEEN '2026-01-01' AND '2026-01-31';
 > **Be careful with `BETWEEN` on `DATETIME`.** `'2026-01-31'` means `2026-01-31 00:00:00`, so purchases made later on January 31 are **missed**. Use `>= start AND < next day` instead (the first example). Use `YYYY-MM-DD` format to avoid date-format problems.
 
 **Invoices in a date range**
+
 ```sql
 SELECT invoice_id, customer_id, invoice_date, total_amount
 FROM invoices
@@ -200,6 +213,7 @@ WHERE invoice_date >= '2026-01-01'
 ```
 
 **Today, this month, last 30 days**
+
 ```sql
 -- Today
 SELECT * FROM purchases
@@ -218,6 +232,7 @@ WHERE YEAR(purchase_date) = YEAR(GETDATE())
 ## 2. Highest selling product
 
 **By quantity sold**
+
 ```sql
 SELECT TOP 1
     product_name,
@@ -228,6 +243,7 @@ ORDER BY total_sold DESC;
 ```
 
 **Top 5 selling products**
+
 ```sql
 SELECT TOP 5
     product_name,
@@ -238,6 +254,7 @@ ORDER BY total_sold DESC;
 ```
 
 **Include ties** (if two products have the same top number)
+
 ```sql
 SELECT TOP 1 WITH TIES
     product_name,
@@ -248,6 +265,7 @@ ORDER BY total_sold DESC;
 ```
 
 **By revenue (money earned)**
+
 ```sql
 SELECT TOP 1
     product_name,
@@ -298,10 +316,10 @@ ORDER BY total_sold ASC;
 
 ## 5. Sorting: DESC and ASC
 
-| Sort | Meaning | Example |
-|------|---------|---------|
-| `ORDER BY col ASC` | Small to large, A to Z, oldest to newest (default) | `ORDER BY purchase_date ASC` |
-| `ORDER BY col DESC` | Large to small, Z to A, newest to oldest | `ORDER BY total_amount DESC` |
+| Sort                | Meaning                                            | Example                      |
+| ------------------- | -------------------------------------------------- | ---------------------------- |
+| `ORDER BY col ASC`  | Small to large, A to Z, oldest to newest (default) | `ORDER BY purchase_date ASC` |
+| `ORDER BY col DESC` | Large to small, Z to A, newest to oldest           | `ORDER BY total_amount DESC` |
 
 ```sql
 -- Newest purchases first
@@ -338,6 +356,7 @@ ORDER BY i.invoice_date DESC;
 ## 7. Smaller operations
 
 **Total sales amount in a date range**
+
 ```sql
 SELECT SUM(total_amount) AS total_sales
 FROM invoices
@@ -346,6 +365,7 @@ WHERE invoice_date >= '2026-01-01'
 ```
 
 **Number of purchases per customer**
+
 ```sql
 SELECT c.customer_name, COUNT(*) AS total_purchases
 FROM customers c
@@ -355,6 +375,7 @@ ORDER BY total_purchases DESC;
 ```
 
 **Total amount spent per customer (top 10)**
+
 ```sql
 SELECT TOP 10
     c.customer_name,
@@ -366,6 +387,7 @@ ORDER BY total_spent DESC;
 ```
 
 **Customers who never purchased**
+
 ```sql
 SELECT c.customer_name
 FROM customers c
@@ -375,6 +397,7 @@ WHERE NOT EXISTS (
 ```
 
 **Customers who purchased more than 5 times** (`HAVING`)
+
 ```sql
 SELECT c.customer_name, COUNT(*) AS total_purchases
 FROM customers c
@@ -384,6 +407,7 @@ HAVING COUNT(*) > 5;
 ```
 
 **Monthly sales summary**
+
 ```sql
 SELECT
     YEAR(invoice_date)  AS sale_year,
@@ -396,6 +420,7 @@ ORDER BY sale_year, sale_month;
 ```
 
 **Average, minimum, and maximum invoice amount**
+
 ```sql
 SELECT
     AVG(total_amount) AS average_invoice,
@@ -405,18 +430,21 @@ FROM invoices;
 ```
 
 **Search customers by name or city**
+
 ```sql
 SELECT * FROM customers WHERE customer_name LIKE 'A%';
 SELECT * FROM customers WHERE city IN ('Dhaka', 'Chattogram');
 ```
 
 **Unique products and cities**
+
 ```sql
 SELECT DISTINCT product_name FROM purchases;
 SELECT DISTINCT city FROM customers;
 ```
 
 **Label invoices with `CASE`**
+
 ```sql
 SELECT invoice_id, total_amount,
     CASE
@@ -428,12 +456,14 @@ FROM invoices;
 ```
 
 **Replace `NULL` values**
+
 ```sql
 SELECT customer_name, COALESCE(phone, 'No phone') AS phone
 FROM customers;
 ```
 
 **Save a reusable result as a view**
+
 ```sql
 CREATE VIEW vw_product_sales AS
 SELECT product_name, SUM(quantity) AS total_sold
@@ -447,16 +477,16 @@ SELECT * FROM vw_product_sales ORDER BY total_sold DESC;
 
 ## Common Problems and Fixes
 
-| Problem | Cause and fix |
-|---------|---------------|
-| **"Cannot open backup device" / "Operating system error 5"** | SQL Server has no permission to read the folder. Move the `.bak` to a folder like `C:\Backup\` or grant read permission. |
-| **"The backup set holds a backup of a database other than the existing database"** | Restoring over a different database. Use a new database name, or tick **WITH REPLACE**. |
-| **"Exclusive access could not be obtained because the database is in use"** | Close other connections, or run `ALTER DATABASE MyDatabase SET SINGLE_USER WITH ROLLBACK IMMEDIATE;` before the restore. |
-| **Backup is from a newer SQL Server version** | You cannot restore it on an older version. Install the same or a newer version. |
-| **File path errors during restore** | Use `RESTORE FILELISTONLY` and `WITH MOVE` to set valid paths. |
-| **Date range misses the last day** | `BETWEEN` on `DATETIME` stops at midnight. Use `>= start AND < next day`. |
-| **"Invalid column name"** | The column name is different. Check with `INFORMATION_SCHEMA.COLUMNS`. |
-| **Query is slow on large data** | Select only needed columns, filter early with `WHERE`, and avoid `SELECT *`. |
+| Problem                                                                            | Cause and fix                                                                                                            |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **"Cannot open backup device" / "Operating system error 5"**                       | SQL Server has no permission to read the folder. Move the `.bak` to a folder like `C:\Backup\` or grant read permission. |
+| **"The backup set holds a backup of a database other than the existing database"** | Restoring over a different database. Use a new database name, or tick **WITH REPLACE**.                                  |
+| **"Exclusive access could not be obtained because the database is in use"**        | Close other connections, or run `ALTER DATABASE MyDatabase SET SINGLE_USER WITH ROLLBACK IMMEDIATE;` before the restore. |
+| **Backup is from a newer SQL Server version**                                      | You cannot restore it on an older version. Install the same or a newer version.                                          |
+| **File path errors during restore**                                                | Use `RESTORE FILELISTONLY` and `WITH MOVE` to set valid paths.                                                           |
+| **Date range misses the last day**                                                 | `BETWEEN` on `DATETIME` stops at midnight. Use `>= start AND < next day`.                                                |
+| **"Invalid column name"**                                                          | The column name is different. Check with `INFORMATION_SCHEMA.COLUMNS`.                                                   |
+| **Query is slow on large data**                                                    | Select only needed columns, filter early with `WHERE`, and avoid `SELECT *`.                                             |
 
 ---
 
