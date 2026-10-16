@@ -4,8 +4,6 @@
 
 Documentation of today's work: restoring a SQL Server `.bak` backup file, exploring the database, and running queries on the **customers**, **purchases**, and **invoices** tables.
 
-> **Note:** The column names in this document (for example `purchase_date`, `product_name`, `quantity`) are **example names**. Replace them with the real column names from your database. Check them with the [Explore the Database](#explore-the-database) queries.
-
 ## Table of Contents
 
 - [Overview](#overview)
