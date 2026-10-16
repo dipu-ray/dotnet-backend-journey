@@ -10,7 +10,6 @@ Documentation of today's work: restoring a SQL Server `.bak` backup file, explor
 - [Part 2: Explore the Database](#part-2-explore-the-database)
 - [Part 3: The Three Tables](#part-3-the-three-tables)
 - [Part 4: Queries](#part-4-queries)
-- [Summary](#summary)
 
 ---
 
@@ -455,14 +454,3 @@ GROUP BY product_name;
 
 SELECT * FROM vw_product_sales ORDER BY total_sold DESC;
 ```
-
----
-
-## Summary
-
-- A **`.bak` file** is a SQL Server backup. Restore it with **SSMS** (Restore Database) or `RESTORE DATABASE ... FROM DISK`.
-- **Explore first**: list tables and columns, peek at rows with `TOP 10`, and count rows.
-- **Date range**: use `>= start AND < next day` for `DATETIME` columns.
-- **Highest / lowest selling product**: `SUM(quantity)` + `GROUP BY product` + `ORDER BY ... DESC` (highest) or `ASC` (lowest) + `TOP 1`.
-- **Sorting**: `DESC` for large to small and newest first, `ASC` for small to large and oldest first.
-- Combine tables with **`JOIN`**, summarize with **`GROUP BY`** and **`HAVING`**, and reuse results with **views**.
