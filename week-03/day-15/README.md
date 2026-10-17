@@ -7,10 +7,7 @@
 - [Part 1: Problem, Most Selling Item](#part-1-problem-most-selling-item)
 - [Part 2: Finding the Source Code of a Stored Procedure](#part-2-finding-the-source-code-of-a-stored-procedure)
 - [Part 3: Understanding Inv_StockReport](#part-3-understanding-inv_stockreport)
-- [Part 4: Worked Example](#part-4-worked-example)
-- [Part 5: Things to Notice and Ask](#part-5-things-to-notice-and-ask)
 - [Concepts Used](#concepts-used)
-- [Practice Tasks](#practice-tasks)
 - [Summary](#summary)
 
 ---
@@ -147,30 +144,6 @@ WHERE definition LIKE '%stock%';
 
 > If a procedure was created `WITH ENCRYPTION`, its source code cannot be viewed.
 
-## Running the Procedure
-
-The first line of the procedure is a comment showing how it is called:
-
-```sql
--- [Inv_StockReport] 7
-```
-
-This is a shortcut for:
-
-```sql
-EXEC [dbo].[Inv_StockReport] @companyInfoId = 7;
-```
-
-More examples:
-
-```sql
--- For one project
-EXEC [dbo].[Inv_StockReport] @companyInfoId = 7, @ProjectId = 3;
-
--- For one project and one sub project
-EXEC [dbo].[Inv_StockReport] @companyInfoId = 7, @ProjectId = 3, @SubProjectId = 12;
-```
-
 ---
 
 # Part 3: Understanding Inv_StockReport
@@ -178,14 +151,6 @@ EXEC [dbo].[Inv_StockReport] @companyInfoId = 7, @ProjectId = 3, @SubProjectId =
 ## What It Does
 
 `Inv_StockReport` produces a **stock report**: for each **item** of a company it shows how much stock came **in**, how much went **out**, the **current quantity**, the **prices**, and the **total stock value**. It can optionally be limited to one **project** and one **sub project**.
-
-## Parameters
-
-| Parameter        | Type | Required?           | Meaning                                                             |
-| ---------------- | ---- | ------------------- | ------------------------------------------------------------------- |
-| `@companyInfoId` | INT  | **Yes**             | Which company's items to report (`7` in the example)                |
-| `@ProjectId`     | INT  | No (default `NULL`) | Only count stock of this project. `NULL` means all projects         |
-| `@SubProjectId`  | INT  | No (default `NULL`) | Only count stock of this sub project. `NULL` means all sub projects |
 
 ## Source Code
 
@@ -476,80 +441,6 @@ OPTION (RECOMPILE);
 
 ---
 
-# Part 4: Worked Example
-
-**Items** (company `7`)
-
-| Id  | Name   | LowStockLevel |
-| --- | ------ | ------------- |
-| 1   | Cement | 20            |
-| 2   | Brick  | NULL          |
-| 3   | Paint  | 5             |
-
-**Stock**
-
-| ItemId | ItemType | StockType | Quantity | UnitPrice | SalesPrice |
-| ------ | -------- | --------- | -------- | --------- | ---------- |
-| 1      | Good     | In        | 100      | 500       | 600        |
-| 1      | Good     | Out       | 30       | 500       | 600        |
-| 2      | Good     | In        | 200      | 10        | 12         |
-| 2      | Good     | Out       | 50       | 10        | 12         |
-
-Paint has **no stock rows**.
-
-**Run**
-
-```sql
-EXEC [dbo].[Inv_StockReport] @companyInfoId = 7;
-```
-
-**Result**
-
-| ItemName | LowStockLevel | UnitPrice | SalesPrice | InQty | OutQty | Quantity | TotalPrice |
-| -------- | ------------- | --------- | ---------- | ----- | ------ | -------- | ---------- |
-| Brick    | 0             | 10        | 12         | 200   | 50     | 150      | 1500       |
-| Cement   | 20            | 500       | 600        | 100   | 30     | 70       | 35000      |
-| Paint    | 5             | 0         | 0          | 0     | 0      | 0        | 0          |
-
-(`ProjectId` and `SubProjectId` are `NULL` because they were not passed.)
-
-**How the numbers come out**
-
-- **Cement:** `InQty = 100`, `OutQty = 30`, so `Quantity = 100 - 30 = 70`. `TotalPrice = 70 x 500 = 35000`.
-- **Brick:** `LowStockLevel` was `NULL`, shown as `0`. `Quantity = 200 - 50 = 150`. `TotalPrice = 150 x 10 = 1500`.
-- **Paint:** the `LEFT JOIN` keeps it even without stock. All quantities are `0`, and `TotalPrice = 0 x 1.00 = 0`.
-- Sorted by name: Brick, Cement, Paint.
-
----
-
-# Part 5: Things to Notice and Ask
-
-Good points to understand or confirm with the senior:
-
-| #   | Observation                                                                                                                            | Why it matters                                                                    |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| 1   | `TotalPrice` uses the **minimum** unit price, not an average or the latest cost                                                        | If an item was bought at different prices, the total value is an approximation    |
-| 2   | If any stock row has a unit price of `0` or `NULL`, `MIN(ISNULL(UnitPrice, 0))` becomes `0`                                            | Then `UnitPrice` shows `0`, and `TotalPrice` falls back to a multiplier of `1.00` |
-| 3   | When `@ProjectId` is passed, items that have **no stock in that project** still appear, with `ProjectId` as `NULL` and zero quantities | This comes from the `LEFT JOIN` with the filter in `ON`                           |
-| 4   | Only `ItemType = 'Good'` rows count for quantities, but `UnitPrice` and `SalesPrice` are taken from **all** rows                       | Services do not affect quantity                                                   |
-| 5   | `Quantity` can become **negative** if more went out than came in                                                                       | Useful for spotting data problems                                                 |
-| 6   | `LowStockLevel` is shown but not compared with `Quantity` inside the procedure                                                         | The application or report can highlight items where `Quantity <= LowStockLevel`   |
-| 7   | The `ProjectId` / `SubProjectId` `CASE` expression appears in both `SELECT` and `GROUP BY`                                             | They must match exactly                                                           |
-
-**Test idea:** compare one item's result with a manual query.
-
-```sql
-SELECT
-    SUM(CASE WHEN UPPER(StockType) = 'IN'  THEN Quantity ELSE 0 END) AS InQty,
-    SUM(CASE WHEN UPPER(StockType) = 'OUT' THEN Quantity ELSE 0 END) AS OutQty
-FROM Stock
-WHERE ItemId = 1
-  AND ISNULL(IsDelete, 0) = 0
-  AND ItemType = 'Good';
-```
-
----
-
 ## Concepts Used
 
 - `TOP`, `GROUP BY`, `SUM`, `ORDER BY ... DESC / ASC`
@@ -561,21 +452,6 @@ WHERE ItemId = 1
 - Conditional aggregation: `SUM(CASE ...)`
 - Optional parameters: `@p IS NULL OR column = @p`
 - Soft delete flag: `IsDelete`
-
----
-
-## Practice Tasks
-
-1. Run `SELECT DISTINCT ReferenceTable, StockType FROM stock;` and list the values you find.
-2. Change the most selling item query to use `AND`, and compare the results with the `OR` version.
-3. Add the item **name** to the most selling item query using a join with `Items`.
-4. Find the **top selling item per month** (hint: `GROUP BY` item and month).
-5. Get the source code of `Inv_StockReport` using `sp_helptext`, `OBJECT_DEFINITION`, and the SSMS GUI.
-6. Run `Inv_StockReport` with only `@companyInfoId`, then with `@ProjectId`, and compare the rows.
-7. Pick one item and verify its `InQty`, `OutQty`, and `Quantity` with a manual query.
-8. Find items where `Quantity` is **at or below** `LowStockLevel` (write a query on top of the procedure result, or modify a copy of the procedure).
-9. Explain in your own words why the `Stock` filters are in the `ON` clause and not in `WHERE`.
-10. Write a short procedure of your own, for example `Inv_TopSellingItems @Top INT`, that returns the top selling items.
 
 ---
 
