@@ -2,13 +2,6 @@
 
 **Date:** 17 October 2026
 
-Two tasks from today:
-
-1. **Problem:** find the most selling item from the `stock` table.
-2. **Study:** find the source code of a stored procedure (`Inv_StockReport`) and understand how it works.
-
-> **Note:** Column names and values such as `ItemId`, `Quantity`, `StockType`, `ReferenceTable`, `'Invoices'`, `'Out'` are taken from the query and stored procedure used at work. Where something is an assumption, it is marked.
-
 ## Table of Contents
 
 - [Part 1: Problem, Most Selling Item](#part-1-problem-most-selling-item)
@@ -53,17 +46,6 @@ select * from stock;
 -- select * from invoices;
 ```
 
-The `purchases` and `invoices` lines are commented out (`--`). Only `stock` is read to see its columns and values.
-
-A useful check before filtering:
-
-```sql
-SELECT DISTINCT ReferenceTable, StockType
-FROM stock;
-```
-
-This shows which combinations exist, so the `WHERE` condition can be chosen correctly.
-
 ## Solution
 
 ```sql
@@ -103,63 +85,6 @@ After filtering and grouping:
 | 1      | 15            |
 
 Item `2` is the top selling item.
-
-## Improving the Solution
-
-**1. `OR` or `AND`?**
-
-| Condition                                           | Rows included                                                                            |
-| --------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `ReferenceTable = 'Invoices' OR StockType = 'Out'`  | Invoice rows **plus** any other "Out" rows (for example damage, transfer, or adjustment) |
-| `ReferenceTable = 'Invoices' AND StockType = 'Out'` | Only rows that are **both** from invoices **and** stock going out                        |
-
-For "**selling**", `AND` is usually more exact. With `OR`, non-sale stock-out rows can be counted as sales. The right choice depends on what values exist in the data (check with the `SELECT DISTINCT` query above, or ask the senior).
-
-**2. Deleted rows.** The stored procedure in Part 3 filters `ISNULL(s.IsDelete, 0) = 0`. If `stock` has an `IsDelete` column, deleted rows should be excluded here too.
-
-**3. Item name.** `ItemId` alone is hard to read. Join the `Items` table to show the name.
-
-**4. Top 1 or Top 5.** The question says "most selling" (one item), while the query returns 5. Use `TOP 1` for one item, or `TOP 1 WITH TIES` if two items can share the top value.
-
-**Improved version**
-
-```sql
-SELECT TOP 5
-    s.ItemId,
-    i.Name AS ItemName,
-    SUM(s.Quantity) AS TotalQuantity
-FROM stock AS s
-INNER JOIN Items AS i ON i.Id = s.ItemId
-WHERE s.ReferenceTable = 'Invoices'
-  AND s.StockType = 'Out'
-  AND ISNULL(s.IsDelete, 0) = 0
-GROUP BY s.ItemId, i.Name
-ORDER BY TotalQuantity DESC;
-```
-
-**Least selling item (same query, sorted ascending)**
-
-```sql
-SELECT TOP 5
-    s.ItemId,
-    i.Name AS ItemName,
-    SUM(s.Quantity) AS TotalQuantity
-FROM stock AS s
-INNER JOIN Items AS i ON i.Id = s.ItemId
-WHERE s.ReferenceTable = 'Invoices'
-  AND s.StockType = 'Out'
-  AND ISNULL(s.IsDelete, 0) = 0
-GROUP BY s.ItemId, i.Name
-ORDER BY TotalQuantity ASC;
-```
-
-**In a date range** (if `stock` has a date column, for example `CreatedDate`)
-
-```sql
-WHERE ...
-  AND s.CreatedDate >= '2026-01-01'
-  AND s.CreatedDate <  '2026-02-01'
-```
 
 ---
 
