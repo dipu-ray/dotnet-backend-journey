@@ -1,4 +1,4 @@
-# Stock Query and Stored Procedure Study
+# Topic: Stock Query and Stored Procedure Study
 
 **Date:** 17 October 2026
 
@@ -10,6 +10,7 @@ Two tasks from today:
 > **Note:** Column names and values such as `ItemId`, `Quantity`, `StockType`, `ReferenceTable`, `'Invoices'`, `'Out'` are taken from the query and stored procedure used at work. Where something is an assumption, it is marked.
 
 ## Table of Contents
+
 - [Part 1: Problem, Most Selling Item](#part-1-problem-most-selling-item)
 - [Part 2: Finding the Source Code of a Stored Procedure](#part-2-finding-the-source-code-of-a-stored-procedure)
 - [Part 3: Understanding Inv_StockReport](#part-3-understanding-inv_stockreport)
@@ -29,19 +30,19 @@ The database has a `stock` table that records every stock movement (items coming
 
 ## Tables Involved
 
-| Table | Purpose |
-|-------|---------|
-| `stock` | Every stock movement: item, quantity, type (In / Out), and which table caused it |
-| `purchases` | Items bought (stock coming in) |
-| `invoices` | Items sold (stock going out) |
+| Table       | Purpose                                                                          |
+| ----------- | -------------------------------------------------------------------------------- |
+| `stock`     | Every stock movement: item, quantity, type (In / Out), and which table caused it |
+| `purchases` | Items bought (stock coming in)                                                   |
+| `invoices`  | Items sold (stock going out)                                                     |
 
 Columns used from `stock` (as seen in the query):
 
-| Column | Meaning |
-|--------|---------|
-| `ItemId` | The item |
-| `Quantity` | Quantity moved |
-| `StockType` | `In` or `Out` |
+| Column           | Meaning                                                    |
+| ---------------- | ---------------------------------------------------------- |
+| `ItemId`         | The item                                                   |
+| `Quantity`       | Quantity moved                                             |
+| `StockType`      | `In` or `Out`                                              |
 | `ReferenceTable` | Which table created the stock row (for example `Invoices`) |
 
 ## Exploring the Data First
@@ -60,6 +61,7 @@ A useful check before filtering:
 SELECT DISTINCT ReferenceTable, StockType
 FROM stock;
 ```
+
 This shows which combinations exist, so the `WHERE` condition can be chosen correctly.
 
 ## Solution
@@ -75,30 +77,30 @@ order by TotalQuantity desc;
 
 ## How the Solution Works
 
-| Step | Clause | What it does |
-|------|--------|--------------|
-| 1 | `from stock` | Read the stock table |
-| 2 | `where ... or ...` | Keep only the rows that are sales (invoice rows, or stock going out) |
-| 3 | `group by ItemId` | Put all rows of the same item together |
-| 4 | `sum(Quantity) as TotalQuantity` | Add up the quantity for each item |
-| 5 | `order by TotalQuantity desc` | Sort from the largest total to the smallest |
-| 6 | `top 5` | Keep only the first 5 rows (the 5 best selling items) |
+| Step | Clause                           | What it does                                                         |
+| ---- | -------------------------------- | -------------------------------------------------------------------- |
+| 1    | `from stock`                     | Read the stock table                                                 |
+| 2    | `where ... or ...`               | Keep only the rows that are sales (invoice rows, or stock going out) |
+| 3    | `group by ItemId`                | Put all rows of the same item together                               |
+| 4    | `sum(Quantity) as TotalQuantity` | Add up the quantity for each item                                    |
+| 5    | `order by TotalQuantity desc`    | Sort from the largest total to the smallest                          |
+| 6    | `top 5`                          | Keep only the first 5 rows (the 5 best selling items)                |
 
 **Example**
 
 | ItemId | Quantity | StockType | ReferenceTable |
-|--------|----------|-----------|----------------|
-| 1 | 10 | Out | Invoices |
-| 1 | 5 | Out | Invoices |
-| 2 | 20 | Out | Invoices |
-| 2 | 100 | In | Purchases |
+| ------ | -------- | --------- | -------------- |
+| 1      | 10       | Out       | Invoices       |
+| 1      | 5        | Out       | Invoices       |
+| 2      | 20       | Out       | Invoices       |
+| 2      | 100      | In        | Purchases      |
 
 After filtering and grouping:
 
 | ItemId | TotalQuantity |
-|--------|---------------|
-| 2 | 20 |
-| 1 | 15 |
+| ------ | ------------- |
+| 2      | 20            |
+| 1      | 15            |
 
 Item `2` is the top selling item.
 
@@ -106,10 +108,10 @@ Item `2` is the top selling item.
 
 **1. `OR` or `AND`?**
 
-| Condition | Rows included |
-|-----------|---------------|
-| `ReferenceTable = 'Invoices' OR StockType = 'Out'` | Invoice rows **plus** any other "Out" rows (for example damage, transfer, or adjustment) |
-| `ReferenceTable = 'Invoices' AND StockType = 'Out'` | Only rows that are **both** from invoices **and** stock going out |
+| Condition                                           | Rows included                                                                            |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `ReferenceTable = 'Invoices' OR StockType = 'Out'`  | Invoice rows **plus** any other "Out" rows (for example damage, transfer, or adjustment) |
+| `ReferenceTable = 'Invoices' AND StockType = 'Out'` | Only rows that are **both** from invoices **and** stock going out                        |
 
 For "**selling**", `AND` is usually more exact. With `OR`, non-sale stock-out rows can be counted as sales. The right choice depends on what values exist in the data (check with the `SELECT DISTINCT` query above, or ask the senior).
 
@@ -120,6 +122,7 @@ For "**selling**", `AND` is usually more exact. With `OR`, non-sale stock-out ro
 **4. Top 1 or Top 5.** The question says "most selling" (one item), while the query returns 5. Use `TOP 1` for one item, or `TOP 1 WITH TIES` if two items can share the top value.
 
 **Improved version**
+
 ```sql
 SELECT TOP 5
     s.ItemId,
@@ -135,6 +138,7 @@ ORDER BY TotalQuantity DESC;
 ```
 
 **Least selling item (same query, sorted ascending)**
+
 ```sql
 SELECT TOP 5
     s.ItemId,
@@ -150,8 +154,9 @@ ORDER BY TotalQuantity ASC;
 ```
 
 **In a date range** (if `stock` has a date column, for example `CreatedDate`)
+
 ```sql
-WHERE ... 
+WHERE ...
   AND s.CreatedDate >= '2026-01-01'
   AND s.CreatedDate <  '2026-02-01'
 ```
@@ -168,10 +173,10 @@ exec sp_helptext '[dbo].[Inv_StockReport]'
 
 `sp_helptext` is a built-in system stored procedure. It returns the **text (source code)** of a stored procedure, view, function, or trigger. The result comes as rows, one line of code per row.
 
-| Part | Meaning |
-|------|---------|
-| `exec` | Run a stored procedure |
-| `sp_helptext` | System procedure that shows object source code |
+| Part                        | Meaning                                          |
+| --------------------------- | ------------------------------------------------ |
+| `exec`                      | Run a stored procedure                           |
+| `sp_helptext`               | System procedure that shows object source code   |
 | `'[dbo].[Inv_StockReport]'` | The object: schema `dbo`, name `Inv_StockReport` |
 
 > Tip: press **Ctrl + T** (results to text) before running, so the code looks like normal text and is easy to copy.
@@ -179,11 +184,13 @@ exec sp_helptext '[dbo].[Inv_StockReport]'
 ## Other Ways to Get the Source Code
 
 **1. `OBJECT_DEFINITION`** (returns the whole code in one value)
+
 ```sql
 SELECT OBJECT_DEFINITION(OBJECT_ID('[dbo].[Inv_StockReport]'));
 ```
 
 **2. System view `sys.sql_modules`**
+
 ```sql
 SELECT m.definition
 FROM sys.sql_modules AS m
@@ -191,12 +198,14 @@ WHERE m.object_id = OBJECT_ID('[dbo].[Inv_StockReport]');
 ```
 
 **3. SSMS (GUI)**
+
 1. Expand the database.
 2. Open **Programmability** then **Stored Procedures**.
 3. Right-click the procedure.
 4. Choose **Modify** (opens an `ALTER PROCEDURE` script) or **Script Stored Procedure as** then **CREATE To** then **New Query Editor Window**.
 
 **4. List all stored procedures**
+
 ```sql
 SELECT SCHEMA_NAME(schema_id) AS SchemaName, name
 FROM sys.procedures
@@ -204,6 +213,7 @@ ORDER BY name;
 ```
 
 **5. Find procedures that use a certain table or word**
+
 ```sql
 SELECT OBJECT_NAME(object_id) AS ProcedureName
 FROM sys.sql_modules
@@ -227,6 +237,7 @@ EXEC [dbo].[Inv_StockReport] @companyInfoId = 7;
 ```
 
 More examples:
+
 ```sql
 -- For one project
 EXEC [dbo].[Inv_StockReport] @companyInfoId = 7, @ProjectId = 3;
@@ -245,11 +256,11 @@ EXEC [dbo].[Inv_StockReport] @companyInfoId = 7, @ProjectId = 3, @SubProjectId =
 
 ## Parameters
 
-| Parameter | Type | Required? | Meaning |
-|-----------|------|-----------|---------|
-| `@companyInfoId` | INT | **Yes** | Which company's items to report (`7` in the example) |
-| `@ProjectId` | INT | No (default `NULL`) | Only count stock of this project. `NULL` means all projects |
-| `@SubProjectId` | INT | No (default `NULL`) | Only count stock of this sub project. `NULL` means all sub projects |
+| Parameter        | Type | Required?           | Meaning                                                             |
+| ---------------- | ---- | ------------------- | ------------------------------------------------------------------- |
+| `@companyInfoId` | INT  | **Yes**             | Which company's items to report (`7` in the example)                |
+| `@ProjectId`     | INT  | No (default `NULL`) | Only count stock of this project. `NULL` means all projects         |
+| `@SubProjectId`  | INT  | No (default `NULL`) | Only count stock of this sub project. `NULL` means all sub projects |
 
 ## Source Code
 
@@ -403,10 +414,10 @@ LEFT JOIN dbo.Stock AS s
     ON s.ItemId = i.Id
 ```
 
-| Table | Alias | Role |
-|-------|-------|------|
-| `Items` | `i` | **Master list** of items (name, low stock level, company) |
-| `Stock` | `s` | **Transactions**: every stock in/out row |
+| Table   | Alias | Role                                                      |
+| ------- | ----- | --------------------------------------------------------- |
+| `Items` | `i`   | **Master list** of items (name, low stock level, company) |
+| `Stock` | `s`   | **Transactions**: every stock in/out row                  |
 
 It is a **`LEFT JOIN`** from `Items`, so **every item appears in the report, even an item that has no stock rows**. (With an `INNER JOIN`, items without stock would disappear.)
 
@@ -419,12 +430,12 @@ AND (@ProjectId IS NULL OR s.ProjectId = @ProjectId)
 AND (@SubProjectId IS NULL OR s.SubProjectId = @SubProjectId)
 ```
 
-| Condition | Meaning |
-|-----------|---------|
-| `s.ItemId = i.Id` | Link each stock row to its item |
-| `ISNULL(s.IsDelete, 0) = 0` | Ignore **soft-deleted** stock rows (`IsDelete` is `NULL` or `0` means not deleted) |
+| Condition                                        | Meaning                                                                                  |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `s.ItemId = i.Id`                                | Link each stock row to its item                                                          |
+| `ISNULL(s.IsDelete, 0) = 0`                      | Ignore **soft-deleted** stock rows (`IsDelete` is `NULL` or `0` means not deleted)       |
 | `@ProjectId IS NULL OR s.ProjectId = @ProjectId` | **Optional filter.** If no project is passed, take all. Otherwise take only that project |
-| `@SubProjectId IS NULL OR ...` | Same idea for the sub project |
+| `@SubProjectId IS NULL OR ...`                   | Same idea for the sub project                                                            |
 
 **Why are these filters in `ON` and not in `WHERE`?**
 In a `LEFT JOIN`, a condition on the **right table** placed in `WHERE` would remove the items that have no stock, which turns the `LEFT JOIN` into an `INNER JOIN`. Putting the condition in `ON` filters the stock rows **before** joining, so all items still appear.
@@ -440,18 +451,18 @@ Only items that are **not deleted** and that belong to the **requested company**
 
 ### 5. The `SELECT` columns
 
-| Column | Expression | Meaning |
-|--------|-----------|---------|
-| `ProjectId` | `CASE WHEN @ProjectId IS NULL THEN NULL ELSE s.ProjectId END` | Shows the project only when a project was requested. Otherwise `NULL`, so all projects collapse into one row per item |
-| `SubProjectId` | Same idea | Same, for the sub project |
-| `ItemId`, `ItemName` | `i.Id`, `i.Name` | Item identity |
-| `LowStockLevel` | `ISNULL(i.LowStockLevel, 0)` | Warning level for low stock. `NULL` becomes `0` |
-| `UnitPrice` | `MIN(ISNULL(s.UnitPrice, 0))` | The **lowest** unit price found among the item's stock rows (`NULL` treated as `0`) |
-| `SalesPrice` | `MAX(ISNULL(s.SalesPrice, 0))` | The **highest** sales price found |
-| `InQty` | `SUM(CASE ... 'IN' ...)` | Total quantity that came **in** |
-| `OutQty` | `SUM(CASE ... 'OUT' ...)` | Total quantity that went **out** |
-| `Quantity` | `SUM(IN as +, OUT as -)` | **Current stock** = In minus Out |
-| `TotalPrice` | `Quantity * (MIN(UnitPrice), or 1.00 if it is 0 or NULL)` | **Value of current stock** |
+| Column               | Expression                                                    | Meaning                                                                                                               |
+| -------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `ProjectId`          | `CASE WHEN @ProjectId IS NULL THEN NULL ELSE s.ProjectId END` | Shows the project only when a project was requested. Otherwise `NULL`, so all projects collapse into one row per item |
+| `SubProjectId`       | Same idea                                                     | Same, for the sub project                                                                                             |
+| `ItemId`, `ItemName` | `i.Id`, `i.Name`                                              | Item identity                                                                                                         |
+| `LowStockLevel`      | `ISNULL(i.LowStockLevel, 0)`                                  | Warning level for low stock. `NULL` becomes `0`                                                                       |
+| `UnitPrice`          | `MIN(ISNULL(s.UnitPrice, 0))`                                 | The **lowest** unit price found among the item's stock rows (`NULL` treated as `0`)                                   |
+| `SalesPrice`         | `MAX(ISNULL(s.SalesPrice, 0))`                                | The **highest** sales price found                                                                                     |
+| `InQty`              | `SUM(CASE ... 'IN' ...)`                                      | Total quantity that came **in**                                                                                       |
+| `OutQty`             | `SUM(CASE ... 'OUT' ...)`                                     | Total quantity that went **out**                                                                                      |
+| `Quantity`           | `SUM(IN as +, OUT as -)`                                      | **Current stock** = In minus Out                                                                                      |
+| `TotalPrice`         | `Quantity * (MIN(UnitPrice), or 1.00 if it is 0 or NULL)`     | **Value of current stock**                                                                                            |
 
 ### 6. Conditional aggregation: `SUM(CASE ...)`
 
@@ -487,12 +498,12 @@ SUM( ... in minus out ... )
 
 Read it from the inside out:
 
-| Step | Expression | Result |
-|------|-----------|--------|
-| 1 | `MIN(s.UnitPrice)` | The lowest unit price of the item |
-| 2 | `NULLIF(..., 0)` | If that price is `0`, turn it into `NULL` |
-| 3 | `ISNULL(..., 1.00)` | If it is `NULL` (no price or `0`), use `1.00` instead |
-| 4 | `Quantity * result` | Stock value |
+| Step | Expression          | Result                                                |
+| ---- | ------------------- | ----------------------------------------------------- |
+| 1    | `MIN(s.UnitPrice)`  | The lowest unit price of the item                     |
+| 2    | `NULLIF(..., 0)`    | If that price is `0`, turn it into `NULL`             |
+| 3    | `ISNULL(..., 1.00)` | If it is `NULL` (no price or `0`), use `1.00` instead |
+| 4    | `Quantity * result` | Stock value                                           |
 
 So the multiplier is the lowest unit price, or `1.00` when there is no usable price. The `1.00` also **prevents a zero or NULL total** caused only by a missing price.
 
@@ -521,22 +532,22 @@ OPTION (RECOMPILE);
 
 ## Concept Map
 
-| Concept | Where it is used |
-|---------|------------------|
-| Stored procedure with parameters and defaults | Header |
-| `SET NOCOUNT ON` | First line of the body |
-| `LEFT JOIN` | `Items` to `Stock`, so items with no stock still show |
-| Optional parameter filter (`@p IS NULL OR col = @p`) | Inside the `ON` clause |
-| Soft delete (`IsDelete`) | `ISNULL(IsDelete, 0) = 0` |
-| `ISNULL` | Replace `NULL` with a value |
-| `NULLIF` | Turn a `0` price into `NULL` |
-| `UPPER` | Case-independent comparison |
-| `CASE` | Choose values per row, and in `GROUP BY` |
-| Conditional aggregation (`SUM(CASE ...)`) | `InQty`, `OutQty`, `Quantity`, `TotalPrice` |
-| `MIN`, `MAX` | `UnitPrice`, `SalesPrice` |
-| `GROUP BY` | One row per item |
-| `ORDER BY` | Sort by item name |
-| `OPTION (RECOMPILE)` | Fresh plan for each run |
+| Concept                                              | Where it is used                                      |
+| ---------------------------------------------------- | ----------------------------------------------------- |
+| Stored procedure with parameters and defaults        | Header                                                |
+| `SET NOCOUNT ON`                                     | First line of the body                                |
+| `LEFT JOIN`                                          | `Items` to `Stock`, so items with no stock still show |
+| Optional parameter filter (`@p IS NULL OR col = @p`) | Inside the `ON` clause                                |
+| Soft delete (`IsDelete`)                             | `ISNULL(IsDelete, 0) = 0`                             |
+| `ISNULL`                                             | Replace `NULL` with a value                           |
+| `NULLIF`                                             | Turn a `0` price into `NULL`                          |
+| `UPPER`                                              | Case-independent comparison                           |
+| `CASE`                                               | Choose values per row, and in `GROUP BY`              |
+| Conditional aggregation (`SUM(CASE ...)`)            | `InQty`, `OutQty`, `Quantity`, `TotalPrice`           |
+| `MIN`, `MAX`                                         | `UnitPrice`, `SalesPrice`                             |
+| `GROUP BY`                                           | One row per item                                      |
+| `ORDER BY`                                           | Sort by item name                                     |
+| `OPTION (RECOMPILE)`                                 | Fresh plan for each run                               |
 
 ---
 
@@ -544,24 +555,25 @@ OPTION (RECOMPILE);
 
 **Items** (company `7`)
 
-| Id | Name | LowStockLevel |
-|----|------|---------------|
-| 1 | Cement | 20 |
-| 2 | Brick | NULL |
-| 3 | Paint | 5 |
+| Id  | Name   | LowStockLevel |
+| --- | ------ | ------------- |
+| 1   | Cement | 20            |
+| 2   | Brick  | NULL          |
+| 3   | Paint  | 5             |
 
 **Stock**
 
 | ItemId | ItemType | StockType | Quantity | UnitPrice | SalesPrice |
-|--------|----------|-----------|----------|-----------|------------|
-| 1 | Good | In | 100 | 500 | 600 |
-| 1 | Good | Out | 30 | 500 | 600 |
-| 2 | Good | In | 200 | 10 | 12 |
-| 2 | Good | Out | 50 | 10 | 12 |
+| ------ | -------- | --------- | -------- | --------- | ---------- |
+| 1      | Good     | In        | 100      | 500       | 600        |
+| 1      | Good     | Out       | 30       | 500       | 600        |
+| 2      | Good     | In        | 200      | 10        | 12         |
+| 2      | Good     | Out       | 50       | 10        | 12         |
 
 Paint has **no stock rows**.
 
 **Run**
+
 ```sql
 EXEC [dbo].[Inv_StockReport] @companyInfoId = 7;
 ```
@@ -569,14 +581,15 @@ EXEC [dbo].[Inv_StockReport] @companyInfoId = 7;
 **Result**
 
 | ItemName | LowStockLevel | UnitPrice | SalesPrice | InQty | OutQty | Quantity | TotalPrice |
-|----------|---------------|-----------|------------|-------|--------|----------|------------|
-| Brick | 0 | 10 | 12 | 200 | 50 | 150 | 1500 |
-| Cement | 20 | 500 | 600 | 100 | 30 | 70 | 35000 |
-| Paint | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+| -------- | ------------- | --------- | ---------- | ----- | ------ | -------- | ---------- |
+| Brick    | 0             | 10        | 12         | 200   | 50     | 150      | 1500       |
+| Cement   | 20            | 500       | 600        | 100   | 30     | 70       | 35000      |
+| Paint    | 5             | 0         | 0          | 0     | 0      | 0        | 0          |
 
 (`ProjectId` and `SubProjectId` are `NULL` because they were not passed.)
 
 **How the numbers come out**
+
 - **Cement:** `InQty = 100`, `OutQty = 30`, so `Quantity = 100 - 30 = 70`. `TotalPrice = 70 x 500 = 35000`.
 - **Brick:** `LowStockLevel` was `NULL`, shown as `0`. `Quantity = 200 - 50 = 150`. `TotalPrice = 150 x 10 = 1500`.
 - **Paint:** the `LEFT JOIN` keeps it even without stock. All quantities are `0`, and `TotalPrice = 0 x 1.00 = 0`.
@@ -588,17 +601,18 @@ EXEC [dbo].[Inv_StockReport] @companyInfoId = 7;
 
 Good points to understand or confirm with the senior:
 
-| # | Observation | Why it matters |
-|---|-------------|----------------|
-| 1 | `TotalPrice` uses the **minimum** unit price, not an average or the latest cost | If an item was bought at different prices, the total value is an approximation |
-| 2 | If any stock row has a unit price of `0` or `NULL`, `MIN(ISNULL(UnitPrice, 0))` becomes `0` | Then `UnitPrice` shows `0`, and `TotalPrice` falls back to a multiplier of `1.00` |
-| 3 | When `@ProjectId` is passed, items that have **no stock in that project** still appear, with `ProjectId` as `NULL` and zero quantities | This comes from the `LEFT JOIN` with the filter in `ON` |
-| 4 | Only `ItemType = 'Good'` rows count for quantities, but `UnitPrice` and `SalesPrice` are taken from **all** rows | Services do not affect quantity |
-| 5 | `Quantity` can become **negative** if more went out than came in | Useful for spotting data problems |
-| 6 | `LowStockLevel` is shown but not compared with `Quantity` inside the procedure | The application or report can highlight items where `Quantity <= LowStockLevel` |
-| 7 | The `ProjectId` / `SubProjectId` `CASE` expression appears in both `SELECT` and `GROUP BY` | They must match exactly |
+| #   | Observation                                                                                                                            | Why it matters                                                                    |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| 1   | `TotalPrice` uses the **minimum** unit price, not an average or the latest cost                                                        | If an item was bought at different prices, the total value is an approximation    |
+| 2   | If any stock row has a unit price of `0` or `NULL`, `MIN(ISNULL(UnitPrice, 0))` becomes `0`                                            | Then `UnitPrice` shows `0`, and `TotalPrice` falls back to a multiplier of `1.00` |
+| 3   | When `@ProjectId` is passed, items that have **no stock in that project** still appear, with `ProjectId` as `NULL` and zero quantities | This comes from the `LEFT JOIN` with the filter in `ON`                           |
+| 4   | Only `ItemType = 'Good'` rows count for quantities, but `UnitPrice` and `SalesPrice` are taken from **all** rows                       | Services do not affect quantity                                                   |
+| 5   | `Quantity` can become **negative** if more went out than came in                                                                       | Useful for spotting data problems                                                 |
+| 6   | `LowStockLevel` is shown but not compared with `Quantity` inside the procedure                                                         | The application or report can highlight items where `Quantity <= LowStockLevel`   |
+| 7   | The `ProjectId` / `SubProjectId` `CASE` expression appears in both `SELECT` and `GROUP BY`                                             | They must match exactly                                                           |
 
 **Test idea:** compare one item's result with a manual query.
+
 ```sql
 SELECT
     SUM(CASE WHEN UPPER(StockType) = 'IN'  THEN Quantity ELSE 0 END) AS InQty,
