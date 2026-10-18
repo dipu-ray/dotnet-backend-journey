@@ -212,19 +212,3 @@ Pencil has no stock entries, but thanks to the LEFT JOIN it still appears in the
 | `NULLIF(MIN(UnitPrice), 0)` + `ISNULL(..., 1.00)` | Treat a UnitPrice of 0 as 1 so TotalPrice doesn't become zero       |
 | `OPTION (RECOMPILE)`                              | Build a fresh query plan for each parameter combination             |
 | `SET NOCOUNT ON`                                  | Suppress the "X rows affected" message                              |
-
-
-## 10. Progress
-
-- [x] Lesson 1: `SELECT`, `WHERE`, `AND`
-- [x] Lesson 2: `SUM`
-- [x] Lesson 3: `CASE WHEN`
-- [x] Lesson 4: `GROUP BY`, `LEFT JOIN`
-- [ ] Lesson 5: Reading the full procedure (parameters, `ISNULL`/`NULLIF`, `TotalPrice`)
-
-## 11. Learning Tips (to remember)
-
-1. **Before** running a query, work out the expected result by hand, then run it and compare.
-2. Change **one thing at a time** (e.g. `LEFT` → `INNER`) and observe what changes.
-3. Don't read big code all at once. Run **small pieces separately**.
-4. Try `INSERT/UPDATE/DELETE` on test data before touching the real database.
