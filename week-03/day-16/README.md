@@ -1,7 +1,8 @@
-# SQL Learning Notes: Understanding the `Inv_StockReport` Procedure
+# Topic: Understanding the `Inv_StockReport` Procedure
 
 **Date:** 18 October 2026
-**Database:** `GayerBazarDB` (SQL Server Express, SSMS)
+
+**Database:** `GayerBazarDB` (SQL Server Express, SSMS)  
 **Goal:** Understand the `Inv_StockReport` stored procedure line by line
 
 ---
@@ -18,23 +19,23 @@ This is what the whole procedure does at its heart. Everything else (`ISNULL`, `
 
 For every item in a company, it shows:
 
-| Column | Meaning |
-|---|---|
-| `InQty` | Total quantity that came into stock |
-| `OutQty` | Total quantity that went out |
-| `Quantity` | Current stock (IN − OUT) |
-| `UnitPrice` | Lowest purchase price (`MIN`) |
-| `SalesPrice` | Highest selling price (`MAX`) |
-| `TotalPrice` | Quantity × UnitPrice |
-| `LowStockLevel` | The item's minimum stock threshold |
+| Column          | Meaning                             |
+| --------------- | ----------------------------------- |
+| `InQty`         | Total quantity that came into stock |
+| `OutQty`        | Total quantity that went out        |
+| `Quantity`      | Current stock (IN − OUT)            |
+| `UnitPrice`     | Lowest purchase price (`MIN`)       |
+| `SalesPrice`    | Highest selling price (`MAX`)       |
+| `TotalPrice`    | Quantity × UnitPrice                |
+| `LowStockLevel` | The item's minimum stock threshold  |
 
 **Parameters:**
 
-| Parameter | Meaning |
-|---|---|
-| `@companyInfoId` | Which company the report is for (required) |
-| `@ProjectId` | Optional. `NULL` = all projects, a value = only that project |
-| `@SubProjectId` | Optional. Same logic for sub-projects |
+| Parameter        | Meaning                                                      |
+| ---------------- | ------------------------------------------------------------ |
+| `@companyInfoId` | Which company the report is for (required)                   |
+| `@ProjectId`     | Optional. `NULL` = all projects, a value = only that project |
+| `@SubProjectId`  | Optional. Same logic for sub-projects                        |
 
 ---
 
@@ -48,10 +49,10 @@ I created two small tables in my own database:
 Data in `shopstock`:
 
 | Name | Type | Quantity |
-|---|---|---|
-| Pen | In | 100 |
-| Pen | Out | 30 |
-| Book | In | 20 |
+| ---- | ---- | -------- |
+| Pen  | In   | 100      |
+| Pen  | Out  | 30       |
+| Book | In   | 20       |
 
 `shopitems` has three products: **Pen, Book, Pencil** (Pencil has no stock entries).
 
@@ -105,10 +106,10 @@ FROM shopstock;
 ```
 
 | name | type | quantity | InPart | OutPart |
-|---|---|---|---|---|
-| Pen | In | 100 | 100 | 0 |
-| Pen | Out | 30 | 0 | 30 |
-| Book | In | 20 | 20 | 0 |
+| ---- | ---- | -------- | ------ | ------- |
+| Pen  | In   | 100      | 100    | 0       |
+| Pen  | Out  | 30       | 0      | 30      |
+| Book | In   | 20       | 20     | 0       |
 
 **`SUM(CASE WHEN ...)`** = the total of the InPart / OutPart columns above.
 
@@ -124,9 +125,9 @@ WHERE name = 'pen';
 ```
 
 | Product | CurrentStock |
-|---|---|
-| Pen | 70 |
-| Book | 20 |
+| ------- | ------------ |
+| Pen     | 70           |
+| Book    | 20           |
 
 ---
 
@@ -178,11 +179,11 @@ GROUP BY i.name
 ORDER BY i.name;
 ```
 
-| name | InQty | OutQty | CurrentStock |
-|---|---|---|---|
-| Book | 20 | 0 | 20 |
-| Pen | 100 | 30 | 70 |
-| Pencil | 0 | 0 | 0 |
+| name   | InQty | OutQty | CurrentStock |
+| ------ | ----- | ------ | ------------ |
+| Book   | 20    | 0      | 20           |
+| Pen    | 100   | 30     | 70           |
+| Pencil | 0     | 0      | 0            |
 
 Pencil has no stock entries, but thanks to the LEFT JOIN it still appears in the report (with quantity 0).
 
@@ -190,27 +191,27 @@ Pencil has no stock entries, but thanks to the LEFT JOIN it still appears in the
 
 ## 8. Mapping to the Real Procedure
 
-| My practice query | Real procedure |
-|---|---|
-| `shopitems AS i` | `dbo.Items AS i` |
-| `LEFT JOIN shopstock AS s` | `LEFT JOIN dbo.Stock AS s` |
-| `SUM(CASE WHEN ...)` | `InQty`, `OutQty`, `Quantity` |
-| `GROUP BY i.name` | `GROUP BY i.Id, i.Name, i.LowStockLevel` |
-| `ORDER BY i.name` | `ORDER BY i.Name` |
+| My practice query          | Real procedure                           |
+| -------------------------- | ---------------------------------------- |
+| `shopitems AS i`           | `dbo.Items AS i`                         |
+| `LEFT JOIN shopstock AS s` | `LEFT JOIN dbo.Stock AS s`               |
+| `SUM(CASE WHEN ...)`       | `InQty`, `OutQty`, `Quantity`            |
+| `GROUP BY i.name`          | `GROUP BY i.Id, i.Name, i.LowStockLevel` |
+| `ORDER BY i.name`          | `ORDER BY i.Name`                        |
 
 **Extra parts in the real procedure:**
 
-| Part | Purpose |
-|---|---|
-| `ISNULL(s.IsDelete, 0) = 0` | Exclude deleted stock entries |
-| `s.ItemType = 'Good'` | Count only goods (not services) |
-| `UPPER(s.StockType)` | Treat `in`, `In`, `IN` the same |
-| `ISNULL(Quantity, 0)` | Treat `NULL` as 0 |
-| `@ProjectId IS NULL OR s.ProjectId = @ProjectId` | Optional filter: no filtering if `NULL`, filter if a value is given |
-| `i.CompanyInfoId = @companyInfoId` | Only one company's data |
-| `NULLIF(MIN(UnitPrice), 0)` + `ISNULL(..., 1.00)` | Treat a UnitPrice of 0 as 1 so TotalPrice doesn't become zero |
-| `OPTION (RECOMPILE)` | Build a fresh query plan for each parameter combination |
-| `SET NOCOUNT ON` | Suppress the "X rows affected" message |
+| Part                                              | Purpose                                                             |
+| ------------------------------------------------- | ------------------------------------------------------------------- |
+| `ISNULL(s.IsDelete, 0) = 0`                       | Exclude deleted stock entries                                       |
+| `s.ItemType = 'Good'`                             | Count only goods (not services)                                     |
+| `UPPER(s.StockType)`                              | Treat `in`, `In`, `IN` the same                                     |
+| `ISNULL(Quantity, 0)`                             | Treat `NULL` as 0                                                   |
+| `@ProjectId IS NULL OR s.ProjectId = @ProjectId`  | Optional filter: no filtering if `NULL`, filter if a value is given |
+| `i.CompanyInfoId = @companyInfoId`                | Only one company's data                                             |
+| `NULLIF(MIN(UnitPrice), 0)` + `ISNULL(..., 1.00)` | Treat a UnitPrice of 0 as 1 so TotalPrice doesn't become zero       |
+| `OPTION (RECOMPILE)`                              | Build a fresh query plan for each parameter combination             |
+| `SET NOCOUNT ON`                                  | Suppress the "X rows affected" message                              |
 
 ---
 
