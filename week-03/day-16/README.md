@@ -213,13 +213,6 @@ Pencil has no stock entries, but thanks to the LEFT JOIN it still appears in the
 | `OPTION (RECOMPILE)`                              | Build a fresh query plan for each parameter combination             |
 | `SET NOCOUNT ON`                                  | Suppress the "X rows affected" message                              |
 
----
-
-## 9. A Caution to Remember
-
-`TotalPrice` uses `MIN(UnitPrice)`. If the same item was bought at different prices, this **will not give the correct total value**, because it multiplies by the lowest price. This depends on the business logic, so it should be verified that this is the intended behavior.
-
----
 
 ## 10. Progress
 
