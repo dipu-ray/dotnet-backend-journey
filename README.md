@@ -97,6 +97,19 @@ dotnet-backend-journey/
 | 11  | SQL Intermediate                            | [Day-11](week-02/day-11) |
 | 12  | SQL Advanced                                | [Day-12](week-02/day-12) |
 | 13  | SQL Recap                                   | [Day-13](week-02/day-13) |
+| 14  | SQL .bak File Queries                       | [Day-14](week-02/day-14) |
+
+</details>
+
+<details>
+<summary><b>Week 03</b> — SQL Advanced Queries</summary>
+
+<br>
+
+| Day | Topic                                         | Notes                    |
+| :-- | :-------------------------------------------- | :----------------------- |
+| 15  | Stock Query and Stored Procedure Study        | [Day-15](week-02/day-15) |
+| 16  | Understanding the `Inv_StockReport` Procedure | [Day-16](week-02/day-16) |
 
 </details>
 
