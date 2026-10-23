@@ -133,6 +133,9 @@ dotnet-backend-journey/
 ---
 
 <p align="center"><sub>Built while learning. Updated regularly.</sub></p>
+<p align="center"><sub>Built while learning. Updated regularly.</sub></p>
+<p align="center"><sub>Built while learning. Updated regularly.</sub></p>
+<p align="center"><sub>Built while learning. Updated regularly.</sub></p>
 
 # Quick Notes:
 
