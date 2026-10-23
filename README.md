@@ -108,8 +108,8 @@ dotnet-backend-journey/
 
 | Day | Topic                                         | Notes                    |
 | :-- | :-------------------------------------------- | :----------------------- |
-| 15  | Stock Query and Stored Procedure Study        | [Day-15](week-02/day-15) |
-| 16  | Understanding the `Inv_StockReport` Procedure | [Day-16](week-02/day-16) |
+| 15  | Stock Query and Stored Procedure Study        | [Day-15](week-03/day-15) |
+| 16  | Understanding the `Inv_StockReport` Procedure | [Day-16](week-03/day-16) |
 
 </details>
 
