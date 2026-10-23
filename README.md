@@ -134,7 +134,6 @@ dotnet-backend-journey/
 
 <p align="center"><sub>Built while learning. Updated regularly.</sub></p>
 
-<!--
 # Quick Notes:
 
 ## Command Summary
@@ -144,4 +143,3 @@ dotnet-backend-journey/
 | Start SQL Server   | CMD (Administrator)    | `net start MSSQL$SQLEXPRESS` |
 | Stop SQL Server    | CMD (Administrator)    | `net stop MSSQL$SQLEXPRESS`  |
 | New C# console app | VS Code terminal / CMD | `dotnet new console`         |
--->
