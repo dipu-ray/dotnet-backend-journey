@@ -72,15 +72,15 @@ dotnet-backend-journey/
 
 <br>
 
-| Day | Topic                                      | Notes                    |
-| :-- | :----------------------------------------- | :----------------------- |
-| 01  | Variables & Data Types in C#               | [Day-01](week-01/day-01) |
-| 02  | Operators in C#                            | [Day-02](week-01/day-02) |
-| 03  | Conditional Statements in C#               | [Day-03](week-01/day-03) |
-| 04  | SQL Basics                                 | [Day-04](week-01/day-04) |
-| 05  | Recap SQL + New and Install Visual Studio  | [Day-05](week-01/day-05) |
-| 06  | Company Task & Client Meeting - Trained Me | [Day-06](week-01/day-06) |
-| 07  | Project: Full Calculator with Menu         | [Day-07](week-01/day-07) |
+| Day | Topic                                      | Notes                            |
+| :-- | :----------------------------------------- | :------------------------------- |
+| 01  | Variables & Data Types in C#               | [Day-01](week-01/day-01)         |
+| 02  | Operators in C#                            | [Day-02](week-01/day-02)         |
+| 03  | Conditional Statements in C#               | [Day-03](week-01/day-03)         |
+| 04  | SQL Basics                                 | [Day-04](week-01/day-04)         |
+| 05  | Recap SQL + New and Install Visual Studio  | [Day-05](week-01/day-05)         |
+| 06  | Company Task & Client Meeting - Trained Me | [Day-06](week-01/day-06)         |
+| 07  | Project: Full Calculator with Menu         | [Day-07](week-01/day-07-project) |
 
 </details>
 
