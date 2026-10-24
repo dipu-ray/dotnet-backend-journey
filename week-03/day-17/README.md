@@ -44,10 +44,10 @@
 | 2   | `Animals`        | Animal Setup       |
 | 3   | `Customers`      | Business Customers |
 | 4   | `Sales Invoices` | SMS Campaign       |
-| 4   | `Production`     | Product Making     |
-| 4   | `Purchases`      | Product Purchases  |
-| 4   | `Invoices`       | Cash Memo          |
-| 4   | `Investment`     | Money Investment   |
+| 5   | `Production`     | Product Making     |
+| 6   | `Purchases`      | Product Purchases  |
+| 7   | `Invoices`       | Cash Memo          |
+| 8   | `Investment`     | Money Investment   |
 
 ---
 
@@ -346,31 +346,3 @@ SELECT name AS [Product Name] FROM products;     -- SQL Server
 | `IN`                    | Match any value in a list                  |
 | `BETWEEN`               | Match a range (inclusive)                  |
 | Alias (`AS`)            | Temporary name                             |
-
----
-
-## Practice Tasks
-
-Use the `products` table above.
-
-1. Select all products, then only `name` and `price`.
-2. List the unique categories.
-3. Find products with a price above 1000, sorted from the highest price to the lowest.
-4. Find Electronics products that cost less than 1000, using `AND`.
-5. Find products in Furniture or Stationery using `IN`, then again using `OR`.
-6. Insert two new products, update one price, and delete one product.
-7. Find products whose quantity is `NULL`.
-8. Show the 3 most expensive products using `TOP` (or `LIMIT`).
-9. Find the cheapest price, the highest price, the number of products, the total quantity, and the average price in one query, using aliases.
-10. Find products whose name starts with `K` or contains `en`, using `LIKE`.
-
----
-
-## Summary
-
-- **Demo project:** understand it by reading the documentation, studying the **database**, running it, and **tracing one feature** from the user action to the database and back. Write down questions.
-- **SQL basics:** `SELECT` reads, `INSERT INTO` adds, `UPDATE` changes, `DELETE` removes. Filter with `WHERE`, sort with `ORDER BY`, and limit rows with `TOP` / `LIMIT`.
-- **Conditions:** `AND`, `OR`, `NOT`, `IN`, `BETWEEN`, `LIKE`, and `IS NULL`.
-- **Aggregates:** `MIN`, `MAX`, `COUNT`, `SUM`, `AVG` return one value from many rows and ignore `NULL`.
-- **Aliases** (`AS`) give columns and tables readable temporary names.
-- Always use `WHERE` with `UPDATE` and `DELETE`.
