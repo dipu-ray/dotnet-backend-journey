@@ -2,13 +2,6 @@
 
 **Date:** 24 October 2026
 
-Today's work:
-
-1. **Demo project understanding:** studying a demo project to understand how it is built and how it works.
-2. **SQL recap:** a quick revision of the basic SQL topics, from `SQL Intro` to `SQL Aliases`.
-
-> **Note:** I do not have the details of the demo project, so Part 1 is a **ready-to-fill template** with a method for understanding a project. Replace the `[ ... ]` placeholders with the real information.
-
 ## Table of Contents
 
 - [Part 1: Demo Project Understanding](#part-1-demo-project-understanding)
@@ -23,16 +16,13 @@ Today's work:
 
 ## 1. Project Overview
 
-| Field        | Details                                       |
-| ------------ | --------------------------------------------- |
-| Project name | [Name]                                        |
-| Purpose      | [What problem it solves, in one or two lines] |
-| Type         | [Web app / Web API / Desktop / Mobile]        |
-| Users        | [Admin, staff, customer, ...]                 |
-| Technology   | [For example ASP.NET Core, C#, SQL Server]    |
-| Database     | [SQL Server / MySQL / PostgreSQL]             |
-| Shared by    | [Name / team]                                 |
-| Date studied | 24 October 2026                               |
+| Field        | Details                            |
+| ------------ | ---------------------------------- |
+| Project name | Multi Business                     |
+| Purpose      | Learn and explore to this software |
+| Type         | Web Applications                   |
+| Users        | Admin                              |
+| Technology   | ASP.NET Core, C#, SQL Server       |
 
 ## 2. How I Approached Understanding the Project
 
@@ -46,99 +36,18 @@ Today's work:
 | 6    | Write down **questions** and ask the team                                              | [ ]  |
 | 7    | Make a small **change** (for example add a field or fix a label) to test understanding | [ ]  |
 
-## 3. Project Structure
+## 3. Modules and Features
 
-Typical layout of a **.NET backend** project (adjust to the real project):
-
-```
-ProjectName/
-├── Controllers/     -> receive requests (API endpoints)
-├── Models/          -> data classes (entities, DTOs)
-├── Services/        -> business logic
-├── Data/            -> database context, repositories
-├── appsettings.json -> configuration (connection string, settings)
-└── Program.cs       -> application start-up
-```
-
-| Folder / file      | Purpose in this project       |
-| ------------------ | ----------------------------- |
-| [Folder 1]         | [Purpose]                     |
-| [Folder 2]         | [Purpose]                     |
-| `appsettings.json` | [Connection string, settings] |
-| `Program.cs`       | [Start-up and services]       |
-
-## 4. Modules and Features
-
-| #   | Module / Feature    | What it does  | Main tables        |
-| --- | ------------------- | ------------- | ------------------ |
-| 1   | [Login / Users]     | [Description] | [Users]            |
-| 2   | [Customers]         | [Description] | [Customers]        |
-| 3   | [Orders / Invoices] | [Description] | [Orders, Invoices] |
-| 4   | [Reports]           | [Description] | [..]               |
-
-## 5. Database Understanding
-
-Explore the database first:
-
-```sql
--- List all tables
-SELECT TABLE_SCHEMA, TABLE_NAME
-FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_TYPE = 'BASE TABLE'
-ORDER BY TABLE_NAME;
-
--- See the columns of one table
-SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE
-FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME = 'Customers';
-
--- Peek at the data
-SELECT TOP 10 * FROM Customers;
-```
-
-| Table     | Purpose          | Key columns                   |
-| --------- | ---------------- | ----------------------------- |
-| [Table 1] | [What it stores] | [Id (PK), ...]                |
-| [Table 2] | [What it stores] | [Id (PK), Table1Id (FK), ...] |
-
-**Relationships**
-
-```
-[Table1] (1) ----< [Table2] (many)
-```
-
-## 6. Following One Feature from Start to End
-
-Pick one feature (for example "Create a customer") and trace it:
-
-```
-User action  ->  Controller / API  ->  Service (logic)  ->  SQL / Database  ->  Response to user
-```
-
-| Layer          | What happens                      | File / object             |
-| -------------- | --------------------------------- | ------------------------- |
-| User interface | [Form / button / Postman request] | [..]                      |
-| Controller     | [Receives the request]            | [..]                      |
-| Service        | [Validates and processes]         | [..]                      |
-| Database       | [INSERT / SELECT / UPDATE]        | [Table, stored procedure] |
-| Response       | [Data returned to the user]       | [..]                      |
-
-## 7. What I Understood
-
-- [Point 1]
-- [Point 2]
-- [Point 3]
-
-## 8. Questions to Ask
-
-- [ ] [Question 1]
-- [ ] [Question 2]
-
-## 9. Next Steps
-
-- [ ] [Run the project locally and test each main feature]
-- [ ] [Read the stored procedures and queries used by the project]
-- [ ] [Pick a small task to work on]
+| #   | Module / Feature | What it does       |
+| --- | ---------------- | ------------------ |
+| 1   | `Settings`       | Initial Setup      |
+| 2   | `Animals`        | Animal Setup       |
+| 3   | `Customers`      | Business Customers |
+| 4   | `Sales Invoices` | SMS Campaign       |
+| 4   | `Production`     | Product Making     |
+| 4   | `Purchases`      | Product Purchases  |
+| 4   | `Invoices`       | Cash Memo          |
+| 4   | `Investment`     | Money Investment   |
 
 ---
 
