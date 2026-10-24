@@ -7,8 +7,6 @@
 - [Part 1: Demo Project Understanding](#part-1-demo-project-understanding)
 - [Part 2: SQL Recap](#part-2-sql-recap)
 - [Cheat Sheet](#cheat-sheet)
-- [Practice Tasks](#practice-tasks)
-- [Summary](#summary)
 
 ---
 
