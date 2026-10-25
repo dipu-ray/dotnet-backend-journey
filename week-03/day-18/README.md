@@ -1,4 +1,4 @@
-# New Client Software Setup and Student Management System (SQL)
+# Topic: New Client Software Setup and Student Management System (SQL)
 
 **Date:** 25 October 2026
 
@@ -10,6 +10,7 @@ Today's work:
 > **Note:** I do not have the exact details of the client's setup, so Part 1 is a **checklist template** with the usual steps. Replace the `[ ... ]` placeholders with the real information. Part 2 is a complete, working example database. Adjust the table and column names to match what you built.
 
 ## Table of Contents
+
 - [Part 1: Software Setup for a New Client](#part-1-software-setup-for-a-new-client)
 - [Part 2: Student Management System](#part-2-student-management-system)
   - [Requirements](#requirements)
@@ -31,66 +32,68 @@ Today's work:
 
 ## 1. Client and Setup Details
 
-| Field | Details |
-|-------|---------|
-| Client / company | [Client name] |
-| Contact person | [Name, phone, email] |
-| Setup date | 25 October 2026 |
-| Setup type | [New installation / Migration / Upgrade] |
-| Server or computer | [Own server / Client PC / Cloud / VPS] |
-| Operating system | [Windows Server / Windows 10 or 11] |
-| Number of users | [Approximate number] |
+| Field              | Details                                  |
+| ------------------ | ---------------------------------------- |
+| Client / company   | [Client name]                            |
+| Contact person     | [Name, phone, email]                     |
+| Setup date         | 25 October 2026                          |
+| Setup type         | [New installation / Migration / Upgrade] |
+| Server or computer | [Own server / Client PC / Cloud / VPS]   |
+| Operating system   | [Windows Server / Windows 10 or 11]      |
+| Number of users    | [Approximate number]                     |
 
 ## 2. Information to Collect Before the Setup
 
-| Item | Collected |
-|------|-----------|
-| Client requirements and the purpose of the software | [ ] |
-| Server or PC details (OS, RAM, disk space) | [ ] |
-| Administrator access and permissions | [ ] |
-| Internet and network details (IP address, firewall, VPN) | [ ] |
-| Existing data to move (Excel files, old database, `.bak` file) | [ ] |
-| Number of users and their roles | [ ] |
-| Backup requirement (how often, where to store) | [ ] |
+| Item                                                           | Collected |
+| -------------------------------------------------------------- | --------- |
+| Client requirements and the purpose of the software            | [ ]       |
+| Server or PC details (OS, RAM, disk space)                     | [ ]       |
+| Administrator access and permissions                           | [ ]       |
+| Internet and network details (IP address, firewall, VPN)       | [ ]       |
+| Existing data to move (Excel files, old database, `.bak` file) | [ ]       |
+| Number of users and their roles                                | [ ]       |
+| Backup requirement (how often, where to store)                 | [ ]       |
 
 ## 3. Software to Install
 
-| Software | Purpose | Version | Done |
-|----------|---------|---------|------|
-| **SQL Server** (Express / Developer / Standard) | Database engine | [Version] | [ ] |
-| **SQL Server Management Studio (SSMS)** | Manage the database and run queries | [Version] | [ ] |
-| **.NET Runtime / SDK** | Run the application | [Version] | [ ] |
-| **IIS** (if it is a web application) | Host the website or API | [Version] | [ ] |
-| **Visual Studio** (only if development is needed) | Development tool | [Version] | [ ] |
-| **Git** | Version control (if needed) | [Version] | [ ] |
-| [Other software] | [Purpose] | [Version] | [ ] |
+| Software                                          | Purpose                             | Version   | Done |
+| ------------------------------------------------- | ----------------------------------- | --------- | ---- |
+| **SQL Server** (Express / Developer / Standard)   | Database engine                     | [Version] | [ ]  |
+| **SQL Server Management Studio (SSMS)**           | Manage the database and run queries | [Version] | [ ]  |
+| **.NET Runtime / SDK**                            | Run the application                 | [Version] | [ ]  |
+| **IIS** (if it is a web application)              | Host the website or API             | [Version] | [ ]  |
+| **Visual Studio** (only if development is needed) | Development tool                    | [Version] | [ ]  |
+| **Git**                                           | Version control (if needed)         | [Version] | [ ]  |
+| [Other software]                                  | [Purpose]                           | [Version] | [ ]  |
 
 > Pick the SQL Server edition by need: **Express** is free with size limits (good for small clients), **Developer** is free for development and testing only, and **Standard / Enterprise** are paid for production.
 
 ## 4. Setup Steps
 
-| # | Step | Details | Done |
-|---|------|---------|------|
-| 1 | **Check requirements** | OS, RAM, free disk space, administrator rights | [ ] |
-| 2 | **Install SQL Server** | Choose the instance name, authentication mode, and data folders | [ ] |
-| 3 | **Install SSMS** | Connect to the server and confirm it works | [ ] |
-| 4 | **Configure SQL Server** | Enable TCP/IP, set the authentication mode, and open the port (default `1433`) in the firewall if remote access is needed | [ ] |
-| 5 | **Create or restore the database** | Run the script, or restore the `.bak` file | [ ] |
-| 6 | **Create an application login** | A login with limited permissions (not `sa`) | [ ] |
-| 7 | **Install and configure the application** | Copy the files, set the connection string | [ ] |
-| 8 | **Test** | Log in, create, edit, and delete a record, and run a report | [ ] |
-| 9 | **Set up backups** | Automatic daily backup | [ ] |
-| 10 | **Handover and training** | Show the client how to use it, and share the documentation | [ ] |
-| 11 | **Sign-off** | Written confirmation from the client | [ ] |
+| #   | Step                                      | Details                                                                                                                   | Done |
+| --- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---- |
+| 1   | **Check requirements**                    | OS, RAM, free disk space, administrator rights                                                                            | [ ]  |
+| 2   | **Install SQL Server**                    | Choose the instance name, authentication mode, and data folders                                                           | [ ]  |
+| 3   | **Install SSMS**                          | Connect to the server and confirm it works                                                                                | [ ]  |
+| 4   | **Configure SQL Server**                  | Enable TCP/IP, set the authentication mode, and open the port (default `1433`) in the firewall if remote access is needed | [ ]  |
+| 5   | **Create or restore the database**        | Run the script, or restore the `.bak` file                                                                                | [ ]  |
+| 6   | **Create an application login**           | A login with limited permissions (not `sa`)                                                                               | [ ]  |
+| 7   | **Install and configure the application** | Copy the files, set the connection string                                                                                 | [ ]  |
+| 8   | **Test**                                  | Log in, create, edit, and delete a record, and run a report                                                               | [ ]  |
+| 9   | **Set up backups**                        | Automatic daily backup                                                                                                    | [ ]  |
+| 10  | **Handover and training**                 | Show the client how to use it, and share the documentation                                                                | [ ]  |
+| 11  | **Sign-off**                              | Written confirmation from the client                                                                                      | [ ]  |
 
 ## 5. Useful Setup Scripts
 
 **Create the database**
+
 ```sql
 CREATE DATABASE StudentManagementDB;
 ```
 
 **Create a login and a limited user for the application**
+
 ```sql
 USE master;
 CREATE LOGIN app_user WITH PASSWORD = '<StrongPasswordHere>';
@@ -104,6 +107,7 @@ ALTER ROLE db_datawriter ADD MEMBER app_user;   -- can insert, update, delete
 > Use a **strong password** and never put it in this document. Do not let the application connect with the `sa` account.
 
 **Connection string** (in `appsettings.json` for a .NET application)
+
 ```json
 {
   "ConnectionStrings": {
@@ -113,6 +117,7 @@ ALTER ROLE db_datawriter ADD MEMBER app_user;   -- can insert, update, delete
 ```
 
 **Manual backup**
+
 ```sql
 BACKUP DATABASE StudentManagementDB
 TO DISK = 'C:\Backup\StudentManagementDB.bak'
@@ -120,6 +125,7 @@ WITH INIT, STATS = 10;
 ```
 
 **Restore a backup** (see the `.bak` restore notes for full details)
+
 ```sql
 RESTORE DATABASE StudentManagementDB
 FROM DISK = 'C:\Backup\StudentManagementDB.bak'
@@ -127,20 +133,21 @@ WITH REPLACE, STATS = 10;
 ```
 
 **Check the connection**
+
 ```sql
 SELECT @@SERVERNAME AS ServerName, DB_NAME() AS CurrentDatabase, @@VERSION AS Version;
 ```
 
 ## 6. Common Setup Problems
 
-| Problem | Fix |
-|---------|-----|
-| Cannot connect to the server | Check that SQL Server is running (Services), TCP/IP is enabled, and the firewall allows port `1433` |
-| Login failed | Check the user name and password, and that **SQL Server and Windows Authentication** (mixed mode) is enabled if using a SQL login |
-| Application cannot find the database | Check the connection string (server name, database name) |
-| Not enough permission | Give the user the correct role (`db_datareader`, `db_datawriter`) |
-| Restore fails | Check the file path, permissions, and that the backup is not from a newer SQL Server version |
-| Slow or failing installation | Check free disk space, run the installer as administrator, and restart the PC |
+| Problem                              | Fix                                                                                                                               |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| Cannot connect to the server         | Check that SQL Server is running (Services), TCP/IP is enabled, and the firewall allows port `1433`                               |
+| Login failed                         | Check the user name and password, and that **SQL Server and Windows Authentication** (mixed mode) is enabled if using a SQL login |
+| Application cannot find the database | Check the connection string (server name, database name)                                                                          |
+| Not enough permission                | Give the user the correct role (`db_datareader`, `db_datawriter`)                                                                 |
+| Restore fails                        | Check the file path, permissions, and that the backup is not from a newer SQL Server version                                      |
+| Slow or failing installation         | Check free disk space, run the installer as administrator, and restart the PC                                                     |
 
 ## 7. Handover Checklist
 
@@ -173,12 +180,12 @@ It should be possible to **add, view, update, and remove** records, **search** s
 
 ### Tables
 
-| Table | Purpose | Primary key |
-|-------|---------|-------------|
-| `Departments` | List of departments | `DepartmentId` |
-| `Teachers` | Teachers, linked to a department | `TeacherId` |
-| `Students` | Student details, linked to a department | `StudentId` |
-| `Courses` | Courses, linked to a department and a teacher | `CourseId` |
+| Table         | Purpose                                       | Primary key    |
+| ------------- | --------------------------------------------- | -------------- |
+| `Departments` | List of departments                           | `DepartmentId` |
+| `Teachers`    | Teachers, linked to a department              | `TeacherId`    |
+| `Students`    | Student details, linked to a department       | `StudentId`    |
+| `Courses`     | Courses, linked to a department and a teacher | `CourseId`     |
 | `Enrollments` | Which student takes which course (with marks) | `EnrollmentId` |
 
 ### Relationships
@@ -267,15 +274,15 @@ CREATE TABLE Enrollments (
 );
 ```
 
-| Feature used | Meaning |
-|--------------|---------|
-| `IDENTITY(1,1)` | Auto-increment ID starting at 1 |
-| `PRIMARY KEY` | Unique identifier of each row |
-| `FOREIGN KEY` | Links to a row in another table, so invalid links are blocked |
-| `NOT NULL` | A value is required |
-| `UNIQUE` | No duplicate values (for example, student code, email) |
-| `CHECK` | Only allowed values (for example, marks between 0 and 100) |
-| `DEFAULT` | Value used when none is given (for example, today's date) |
+| Feature used    | Meaning                                                       |
+| --------------- | ------------------------------------------------------------- |
+| `IDENTITY(1,1)` | Auto-increment ID starting at 1                               |
+| `PRIMARY KEY`   | Unique identifier of each row                                 |
+| `FOREIGN KEY`   | Links to a row in another table, so invalid links are blocked |
+| `NOT NULL`      | A value is required                                           |
+| `UNIQUE`        | No duplicate values (for example, student code, email)        |
+| `CHECK`         | Only allowed values (for example, marks between 0 and 100)    |
+| `DEFAULT`       | Value used when none is given (for example, today's date)     |
 
 ## Insert Sample Data
 
@@ -314,14 +321,14 @@ INSERT INTO Enrollments (StudentId, CourseId, Semester, Marks) VALUES
 
 **Students**
 
-| StudentId | StudentCode | FullName | City | Department |
-|-----------|-------------|----------|------|------------|
-| 1 | S-001 | Rahim Uddin | Dhaka | CSE |
-| 2 | S-002 | Nusrat Jahan | Dhaka | CSE |
-| 3 | S-003 | Karim Hasan | Chattogram | EEE |
-| 4 | S-004 | Sadia Islam | Sylhet | BBA |
-| 5 | S-005 | Tanvir Ahmed | Khulna | CSE |
-| 6 | S-006 | Mitu Akter | Rajshahi | EEE |
+| StudentId | StudentCode | FullName     | City       | Department |
+| --------- | ----------- | ------------ | ---------- | ---------- |
+| 1         | S-001       | Rahim Uddin  | Dhaka      | CSE        |
+| 2         | S-002       | Nusrat Jahan | Dhaka      | CSE        |
+| 3         | S-003       | Karim Hasan  | Chattogram | EEE        |
+| 4         | S-004       | Sadia Islam  | Sylhet     | BBA        |
+| 5         | S-005       | Tanvir Ahmed | Khulna     | CSE        |
+| 6         | S-006       | Mitu Akter   | Rajshahi   | EEE        |
 
 ## Basic Operations (CRUD)
 
@@ -402,9 +409,9 @@ WHERE d.DepartmentName = 'CSE' AND s.Gender = 'Female';
 
 Result of the last query:
 
-| StudentCode | FullName |
-|-------------|----------|
-| S-002 | Nusrat Jahan |
+| StudentCode | FullName     |
+| ----------- | ------------ |
+| S-002       | Nusrat Jahan |
 
 ## Reports
 
@@ -419,10 +426,10 @@ ORDER BY TotalStudents DESC;
 ```
 
 | DepartmentName | TotalStudents |
-|----------------|---------------|
-| CSE | 3 |
-| EEE | 2 |
-| BBA | 1 |
+| -------------- | ------------- |
+| CSE            | 3             |
+| EEE            | 2             |
+| BBA            | 1             |
 
 `LEFT JOIN` keeps departments that have no students (they show `0`).
 
@@ -436,10 +443,10 @@ INNER JOIN Courses  c ON e.CourseId  = c.CourseId
 WHERE c.CourseCode = 'CSE201';
 ```
 
-| StudentCode | FullName | Marks |
-|-------------|----------|-------|
-| S-001 | Rahim Uddin | 78.00 |
-| S-002 | Nusrat Jahan | 88.00 |
+| StudentCode | FullName     | Marks |
+| ----------- | ------------ | ----- |
+| S-001       | Rahim Uddin  | 78.00 |
+| S-002       | Nusrat Jahan | 88.00 |
 
 ### 3. Result sheet with grade (`CASE`)
 
@@ -463,15 +470,15 @@ INNER JOIN Courses  c ON e.CourseId  = c.CourseId
 ORDER BY s.StudentCode, c.CourseCode;
 ```
 
-| StudentCode | FullName | CourseCode | Marks | Grade |
-|-------------|----------|------------|-------|-------|
-| S-001 | Rahim Uddin | CSE101 | 85.00 | A+ |
-| S-001 | Rahim Uddin | CSE201 | 78.00 | A |
-| S-002 | Nusrat Jahan | CSE101 | 92.00 | A+ |
-| S-002 | Nusrat Jahan | CSE201 | 88.00 | A+ |
-| S-003 | Karim Hasan | EEE101 | 70.00 | A |
-| S-004 | Sadia Islam | BBA101 | 65.00 | B |
-| S-005 | Tanvir Ahmed | CSE101 | NULL | Pending |
+| StudentCode | FullName     | CourseCode | Marks | Grade   |
+| ----------- | ------------ | ---------- | ----- | ------- |
+| S-001       | Rahim Uddin  | CSE101     | 85.00 | A+      |
+| S-001       | Rahim Uddin  | CSE201     | 78.00 | A       |
+| S-002       | Nusrat Jahan | CSE101     | 92.00 | A+      |
+| S-002       | Nusrat Jahan | CSE201     | 88.00 | A+      |
+| S-003       | Karim Hasan  | EEE101     | 70.00 | A       |
+| S-004       | Sadia Islam  | BBA101     | 65.00 | B       |
+| S-005       | Tanvir Ahmed | CSE101     | NULL  | Pending |
 
 (This is the data before the marks for Tanvir were entered.)
 
@@ -486,12 +493,12 @@ GROUP BY s.StudentCode, s.FullName
 ORDER BY AvgMarks DESC;
 ```
 
-| StudentCode | FullName | AvgMarks |
-|-------------|----------|----------|
-| S-002 | Nusrat Jahan | 90.00 |
-| S-001 | Rahim Uddin | 81.50 |
-| S-003 | Karim Hasan | 70.00 |
-| S-004 | Sadia Islam | 65.00 |
+| StudentCode | FullName     | AvgMarks |
+| ----------- | ------------ | -------- |
+| S-002       | Nusrat Jahan | 90.00    |
+| S-001       | Rahim Uddin  | 81.50    |
+| S-003       | Karim Hasan  | 70.00    |
+| S-004       | Sadia Islam  | 65.00    |
 
 ### 5. Top student
 
@@ -503,6 +510,7 @@ WHERE e.Marks IS NOT NULL
 GROUP BY s.StudentCode, s.FullName
 ORDER BY AvgMarks DESC;
 ```
+
 Result: `S-002 | Nusrat Jahan | 90.00`
 
 Use `ORDER BY AvgMarks ASC` to find the **lowest** average.
@@ -521,12 +529,12 @@ GROUP BY c.CourseCode, c.CourseName
 ORDER BY c.CourseCode;
 ```
 
-| CourseCode | CourseName | TotalStudents | AvgMarks | HighestMarks | LowestMarks |
-|------------|------------|---------------|----------|--------------|-------------|
-| BBA101 | Principles of Management | 1 | 65.00 | 65.00 | 65.00 |
-| CSE101 | Programming Fundamentals | 3 | 88.50 | 92.00 | 85.00 |
-| CSE201 | Database Systems | 2 | 83.00 | 88.00 | 78.00 |
-| EEE101 | Basic Electronics | 1 | 70.00 | 70.00 | 70.00 |
+| CourseCode | CourseName               | TotalStudents | AvgMarks | HighestMarks | LowestMarks |
+| ---------- | ------------------------ | ------------- | -------- | ------------ | ----------- |
+| BBA101     | Principles of Management | 1             | 65.00    | 65.00        | 65.00       |
+| CSE101     | Programming Fundamentals | 3             | 88.50    | 92.00        | 85.00       |
+| CSE201     | Database Systems         | 2             | 83.00    | 88.00        | 78.00       |
+| EEE101     | Basic Electronics        | 1             | 70.00    | 70.00        | 70.00       |
 
 `AVG`, `MAX`, and `MIN` ignore `NULL`, so Tanvir's missing marks do not affect them.
 
@@ -541,9 +549,9 @@ HAVING COUNT(*) > 1;
 ```
 
 | CourseCode | TotalStudents |
-|------------|---------------|
-| CSE101 | 3 |
-| CSE201 | 2 |
+| ---------- | ------------- |
+| CSE101     | 3             |
+| CSE201     | 2             |
 
 ### 8. Total credits per student
 
@@ -564,6 +572,7 @@ WHERE NOT EXISTS (
     SELECT 1 FROM Enrollments e WHERE e.StudentId = s.StudentId
 );
 ```
+
 Result: `S-006 | Mitu Akter`
 
 ### 10. Students who failed (marks below 40)
@@ -575,6 +584,7 @@ INNER JOIN Students s ON e.StudentId = s.StudentId
 INNER JOIN Courses  c ON e.CourseId  = c.CourseId
 WHERE e.Marks < 40;
 ```
+
 No rows are returned for the sample data, because nobody has marks below 40.
 
 ### 11. Courses and their teachers
@@ -620,10 +630,10 @@ Use it like a table:
 SELECT * FROM vw_StudentResults WHERE StudentCode = 'S-001';
 ```
 
-| StudentCode | FullName | DepartmentName | CourseCode | CourseName | Credit | Semester | Marks | Grade |
-|-------------|----------|----------------|------------|------------|--------|----------|-------|-------|
-| S-001 | Rahim Uddin | CSE | CSE101 | Programming Fundamentals | 3 | Spring 2026 | 85.00 | A+ |
-| S-001 | Rahim Uddin | CSE | CSE201 | Database Systems | 3 | Spring 2026 | 78.00 | A |
+| StudentCode | FullName    | DepartmentName | CourseCode | CourseName               | Credit | Semester    | Marks | Grade |
+| ----------- | ----------- | -------------- | ---------- | ------------------------ | ------ | ----------- | ----- | ----- |
+| S-001       | Rahim Uddin | CSE            | CSE101     | Programming Fundamentals | 3      | Spring 2026 | 85.00 | A+    |
+| S-001       | Rahim Uddin | CSE            | CSE201     | Database Systems         | 3      | Spring 2026 | 78.00 | A     |
 
 ## Stored Procedures
 
@@ -681,15 +691,15 @@ EXEC usp_GetStudentResult @StudentCode = 'S-002';
 
 What the database prevents automatically:
 
-| Rule | Example of what is blocked |
-|------|----------------------------|
-| `UNIQUE` on `StudentCode` and `Email` | Adding two students with the same student code |
-| `FOREIGN KEY` | Creating a student with a `DepartmentId` that does not exist |
-| `FOREIGN KEY` | Deleting a student who still has enrollments |
-| `CHECK` on `Marks` | Saving marks of `150` or `-5` |
-| `CHECK` on `Gender` | Saving a gender that is not `Male`, `Female`, or `Other` |
-| `UQ_Enrollment` | Enrolling the same student in the same course and semester twice |
-| `NOT NULL` | Saving a student without a name |
+| Rule                                  | Example of what is blocked                                       |
+| ------------------------------------- | ---------------------------------------------------------------- |
+| `UNIQUE` on `StudentCode` and `Email` | Adding two students with the same student code                   |
+| `FOREIGN KEY`                         | Creating a student with a `DepartmentId` that does not exist     |
+| `FOREIGN KEY`                         | Deleting a student who still has enrollments                     |
+| `CHECK` on `Marks`                    | Saving marks of `150` or `-5`                                    |
+| `CHECK` on `Gender`                   | Saving a gender that is not `Male`, `Female`, or `Other`         |
+| `UQ_Enrollment`                       | Enrolling the same student in the same course and semester twice |
+| `NOT NULL`                            | Saving a student without a name                                  |
 
 Test one of them:
 
