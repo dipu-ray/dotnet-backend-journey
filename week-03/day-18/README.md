@@ -24,35 +24,18 @@
 
 | Field              | Details            |
 | ------------------ | ------------------ |
-| Abc Enterprise     | John Doe           |
 | Setup date         | 25 October 2026    |
 | Setup type         | New software setup |
 | Server or computer | Own Server         |
 | Number of users    | Max 100            |
 
-## 2. Setup Steps
+## 2. Software Setup & Handover Checklist
 
-| #   | Step                   | Details                                                               | Done |
-| --- | ---------------------- | --------------------------------------------------------------------- | ---- |
-| 1   | **Basic Intro**        | Basic introduction of this softwares                                  | [ ]  |
-| 2   | **Software Reg**       | Need some information of create account this software                 | [ ]  |
-| 3   | **Features Customize** | Add features of his business type or demand                           | [ ]  |
-| 4   | **Handover to Client** | Whole features and how to work this software to understand his client | [ ]  |
-
-## 3. Common Setup Problems
-
-- Small issue solve yourself otherwise contact to senior engineer.
-
-## 7. Handover Checklist
-
-- [ ] Software installed and working
-- [ ] Database created or restored
-- [ ] Application connects to the database
-- [ ] Users and roles created
-- [ ] Automatic backup configured and tested
-- [ ] Client trained on the main features
-- [ ] Documentation and login details handed over securely
-- [ ] Client sign-off received
+- [ ] Basic introduction of this softwares
+- [ ] To need some information of registry to this software an user
+- [ ] Customize and add features which part need to this his business
+- [ ] Then present and understanding his this software after setup
+- [ ] Last part to payment
 
 ---
 
