@@ -2,13 +2,6 @@
 
 **Date:** 25 October 2026
 
-Today's work:
-
-1. **Software setup for a new client:** installing and configuring the software and database the client needs.
-2. **Student Management System using SQL:** designing and building the database, then writing queries for it.
-
-> **Note:** I do not have the exact details of the client's setup, so Part 1 is a **checklist template** with the usual steps. Replace the `[ ... ]` placeholders with the real information. Part 2 is a complete, working example database. Adjust the table and column names to match what you built.
-
 ## Table of Contents
 
 - [Part 1: Software Setup for a New Client](#part-1-software-setup-for-a-new-client)
@@ -21,9 +14,6 @@ Today's work:
   - [Search and Filter](#search-and-filter)
   - [Reports](#reports)
   - [View](#view)
-  - [Stored Procedures](#stored-procedures)
-  - [Constraints and Data Safety](#constraints-and-data-safety)
-- [Practice Tasks](#practice-tasks)
 - [Summary](#summary)
 
 ---
@@ -32,122 +22,26 @@ Today's work:
 
 ## 1. Client and Setup Details
 
-| Field              | Details                                  |
-| ------------------ | ---------------------------------------- |
-| Client / company   | [Client name]                            |
-| Contact person     | [Name, phone, email]                     |
-| Setup date         | 25 October 2026                          |
-| Setup type         | [New installation / Migration / Upgrade] |
-| Server or computer | [Own server / Client PC / Cloud / VPS]   |
-| Operating system   | [Windows Server / Windows 10 or 11]      |
-| Number of users    | [Approximate number]                     |
+| Field              | Details            |
+| ------------------ | ------------------ |
+| Abc Enterprise     | John Doe           |
+| Setup date         | 25 October 2026    |
+| Setup type         | New software setup |
+| Server or computer | Own Server         |
+| Number of users    | Max 100            |
 
-## 2. Information to Collect Before the Setup
+## 2. Setup Steps
 
-| Item                                                           | Collected |
-| -------------------------------------------------------------- | --------- |
-| Client requirements and the purpose of the software            | [ ]       |
-| Server or PC details (OS, RAM, disk space)                     | [ ]       |
-| Administrator access and permissions                           | [ ]       |
-| Internet and network details (IP address, firewall, VPN)       | [ ]       |
-| Existing data to move (Excel files, old database, `.bak` file) | [ ]       |
-| Number of users and their roles                                | [ ]       |
-| Backup requirement (how often, where to store)                 | [ ]       |
+| #   | Step                   | Details                                                               | Done |
+| --- | ---------------------- | --------------------------------------------------------------------- | ---- |
+| 1   | **Basic Intro**        | Basic introduction of this softwares                                  | [ ]  |
+| 2   | **Software Reg**       | Need some information of create account this software                 | [ ]  |
+| 3   | **Features Customize** | Add features of his business type or demand                           | [ ]  |
+| 4   | **Handover to Client** | Whole features and how to work this software to understand his client | [ ]  |
 
-## 3. Software to Install
+## 3. Common Setup Problems
 
-| Software                                          | Purpose                             | Version   | Done |
-| ------------------------------------------------- | ----------------------------------- | --------- | ---- |
-| **SQL Server** (Express / Developer / Standard)   | Database engine                     | [Version] | [ ]  |
-| **SQL Server Management Studio (SSMS)**           | Manage the database and run queries | [Version] | [ ]  |
-| **.NET Runtime / SDK**                            | Run the application                 | [Version] | [ ]  |
-| **IIS** (if it is a web application)              | Host the website or API             | [Version] | [ ]  |
-| **Visual Studio** (only if development is needed) | Development tool                    | [Version] | [ ]  |
-| **Git**                                           | Version control (if needed)         | [Version] | [ ]  |
-| [Other software]                                  | [Purpose]                           | [Version] | [ ]  |
-
-> Pick the SQL Server edition by need: **Express** is free with size limits (good for small clients), **Developer** is free for development and testing only, and **Standard / Enterprise** are paid for production.
-
-## 4. Setup Steps
-
-| #   | Step                                      | Details                                                                                                                   | Done |
-| --- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---- |
-| 1   | **Check requirements**                    | OS, RAM, free disk space, administrator rights                                                                            | [ ]  |
-| 2   | **Install SQL Server**                    | Choose the instance name, authentication mode, and data folders                                                           | [ ]  |
-| 3   | **Install SSMS**                          | Connect to the server and confirm it works                                                                                | [ ]  |
-| 4   | **Configure SQL Server**                  | Enable TCP/IP, set the authentication mode, and open the port (default `1433`) in the firewall if remote access is needed | [ ]  |
-| 5   | **Create or restore the database**        | Run the script, or restore the `.bak` file                                                                                | [ ]  |
-| 6   | **Create an application login**           | A login with limited permissions (not `sa`)                                                                               | [ ]  |
-| 7   | **Install and configure the application** | Copy the files, set the connection string                                                                                 | [ ]  |
-| 8   | **Test**                                  | Log in, create, edit, and delete a record, and run a report                                                               | [ ]  |
-| 9   | **Set up backups**                        | Automatic daily backup                                                                                                    | [ ]  |
-| 10  | **Handover and training**                 | Show the client how to use it, and share the documentation                                                                | [ ]  |
-| 11  | **Sign-off**                              | Written confirmation from the client                                                                                      | [ ]  |
-
-## 5. Useful Setup Scripts
-
-**Create the database**
-
-```sql
-CREATE DATABASE StudentManagementDB;
-```
-
-**Create a login and a limited user for the application**
-
-```sql
-USE master;
-CREATE LOGIN app_user WITH PASSWORD = '<StrongPasswordHere>';
-
-USE StudentManagementDB;
-CREATE USER app_user FOR LOGIN app_user;
-ALTER ROLE db_datareader ADD MEMBER app_user;   -- can read data
-ALTER ROLE db_datawriter ADD MEMBER app_user;   -- can insert, update, delete
-```
-
-> Use a **strong password** and never put it in this document. Do not let the application connect with the `sa` account.
-
-**Connection string** (in `appsettings.json` for a .NET application)
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=[ServerName];Database=StudentManagementDB;User Id=app_user;Password=<StrongPasswordHere>;TrustServerCertificate=True;"
-  }
-}
-```
-
-**Manual backup**
-
-```sql
-BACKUP DATABASE StudentManagementDB
-TO DISK = 'C:\Backup\StudentManagementDB.bak'
-WITH INIT, STATS = 10;
-```
-
-**Restore a backup** (see the `.bak` restore notes for full details)
-
-```sql
-RESTORE DATABASE StudentManagementDB
-FROM DISK = 'C:\Backup\StudentManagementDB.bak'
-WITH REPLACE, STATS = 10;
-```
-
-**Check the connection**
-
-```sql
-SELECT @@SERVERNAME AS ServerName, DB_NAME() AS CurrentDatabase, @@VERSION AS Version;
-```
-
-## 6. Common Setup Problems
-
-| Problem                              | Fix                                                                                                                               |
-| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| Cannot connect to the server         | Check that SQL Server is running (Services), TCP/IP is enabled, and the firewall allows port `1433`                               |
-| Login failed                         | Check the user name and password, and that **SQL Server and Windows Authentication** (mixed mode) is enabled if using a SQL login |
-| Application cannot find the database | Check the connection string (server name, database name)                                                                          |
-| Not enough permission                | Give the user the correct role (`db_datareader`, `db_datawriter`)                                                                 |
-| Restore fails                        | Check the file path, permissions, and that the backup is not from a newer SQL Server version                                      |
-| Slow or failing installation         | Check free disk space, run the installer as administrator, and restart the PC                                                     |
+- Small issue solve yourself otherwise contact to senior engineer.
 
 ## 7. Handover Checklist
 
@@ -174,8 +68,6 @@ A system to manage a school or university's student information. It should store
 - **Courses**, their credits, department, and teacher
 - **Enrollments**: which student takes which course in which semester, and the **marks** they get
 
-It should be possible to **add, view, update, and remove** records, **search** students, and produce **reports** such as results, averages, and top students.
-
 ## Database Design
 
 ### Tables
@@ -197,10 +89,6 @@ Departments (1) ----< Courses
 Teachers    (1) ----< Courses
 Students    (1) ----< Enrollments >---- (1) Courses
 ```
-
-- One department has **many** students, teachers, and courses.
-- One teacher teaches **many** courses.
-- **Students and Courses are many-to-many**, so the `Enrollments` table sits between them.
 
 ## Create the Database and Tables
 
@@ -635,38 +523,6 @@ SELECT * FROM vw_StudentResults WHERE StudentCode = 'S-001';
 | S-001       | Rahim Uddin | CSE            | CSE101     | Programming Fundamentals | 3      | Spring 2026 | 85.00 | A+    |
 | S-001       | Rahim Uddin | CSE            | CSE201     | Database Systems         | 3      | Spring 2026 | 78.00 | A     |
 
-## Stored Procedures
-
-### Add a student
-
-```sql
-CREATE PROCEDURE usp_AddStudent
-    @StudentCode  VARCHAR(20),
-    @FullName     VARCHAR(100),
-    @Email        VARCHAR(100),
-    @Phone        VARCHAR(20),
-    @Gender       VARCHAR(10),
-    @DateOfBirth  DATE,
-    @City         VARCHAR(50),
-    @DepartmentId INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    INSERT INTO Students
-        (StudentCode, FullName, Email, Phone, Gender, DateOfBirth, City, DepartmentId)
-    VALUES
-        (@StudentCode, @FullName, @Email, @Phone, @Gender, @DateOfBirth, @City, @DepartmentId);
-END;
-```
-
-```sql
-EXEC usp_AddStudent
-    @StudentCode = 'S-008', @FullName = 'Lima Khatun', @Email = 'lima@example.com',
-    @Phone = '01700000008', @Gender = 'Female', @DateOfBirth = '2004-06-25',
-    @City = 'Dhaka', @DepartmentId = 1;
-```
-
 ### Get one student's result
 
 ```sql
@@ -686,51 +542,6 @@ END;
 ```sql
 EXEC usp_GetStudentResult @StudentCode = 'S-002';
 ```
-
-## Constraints and Data Safety
-
-What the database prevents automatically:
-
-| Rule                                  | Example of what is blocked                                       |
-| ------------------------------------- | ---------------------------------------------------------------- |
-| `UNIQUE` on `StudentCode` and `Email` | Adding two students with the same student code                   |
-| `FOREIGN KEY`                         | Creating a student with a `DepartmentId` that does not exist     |
-| `FOREIGN KEY`                         | Deleting a student who still has enrollments                     |
-| `CHECK` on `Marks`                    | Saving marks of `150` or `-5`                                    |
-| `CHECK` on `Gender`                   | Saving a gender that is not `Male`, `Female`, or `Other`         |
-| `UQ_Enrollment`                       | Enrolling the same student in the same course and semester twice |
-| `NOT NULL`                            | Saving a student without a name                                  |
-
-Test one of them:
-
-```sql
--- This fails because the marks are above 100
-UPDATE Enrollments SET Marks = 150 WHERE EnrollmentId = 1;
-```
-
-**Back up** the database regularly:
-
-```sql
-BACKUP DATABASE StudentManagementDB
-TO DISK = 'C:\Backup\StudentManagementDB.bak'
-WITH INIT, STATS = 10;
-```
-
----
-
-## Practice Tasks
-
-1. Follow the setup checklist and write down the SQL Server version, the server name, and the database name for your setup.
-2. Create the `StudentManagementDB` database and all five tables, then insert the sample data.
-3. List all students with their department names, sorted by name.
-4. Find all students from `Dhaka` whose names start with `N`.
-5. Enter a mark for Tanvir (`S-005`) and check his grade in `vw_StudentResults`.
-6. Find the **top 3 students** by average marks and the **student with the lowest** average.
-7. Show the average marks of each department (join `Students`, `Enrollments`, and `Departments`).
-8. Find the students who have **not been enrolled** in any course, then enroll one of them.
-9. Add a `Fees` table (`FeeId`, `StudentId`, `Amount`, `PaidDate`) and write a query for each student's total paid amount.
-10. Create a stored procedure `usp_EnrollStudent` that enrolls a student in a course for a semester.
-11. Make a backup of the database and restore it under a new name.
 
 ---
 
