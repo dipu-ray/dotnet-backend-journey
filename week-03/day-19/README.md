@@ -2,17 +2,12 @@
 
 **Date:** 26 October 2026
 
-Today's topic: **SQL Joins**, practised by solving problems on a student and teacher database. The problems are grouped into two levels, from easy to advanced.
-
 ## Table of Contents
 
 - [SQL Joins Recap](#sql-joins-recap)
 - [Database Used](#database-used)
-- [How to Solve a Join Problem](#how-to-solve-a-join-problem)
 - [Level 1 Problems](#level-1-problems)
 - [Level 2 Problems](#level-2-problems)
-- [Important Note: Join Results on Both Student and Course](#important-note-join-results-on-both-student-and-course)
-- [Bonus Problems](#bonus-problems)
 - [Summary](#summary)
 
 ---
@@ -115,23 +110,6 @@ students (1) ----< results   >---- (1) courses       (marks and grade per studen
 | 4         | 4        | 65    | B     |
 
 > The outputs below are based on this sample data. Row order is not guaranteed unless `ORDER BY` is used.
-
----
-
-## How to Solve a Join Problem
-
-1. **Find the tables** that contain the columns the question asks for.
-2. **Find the linking columns** between them (primary key and foreign key).
-3. **Build the chain:** start from one table and `JOIN` the next one using the linking column, one step at a time.
-4. **Select the needed columns** and give them clear aliases.
-5. **Add a filter** (`WHERE`) if the question has a condition.
-6. **Check the result** against the sample data.
-
-Example: to get "student name and teacher name", there is no direct link between `students` and `teachers`. Go through the tables in between:
-
-```
-students -> enrollments -> courses -> teachers
-```
 
 ---
 
@@ -445,112 +423,6 @@ FROM students s
 JOIN results r ON s.studentid = r.studentid
 JOIN courses c ON r.courseid  = c.courseid
 WHERE r.marks > 80;
-```
-
----
-
-## Important Note: Join Results on Both Student and Course
-
-When `results` is joined **only on `studentid`**, every enrollment of a student is matched with **every result** of that student.
-
-For Rahim (2 enrollments, 2 results), the join produces `2 x 2 = 4` rows:
-
-| Course (from enrollments) | Marks (from results) | Correct?                                        |
-| ------------------------- | -------------------- | ----------------------------------------------- |
-| Programming Fundamentals  | 85                   | Yes                                             |
-| Programming Fundamentals  | 78                   | **No** (78 belongs to Database Systems)         |
-| Database Systems          | 85                   | **No** (85 belongs to Programming Fundamentals) |
-| Database Systems          | 78                   | Yes                                             |
-
-With `WHERE marks > 80`, the query from the original solution returns:
-
-| Student Name | Course Name              | Marks | Correct? |
-| ------------ | ------------------------ | ----- | -------- |
-| Rahim Uddin  | Programming Fundamentals | 85    | Yes      |
-| Rahim Uddin  | Database Systems         | 85    | **No**   |
-| Nusrat Jahan | Programming Fundamentals | 92    | Yes      |
-| Nusrat Jahan | Programming Fundamentals | 88    | **No**   |
-| Nusrat Jahan | Database Systems         | 92    | **No**   |
-| Nusrat Jahan | Database Systems         | 88    | Yes      |
-
-That is **6 rows instead of 3**, and 3 of them show the wrong marks for the course.
-
-**Rule:** if a table is related through **two keys** (here student **and** course), join on **both** keys with `AND`. Level 1 Problem 4 does this correctly.
-
-**Quick check:** after writing a join, compare the number of rows with what you expect. Unexpectedly many rows usually means a missing join condition.
-
----
-
-## Bonus Problems
-
-Try these using `LEFT JOIN`, `GROUP BY`, and the other topics.
-
-**1. Teachers who teach no course** (`LEFT JOIN` + `IS NULL`)
-
-```sql
-SELECT t.name AS [Teacher Name]
-FROM teachers t
-LEFT JOIN courses c ON t.teachersid = c.teachersid
-WHERE c.courseid IS NULL;
-```
-
-**2. Students who are not enrolled in any course**
-
-```sql
-SELECT s.name AS [Student Name]
-FROM students s
-LEFT JOIN enrollments e ON s.studentid = e.studentid
-WHERE e.studentid IS NULL;
-```
-
-**3. Number of students in each course**
-
-```sql
-SELECT c.coursename AS [Course Name], COUNT(e.studentid) AS [Total Students]
-FROM courses c
-LEFT JOIN enrollments e ON c.courseid = e.courseid
-GROUP BY c.coursename;
-```
-
-**4. Average marks of each course, highest first**
-
-```sql
-SELECT c.coursename AS [Course Name], AVG(r.marks) AS [Average Marks]
-FROM courses c
-JOIN results r ON c.courseid = r.courseid
-GROUP BY c.coursename
-ORDER BY AVG(r.marks) DESC;
-```
-
-**5. Top student by total marks**
-
-```sql
-SELECT TOP 1 s.name AS [Student Name], SUM(r.marks) AS [Total Marks]
-FROM students s
-JOIN results r ON s.studentid = r.studentid
-GROUP BY s.name
-ORDER BY SUM(r.marks) DESC;
-```
-
-**6. Students and the teachers who teach them, without repeating the same pair** (`DISTINCT`)
-
-```sql
-SELECT DISTINCT s.name AS [Student Name], t.name AS [Teacher Name]
-FROM students s
-JOIN enrollments e ON s.studentid = e.studentid
-JOIN courses c     ON e.courseid  = c.courseid
-JOIN teachers t    ON c.teachersid = t.teachersid;
-```
-
-**7. Students with an `A+` grade, with the course and teacher**
-
-```sql
-SELECT s.name AS [Student Name], c.coursename AS [Course Name], t.name AS [Teacher Name]
-FROM students s
-JOIN results r  ON s.studentid = r.studentid
-JOIN courses c  ON r.courseid  = c.courseid
-JOIN teachers t ON c.teachersid = t.teachersid
-WHERE r.grade = 'A+';
 ```
 
 ---
