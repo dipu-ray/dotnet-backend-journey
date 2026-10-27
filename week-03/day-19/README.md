@@ -22,7 +22,6 @@ A **JOIN** combines rows from two or more tables using a **related column**.
 | `LEFT JOIN`                   | All rows from the **left** table + matches from the right |
 | `RIGHT JOIN`                  | All rows from the **right** table + matches from the left |
 | `FULL JOIN`                   | All rows from **both** tables                             |
-| `SELF JOIN`                   | A table joined with itself                                |
 
 **Syntax**
 
