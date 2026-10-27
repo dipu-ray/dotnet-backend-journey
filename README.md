@@ -113,6 +113,7 @@ dotnet-backend-journey/
 | 17  | Demo Project Understanding and SQL Recap  | [Day-17](week-03/day-17) |
 | 18  | New Client Software Setup and SQL         | [Day-18](week-03/day-18) |
 | 19  | SQL Joins: Problem Solving                | [Day-19](week-03/day-19) |
+| 20  | SQL Self Join: Problem Solving            | [Day-20](week-03/day-20) |
 
 </details>
 
