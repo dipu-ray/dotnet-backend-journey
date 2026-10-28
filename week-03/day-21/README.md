@@ -12,6 +12,7 @@ A quick recap of the C# fundamentals:
 6. Loops
 
 ## Table of Contents
+
 - [1. Backslash Characters (Escape Sequences)](#1-backslash-characters-escape-sequences)
 - [2. Variables and Data Types](#2-variables-and-data-types)
 - [3. Data Type Casting](#3-data-type-casting)
@@ -29,17 +30,17 @@ A quick recap of the C# fundamentals:
 
 A **backslash** `\` inside a string starts an **escape sequence**: a special character that is hard to type directly (new line, tab, a quote, and so on).
 
-| Escape | Meaning |
-|--------|---------|
-| `\n` | New line |
-| `\t` | Tab |
-| `\\` | A backslash |
-| `\"` | A double quote |
-| `\'` | A single quote |
-| `\r` | Carriage return (move to the start of the line) |
-| `\b` | Backspace |
-| `\0` | Null character |
-| `\a` | Alert (beep) |
+| Escape   | Meaning                                         |
+| -------- | ----------------------------------------------- |
+| `\n`     | New line                                        |
+| `\t`     | Tab                                             |
+| `\\`     | A backslash                                     |
+| `\"`     | A double quote                                  |
+| `\'`     | A single quote                                  |
+| `\r`     | Carriage return (move to the start of the line) |
+| `\b`     | Backspace                                       |
+| `\0`     | Null character                                  |
+| `\a`     | Alert (beep)                                    |
 | `\uXXXX` | Unicode character (for example `\u0041` is `A`) |
 
 ```csharp
@@ -52,6 +53,7 @@ Console.WriteLine("\u0041");                    // A
 ```
 
 **Output**
+
 ```
 Hello
 World
@@ -101,6 +103,7 @@ age = 26;              // the value can change
 ```
 
 **Naming rules**
+
 - Start with a letter or `_`. No spaces or special characters.
 - Cannot be a keyword (`class`, `int`).
 - C# is **case sensitive** (`Age` and `age` are different).
@@ -108,18 +111,18 @@ age = 26;              // the value can change
 
 ## Common Data Types
 
-| Type | Stores | Size | Example | Default |
-|------|--------|------|---------|---------|
-| `int` | Whole number | 4 bytes | `42` | `0` |
-| `long` | Large whole number | 8 bytes | `9000000000L` | `0` |
-| `short` | Small whole number | 2 bytes | `100` | `0` |
-| `byte` | 0 to 255 | 1 byte | `200` | `0` |
-| `float` | Decimal (about 7 digits) | 4 bytes | `3.14f` | `0` |
-| `double` | Decimal (about 15 digits) | 8 bytes | `3.14159` | `0` |
-| `decimal` | Precise decimal (money) | 16 bytes | `99.99m` | `0` |
-| `bool` | `true` or `false` | 1 byte | `true` | `false` |
-| `char` | One character (single quotes) | 2 bytes | `'A'` | `'\0'` |
-| `string` | Text (double quotes) | varies | `"Hello"` | `null` |
+| Type      | Stores                        | Size     | Example       | Default |
+| --------- | ----------------------------- | -------- | ------------- | ------- |
+| `int`     | Whole number                  | 4 bytes  | `42`          | `0`     |
+| `long`    | Large whole number            | 8 bytes  | `9000000000L` | `0`     |
+| `short`   | Small whole number            | 2 bytes  | `100`         | `0`     |
+| `byte`    | 0 to 255                      | 1 byte   | `200`         | `0`     |
+| `float`   | Decimal (about 7 digits)      | 4 bytes  | `3.14f`       | `0`     |
+| `double`  | Decimal (about 15 digits)     | 8 bytes  | `3.14159`     | `0`     |
+| `decimal` | Precise decimal (money)       | 16 bytes | `99.99m`      | `0`     |
+| `bool`    | `true` or `false`             | 1 byte   | `true`        | `false` |
+| `char`    | One character (single quotes) | 2 bytes  | `'A'`         | `'\0'`  |
+| `string`  | Text (double quotes)          | varies   | `"Hello"`     | `null`  |
 
 ```csharp
 int age = 25;
@@ -135,6 +138,7 @@ string name = "Rahim";
 > Suffixes: `f` for `float`, `m` for `decimal`, `L` for `long`. Without `f` or `m`, a decimal number is a `double`.
 
 **Range of `int`:** `-2,147,483,648` to `2,147,483,647`
+
 ```csharp
 Console.WriteLine(int.MaxValue);   // 2147483647
 Console.WriteLine(int.MinValue);   // -2147483648
@@ -146,6 +150,7 @@ Console.WriteLine(int.MinValue);   // -2147483648
 Console.WriteLine(0.1 + 0.2);      // 0.30000000000000004  (double, small error)
 Console.WriteLine(0.1m + 0.2m);    // 0.3                  (decimal, exact)
 ```
+
 Use **`decimal` for money**.
 
 ## `var`, `const`, and nullable
@@ -171,11 +176,11 @@ Console.WriteLine("Hi " + "there");          // Hi there
 
 ## Value types and reference types
 
-| | Value types | Reference types |
-|---|-------------|-----------------|
-| Examples | `int`, `double`, `decimal`, `bool`, `char` | `string`, arrays, classes |
-| Stores | The value itself | A reference (address) to the data |
-| Can be `null`? | No (unless `int?`) | Yes |
+|                | Value types                                | Reference types                   |
+| -------------- | ------------------------------------------ | --------------------------------- |
+| Examples       | `int`, `double`, `decimal`, `bool`, `char` | `string`, arrays, classes         |
+| Stores         | The value itself                           | A reference (address) to the data |
+| Can be `null`? | No (unless `int?`)                         | Yes                               |
 
 ---
 
@@ -200,6 +205,7 @@ Console.WriteLine(b);   // 10
 ```
 
 `char` converts to `int` (its character code):
+
 ```csharp
 int code = 'A';
 Console.WriteLine(code);   // 65
@@ -246,9 +252,9 @@ Console.WriteLine(Convert.ToInt32(9.78));   // 10  (rounds)
 Console.WriteLine((int)9.78);               // 9   (cuts off)
 ```
 
-| | `(int)9.78` | `Convert.ToInt32(9.78)` |
-|---|-------------|--------------------------|
-| Result | `9` | `10` |
+|          | `(int)9.78`                       | `Convert.ToInt32(9.78)`            |
+| -------- | --------------------------------- | ---------------------------------- |
+| Result   | `9`                               | `10`                               |
 | Behavior | Truncates (cuts the decimal part) | Rounds to the nearest whole number |
 
 > `Convert.ToInt32` rounds halves to the nearest **even** number: `2.5` becomes `2`, and `3.5` becomes `4`.
@@ -271,6 +277,7 @@ else
 ```
 
 Reading a number from the user:
+
 ```csharp
 Console.Write("Enter your age: ");
 int age = Convert.ToInt32(Console.ReadLine());
@@ -295,11 +302,11 @@ Console.WriteLine(big + 1);            // -2147483648 (wraps around, no error by
 // checked { int r = big + 1; }
 ```
 
-| Cast type | Direction | Needs `( )`? | Data loss? |
-|-----------|-----------|--------------|------------|
-| Implicit | Small to large (`int` to `double`) | No | No |
-| Explicit | Large to small (`double` to `int`) | **Yes** | Possible |
-| `Convert` / `Parse` | Any, including strings | Method call | Rounds, or throws on bad input |
+| Cast type           | Direction                          | Needs `( )`? | Data loss?                     |
+| ------------------- | ---------------------------------- | ------------ | ------------------------------ |
+| Implicit            | Small to large (`int` to `double`) | No           | No                             |
+| Explicit            | Large to small (`double` to `int`) | **Yes**      | Possible                       |
+| `Convert` / `Parse` | Any, including strings             | Method call  | Rounds, or throws on bad input |
 
 ---
 
@@ -307,15 +314,15 @@ Console.WriteLine(big + 1);            // -2147483648 (wraps around, no error by
 
 ## Arithmetic
 
-| Operator | Name | Example | Result |
-|----------|------|---------|--------|
-| `+` | Add | `10 + 3` | `13` |
-| `-` | Subtract | `10 - 3` | `7` |
-| `*` | Multiply | `10 * 3` | `30` |
-| `/` | Divide | `10 / 3` | `3` (int) |
-| `%` | Modulus (remainder) | `10 % 3` | `1` |
-| `++` | Increment | `x++` | `x + 1` |
-| `--` | Decrement | `x--` | `x - 1` |
+| Operator | Name                | Example  | Result    |
+| -------- | ------------------- | -------- | --------- |
+| `+`      | Add                 | `10 + 3` | `13`      |
+| `-`      | Subtract            | `10 - 3` | `7`       |
+| `*`      | Multiply            | `10 * 3` | `30`      |
+| `/`      | Divide              | `10 / 3` | `3` (int) |
+| `%`      | Modulus (remainder) | `10 % 3` | `1`       |
+| `++`     | Increment           | `x++`    | `x + 1`   |
+| `--`     | Decrement           | `x--`    | `x - 1`   |
 
 ```csharp
 int y = 5;
@@ -327,14 +334,14 @@ Console.WriteLine(7 % 2 == 0);   // False (7 is odd)
 
 ## Assignment
 
-| Operator | Same as |
-|----------|---------|
-| `=` | Assign |
-| `+=` | `x = x + y` |
-| `-=` | `x = x - y` |
-| `*=` | `x = x * y` |
-| `/=` | `x = x / y` |
-| `%=` | `x = x % y` |
+| Operator | Same as     |
+| -------- | ----------- |
+| `=`      | Assign      |
+| `+=`     | `x = x + y` |
+| `-=`     | `x = x - y` |
+| `*=`     | `x = x * y` |
+| `/=`     | `x = x / y` |
+| `%=`     | `x = x % y` |
 
 ```csharp
 int n = 10;
@@ -344,11 +351,11 @@ n *= 2;    // 30
 
 ## Comparison (result is `bool`)
 
-| Operator | Meaning |
-|----------|---------|
-| `==` | Equal to |
-| `!=` | Not equal to |
-| `>` / `<` | Greater / less than |
+| Operator    | Meaning                         |
+| ----------- | ------------------------------- |
+| `==`        | Equal to                        |
+| `!=`        | Not equal to                    |
+| `>` / `<`   | Greater / less than             |
 | `>=` / `<=` | Greater / less than or equal to |
 
 ```csharp
@@ -361,11 +368,11 @@ Console.WriteLine(a < b);    // True
 
 ## Logical
 
-| Operator | Name | Meaning |
-|----------|------|---------|
-| `&&` | AND | True only if **both** are true |
-| `\|\|` | OR | True if **at least one** is true |
-| `!` | NOT | Reverses the value |
+| Operator | Name | Meaning                          |
+| -------- | ---- | -------------------------------- |
+| `&&`     | AND  | True only if **both** are true   |
+| `\|\|`   | OR   | True if **at least one** is true |
+| `!`      | NOT  | Reverses the value               |
 
 ```csharp
 int age = 22;
@@ -513,11 +520,11 @@ string grade = marks switch
 };
 ```
 
-| Use | When |
-|-----|------|
-| `if / else if` | Ranges and combined conditions |
-| `switch` | One value compared with many fixed values |
-| `? :` | A short choice between two values |
+| Use            | When                                      |
+| -------------- | ----------------------------------------- |
+| `if / else if` | Ranges and combined conditions            |
+| `switch`       | One value compared with many fixed values |
+| `? :`          | A short choice between two values         |
 
 ---
 
@@ -593,10 +600,10 @@ foreach (char ch in "Hi")
 
 ## `break` and `continue`
 
-| Keyword | Effect |
-|---------|--------|
-| `break` | Stops the loop immediately |
-| `continue` | Skips to the next round |
+| Keyword    | Effect                     |
+| ---------- | -------------------------- |
+| `break`    | Stops the loop immediately |
+| `continue` | Skips to the next round    |
 
 ```csharp
 for (int i = 1; i <= 10; i++)
@@ -622,19 +629,19 @@ for (int i = 1; i <= 3; i++)
 ```
 
 ```
-* 
-* * 
-* * * 
+*
+* *
+* * *
 ```
 
 ## Which loop to use
 
-| Loop | Condition checked | Minimum runs | Best for |
-|------|-------------------|--------------|----------|
-| `for` | Before each run | 0 | Known number of repeats |
-| `while` | Before each run | 0 | Unknown number of repeats |
-| `do-while` | **After** each run | **1** | Menus, input validation |
-| `foreach` | Goes through all items | 0 | Arrays, lists, strings |
+| Loop       | Condition checked      | Minimum runs | Best for                  |
+| ---------- | ---------------------- | ------------ | ------------------------- |
+| `for`      | Before each run        | 0            | Known number of repeats   |
+| `while`    | Before each run        | 0            | Unknown number of repeats |
+| `do-while` | **After** each run     | **1**        | Menus, input validation   |
+| `foreach`  | Goes through all items | 0            | Arrays, lists, strings    |
 
 > An **infinite loop** happens when the condition never becomes `false` (for example, forgetting `i++`). Press `Ctrl + C` to stop it.
 
@@ -676,6 +683,7 @@ class Program
 ```
 
 **Sample run**
+
 ```
 Enter how many students: 3
 Enter marks of student 1: 85
@@ -692,14 +700,14 @@ Average marks: 60.67
 
 # Cheat Sheet
 
-| Topic | Key points |
-|-------|------------|
-| Escape sequences | `\n` new line, `\t` tab, `\\` backslash, `\"` quote, `@"..."` verbatim |
-| Variables | Named memory. `int`, `double`, `decimal`, `bool`, `char`, `string`. `var`, `const` |
-| Casting | Implicit: small to large. Explicit: `(int)x`. `Convert`, `Parse`, `TryParse` |
-| Operators | Arithmetic, assignment, comparison, logical (`&&`, `\|\|`, `!`), ternary `?:` |
-| Conditions | `if / else if / else`, `switch`, switch expression |
-| Loops | `for`, `while`, `do-while`, `foreach`, `break`, `continue` |
+| Topic            | Key points                                                                         |
+| ---------------- | ---------------------------------------------------------------------------------- |
+| Escape sequences | `\n` new line, `\t` tab, `\\` backslash, `\"` quote, `@"..."` verbatim             |
+| Variables        | Named memory. `int`, `double`, `decimal`, `bool`, `char`, `string`. `var`, `const` |
+| Casting          | Implicit: small to large. Explicit: `(int)x`. `Convert`, `Parse`, `TryParse`       |
+| Operators        | Arithmetic, assignment, comparison, logical (`&&`, `\|\|`, `!`), ternary `?:`      |
+| Conditions       | `if / else if / else`, `switch`, switch expression                                 |
+| Loops            | `for`, `while`, `do-while`, `foreach`, `break`, `continue`                         |
 
 ---
 
