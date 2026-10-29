@@ -14,11 +14,7 @@ Today's work:
 - [Part 1: Business Management Software](#part-1-business-management-software)
   - [Visit Details](#1-visit-details)
   - [What is Business Management Software?](#2-what-is-business-management-software)
-  - [Common Modules](#3-common-modules)
   - [How I Explored the Software](#4-how-i-explored-the-software)
-  - [Adapting the Software to Different Business Types](#5-adapting-the-software-to-different-business-types)
-  - [Farm Management in Detail](#6-farm-management-in-detail)
-  - [Maintaining the Software](#7-maintaining-the-software)
   - [What I Learned, Questions, and Next Steps](#8-what-i-learned-questions-and-next-steps)
 - [Part 2: SQL Recap](#part-2-sql-recap)
 - [Cheat Sheet](#cheat-sheet)
@@ -31,15 +27,15 @@ Today's work:
 
 ## 1. Visit Details
 
-| Field                      | Details                           |
-| -------------------------- | --------------------------------- |
-| Software name              | [Name]                            |
-| Company / vendor           | [Name]                            |
-| Visit date                 | 29 October 2026                   |
-| Shown by                   | [Name, role]                      |
-| Type                       | [Web / Desktop / Mobile]          |
-| Technology (if known)      | [For example ASP.NET, SQL Server] |
-| Business types it supports | [Retail, wholesale, service, ...] |
+| Field                      | Details                      |
+| -------------------------- | ---------------------------- |
+| Software name              | Business Management Software |
+| Company                    | Technovate BD                |
+| Visit date                 | 29 October 2026              |
+| Shown by                   | Sr. Software Engineer        |
+| Type                       | Web Application              |
+| Technology                 | .NET                         |
+| Business types it supports | SaaS Service                 |
 
 ## 2. What is Business Management Software?
 
@@ -63,30 +59,6 @@ Transactions (purchase, sale, expense, stock movement)
 Reports (stock, profit, due, performance)
 ```
 
-## 3. Common Modules
-
-| Module                | What it does                                               | Example data                                |
-| --------------------- | ---------------------------------------------------------- | ------------------------------------------- |
-| **Dashboard**         | Summary of the business at a glance (sales, stock, profit) | Today's sales, low stock alerts             |
-| **Customers**         | Customer information and dues                              | Name, phone, due amount                     |
-| **Suppliers**         | Supplier information and payables                          | Name, phone, payable amount                 |
-| **Items / Products**  | List of goods and services                                 | Name, category, unit, price                 |
-| **Purchase**          | Buying goods from suppliers                                | Purchase order, invoice, quantity           |
-| **Sales / Invoices**  | Selling to customers                                       | Invoice, items, discount, payment           |
-| **Inventory / Stock** | Stock in, stock out, current balance                       | Item, quantity, reorder level               |
-| **Accounts**          | Income, expenses, payments, balance                        | Cash, bank, expense categories              |
-| **HR / Payroll**      | Employees, attendance, salary                              | Employee, salary, leave                     |
-| **Reports**           | Printable and exportable summaries                         | Sales report, stock report, profit and loss |
-| **Users and Roles**   | Who can see and do what                                    | Admin, manager, cashier                     |
-| **Settings**          | Company information, business type, tax, backup            | Company name, currency, VAT                 |
-
-Features I saw in the software:
-
-| Feature     | Seen?      | Notes   |
-| ----------- | ---------- | ------- |
-| [Feature 1] | [Yes / No] | [Notes] |
-| [Feature 2] | [Yes / No] | [Notes] |
-
 ## 4. How I Explored the Software
 
 | Step | What to do                                                                         | Done |
@@ -102,286 +74,6 @@ Features I saw in the software:
 | 9    | Look at **users and roles** and log in as a normal user to see the difference      | [ ]  |
 | 10   | Find out where the **data** is stored and how **backup** is done                   | [ ]  |
 
-A good test of understanding: **follow one item through the whole system.**
-
-```
-Purchase 100 units  ->  Stock = 100  ->  Sell 30 units  ->  Stock = 70  ->  Reports show it
-```
-
-## 5. Adapting the Software to Different Business Types
-
-Most business software uses the **same core**: items, customers, suppliers, purchase, sale, stock, expense, reports. A different business type mainly changes the **names, categories, and a few extra modules**.
-
-| Business type                | Items are called         | Extra things to track                           |
-| ---------------------------- | ------------------------ | ----------------------------------------------- |
-| **Retail / grocery shop**    | Products                 | Barcode, discount, expiry date                  |
-| **Pharmacy**                 | Medicines                | Batch number, expiry date, prescriptions        |
-| **Restaurant**               | Menu items, ingredients  | Recipes, tables, orders, kitchen stock          |
-| **Service company**          | Services                 | Projects, hours, quotations, recurring invoices |
-| **School / training center** | Courses                  | Students, fees, attendance, results             |
-| **Farm**                     | Crops, livestock, inputs | Fields, harvest, feed, production, equipment    |
-
-**How to adapt the software to a new business type**
-
-| Step | Action                                                                                      |
-| ---- | ------------------------------------------------------------------------------------------- |
-| 1    | **Understand the business:** what is bought, produced, stored, sold, and what the costs are |
-| 2    | **Map the generic modules** to the business (see the farm example below)                    |
-| 3    | **Set up master data:** categories, items, units, customers, suppliers                      |
-| 4    | **Add custom fields or modules** only where the standard ones are not enough                |
-| 5    | **Set up users and roles** (owner, manager, worker)                                         |
-| 6    | **Enter opening balances** (starting stock, dues, cash)                                     |
-| 7    | **Test with real examples** and compare the reports with manual calculations                |
-| 8    | **Train the people** who will use it                                                        |
-
-## 6. Farm Management in Detail
-
-### Mapping generic modules to a farm
-
-| Generic module                      | Farm version                          | Examples                                         |
-| ----------------------------------- | ------------------------------------- | ------------------------------------------------ |
-| Items / Products                    | **Crops, livestock products, inputs** | Rice, potato, milk, eggs, seed, fertilizer, feed |
-| Suppliers                           | **Input suppliers**                   | Seed shop, fertilizer dealer, feed supplier      |
-| Customers                           | **Buyers**                            | Wholesalers, market traders, restaurants         |
-| Purchase                            | **Buying inputs**                     | Seed, fertilizer, pesticide, feed, medicine      |
-| Inventory                           | **Store**                             | Seed stock, fertilizer stock, feed stock         |
-| Sales                               | **Selling produce**                   | Selling rice, milk, vegetables                   |
-| Accounts                            | **Farm income and expenses**          | Labor, fuel, irrigation, vet cost                |
-| HR                                  | **Workers**                           | Daily laborers, wages, attendance                |
-| (new) **Fields / Plots**            | Land areas                            | North Field (5 acres), South Field (3.5 acres)   |
-| (new) **Crop cycles**               | Sowing to harvest                     | Sowing date, expected harvest date               |
-| (new) **Harvest / Production**      | Output                                | Quantity harvested, milk per day, eggs per day   |
-| (new) **Livestock**                 | Animals                               | Cows, goats, poultry: health, feed, vaccination  |
-| (new) **Equipment and maintenance** | Machines                              | Tractor, pump: service dates, repair cost        |
-
-### Farm workflow
-
-```
-Buy inputs (seed, fertilizer, feed)
-        |
-Store (inventory)
-        |
-Use in the field / for livestock  ->  Record expenses (labor, fuel, water)
-        |
-Harvest / production
-        |
-Sell  ->  Record income
-        |
-Reports: cost, revenue, profit per crop and per field
-```
-
-### Data to track
-
-| Area       | Data                                                   |
-| ---------- | ------------------------------------------------------ |
-| Fields     | Name, area, location, soil type, current crop          |
-| Crops      | Crop name, season, sowing date, harvest date           |
-| Inputs     | Seed, fertilizer, pesticide: quantity, price, supplier |
-| Livestock  | Animal ID, type, age, health, vaccination dates        |
-| Production | Harvest quantity, milk and egg count, date, field      |
-| Expenses   | Date, category, amount, field or animal                |
-| Sales      | Date, buyer, product, quantity, price, payment         |
-| Workers    | Name, daily wage, attendance                           |
-| Equipment  | Name, purchase date, service dates, repair cost        |
-
-### Sample farm database (small)
-
-**Fields**
-
-| FieldId | FieldName   | AreaAcre |
-| ------- | ----------- | -------- |
-| 1       | North Field | 5.0      |
-| 2       | South Field | 3.5      |
-
-**Crops**
-
-| CropId | CropName |
-| ------ | -------- |
-| 1      | Rice     |
-| 2      | Potato   |
-
-**Harvests**
-
-| HarvestId | FieldId | CropId | HarvestDate | QuantityKg |
-| --------- | ------- | ------ | ----------- | ---------- |
-| 1         | 1       | 1      | 2026-09-15  | 1200       |
-| 2         | 2       | 2      | 2026-09-20  | 800        |
-| 3         | 1       | 1      | 2026-10-05  | 600        |
-
-**Expenses**
-
-| ExpenseId | ExpenseDate | Category   | Amount | FieldId |
-| --------- | ----------- | ---------- | ------ | ------- |
-| 1         | 2026-09-01  | Seed       | 5000   | 1       |
-| 2         | 2026-09-03  | Fertilizer | 8000   | 1       |
-| 3         | 2026-09-10  | Labor      | 6000   | 2       |
-| 4         | 2026-10-02  | Fuel       | 2000   | NULL    |
-
-**Sales**
-
-| SaleId | SaleDate   | CropId | QuantityKg | UnitPrice |
-| ------ | ---------- | ------ | ---------- | --------- |
-| 1      | 2026-09-20 | 1      | 1000       | 50        |
-| 2      | 2026-09-25 | 2      | 500        | 30        |
-| 3      | 2026-10-10 | 1      | 500        | 52        |
-
-**Inventory**
-
-| ItemId | ItemName    | Quantity | ReorderLevel |
-| ------ | ----------- | -------- | ------------ |
-| 1      | Seed        | 40       | 50           |
-| 2      | Fertilizer  | 200      | 100          |
-| 3      | Cattle Feed | 30       | 60           |
-
-(The prices and quantities are only examples.)
-
-### Example queries (the SQL topics applied to a farm)
-
-**Total harvest per crop** (`JOIN`, `GROUP BY`, `SUM`)
-
-```sql
-SELECT c.CropName, SUM(h.QuantityKg) AS TotalKg
-FROM Harvests h
-JOIN Crops c ON h.CropId = c.CropId
-GROUP BY c.CropName
-ORDER BY TotalKg DESC;
-```
-
-| CropName | TotalKg |
-| -------- | ------- |
-| Rice     | 1800    |
-| Potato   | 800     |
-
-**Total harvest per field**
-
-```sql
-SELECT f.FieldName, SUM(h.QuantityKg) AS TotalKg
-FROM Harvests h
-JOIN Fields f ON h.FieldId = f.FieldId
-GROUP BY f.FieldName;
-```
-
-Result: North Field `1800`, South Field `800`
-
-**Expenses per category** (`GROUP BY`, `ORDER BY`)
-
-```sql
-SELECT Category, SUM(Amount) AS TotalAmount
-FROM Expenses
-GROUP BY Category
-ORDER BY TotalAmount DESC;
-```
-
-| Category   | TotalAmount |
-| ---------- | ----------- |
-| Fertilizer | 8000        |
-| Labor      | 6000        |
-| Seed       | 5000        |
-| Fuel       | 2000        |
-
-**Expenses in a date range** (September 2026)
-
-```sql
-SELECT SUM(Amount) AS TotalExpense
-FROM Expenses
-WHERE ExpenseDate >= '2026-09-01'
-  AND ExpenseDate <  '2026-10-01';
-```
-
-Result: `19000`
-
-**Revenue per crop**
-
-```sql
-SELECT c.CropName, SUM(s.QuantityKg * s.UnitPrice) AS Revenue
-FROM Sales s
-JOIN Crops c ON s.CropId = c.CropId
-GROUP BY c.CropName;
-```
-
-| CropName | Revenue |
-| -------- | ------- |
-| Rice     | 76000   |
-| Potato   | 15000   |
-
-**Total profit** (revenue minus expenses)
-
-```sql
-SELECT
-    (SELECT SUM(QuantityKg * UnitPrice) FROM Sales)
-  - (SELECT SUM(Amount) FROM Expenses) AS Profit;
-```
-
-Result: `91000 - 21000 = 70000`
-
-**Low stock alert**
-
-```sql
-SELECT ItemName, Quantity, ReorderLevel
-FROM Inventory
-WHERE Quantity <= ReorderLevel;
-```
-
-Result: Seed (`40` of `50`) and Cattle Feed (`30` of `60`)
-
-**Best selling crop** (`TOP 1`)
-
-```sql
-SELECT TOP 1 c.CropName, SUM(s.QuantityKg) AS TotalSold
-FROM Sales s
-JOIN Crops c ON s.CropId = c.CropId
-GROUP BY c.CropName
-ORDER BY TotalSold DESC;
-```
-
-Result: `Rice | 1500`
-
-### Farm dashboard and reports
-
-| Report / indicator                         | Why it matters                              |
-| ------------------------------------------ | ------------------------------------------- |
-| Production per crop and per field          | Which crops and fields perform best         |
-| Expense per category                       | Where the money goes                        |
-| Revenue, expense, and profit (monthly)     | Is the farm making money?                   |
-| Cost per field                             | Profit per acre                             |
-| Low stock alerts                           | Do not run out of seed, feed, or fertilizer |
-| Livestock health and vaccination due dates | Do not miss treatment dates                 |
-| Equipment service due dates                | Avoid machine breakdowns                    |
-| Customer dues                              | Money still to collect                      |
-
-## 7. Maintaining the Software
-
-"Maintain" means keeping the software and its data **correct, safe, and working**.
-
-| Frequency              | Task                                                                           |
-| ---------------------- | ------------------------------------------------------------------------------ |
-| **Daily**              | Enter all transactions (purchase, sale, expense, production) on the same day   |
-| **Daily**              | Check the dashboard and low stock alerts                                       |
-| **Daily or automatic** | Back up the database                                                           |
-| **Weekly**             | Check dues and payments, compare physical stock with system stock              |
-| **Monthly**            | Review the profit and expense reports, check the user list, and fix wrong data |
-| **Yearly**             | Closing: opening balances, archive old data, review users and prices           |
-| **When needed**        | Install updates and fixes, add new items, users, and categories                |
-
-### Good practices
-
-| Area                | Practice                                                                                                    |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **Data quality**    | Enter data on time, use clear names and categories, avoid duplicates                                        |
-| **Users and roles** | One login per person, give only the permissions they need, remove users who leave                           |
-| **Backup**          | Automatic daily backup, stored in a **second place** (another disk or cloud). **Test a restore** sometimes. |
-| **Security**        | Strong passwords, no shared logins, keep the server updated                                                 |
-| **Corrections**     | Fix mistakes with a proper correction entry. Do not silently edit or delete records.                        |
-| **Support log**     | Record problems, who reported them, and how they were fixed                                                 |
-
-### Simple backup command (SQL Server)
-
-```sql
-BACKUP DATABASE BusinessDB
-TO DISK = 'C:\Backup\BusinessDB.bak'
-WITH INIT, STATS = 10;
-```
-
 ## 8. What I Learned, Questions, and Next Steps
 
 **What I learned**
@@ -389,19 +81,9 @@ WITH INIT, STATS = 10;
 - A business software has the **same core** (items, customers, suppliers, purchase, sale, stock, expense, reports) for most businesses.
 - A different business type changes the **names, categories, and a few extra modules** (for a farm: fields, crops, harvest, livestock).
 - Everything depends on the **database**, so SQL is the base skill.
-- [Add your own points]
-
-**Questions to ask**
-
-- [ ] [Question 1]
-- [ ] [Question 2]
-
-**Next steps**
-
-- [ ] Choose a business type (for example, a small farm) and list its items, customers, and costs
-- [ ] Design the tables and relationships
-- [ ] Enter sample data and run the report queries
-- [ ] Try adding a new module in the software, or customize an existing one
+- Customizable to fit specific business needs and workflows.
+- Supports end-to-end management, production tracking, and maintenance of farm products.
+- Provides seamless tracking and management of all **financial transactions**, including income and expenditure.
 
 ---
 
@@ -750,21 +432,6 @@ HAVING COUNT(*) > 1;          -- IT | 3
 | `SELF JOIN`                         | Table joined with itself                  |
 | `UNION` / `UNION ALL`               | Combine results without / with duplicates |
 | `GROUP BY`                          | Summarize per group                       |
-
----
-
-## Practice Tasks
-
-1. Pick a business type (for example, a farm, a shop, or a pharmacy) and list its **items, customers, suppliers, and expenses**.
-2. Design 5 tables for that business, with primary keys and foreign keys, and insert sample data.
-3. Write a query that finds the **total expense per category** and the **total expense in a date range**.
-4. Write a query that finds the **highest** and **lowest selling item**.
-5. Write a `LEFT JOIN` query that lists customers who have **no sales**.
-6. Write a `SELF JOIN` query on any table that has a parent and child relationship (employee and manager).
-7. Combine two lists with `UNION` and with `UNION ALL`, and compare the row counts.
-8. Use `GROUP BY` and `HAVING` to find items sold **more than a given quantity**.
-9. Write a **low stock** query using a reorder level.
-10. Write a **profit** query: total sales minus total expenses.
 
 ---
 
