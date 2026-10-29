@@ -118,6 +118,17 @@ dotnet-backend-journey/
 
 </details>
 
+<details>
+<summary><b>Week 04</b> — Software Logic, SQL & C#</summary>
+
+<br>
+
+| Day | Topic                                      | Notes                    |
+| :-- | :----------------------------------------- | :----------------------- |
+| 22  | Business Management Software and SQL Recap | [Day-22](week-04/day-22) |
+
+</details>
+
 ---
 
 ## 🧪 Projects
