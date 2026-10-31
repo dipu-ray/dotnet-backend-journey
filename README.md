@@ -126,6 +126,7 @@ dotnet-backend-journey/
 | Day | Topic                                      | Notes                    |
 | :-- | :----------------------------------------- | :----------------------- |
 | 22  | Business Management Software and SQL Recap | [Day-22](week-04/day-22) |
+| 23  | Business Management Software               | [Day-23](week-04/day-23) |
 
 </details>
 
