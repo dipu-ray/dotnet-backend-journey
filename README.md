@@ -123,10 +123,11 @@ dotnet-backend-journey/
 
 <br>
 
-| Day | Topic                                      | Notes                    |
-| :-- | :----------------------------------------- | :----------------------- |
-| 22  | Business Management Software and SQL Recap | [Day-22](week-04/day-22) |
-| 23  | Business Management Software               | [Day-23](week-04/day-23) |
+| Day | Topic                                        | Notes                    |
+| :-- | :------------------------------------------- | :----------------------- |
+| 22  | Business Management Software and SQL Recap   | [Day-22](week-04/day-22) |
+| 23  | Business Management Software                 | [Day-23](week-04/day-23) |
+| 24  | Accounts Module and C# Method, Class, Object | [Day-24](week-04/day-24) |
 
 </details>
 
