@@ -10,6 +10,7 @@ Today's work:
 > **Note:** I do not have the details of the exact software screens that were shown. The Accounts section explains how an accounts module works in most business software, with a worked example. Replace the `[ ... ]` placeholders with what you actually saw.
 
 ## Table of Contents
+
 - [Part 1: Business Software Recap and the Accounts Module](#part-1-business-software-recap-and-the-accounts-module)
   - [Quick Recap](#1-quick-recap)
   - [Why Accounts is the Most Important Module](#2-why-accounts-is-the-most-important-module)
@@ -48,31 +49,31 @@ A business management software keeps **master data** (items, customers, supplier
 Master data  +  Transactions  =  Reports
 ```
 
-| Module | Purpose |
-|--------|---------|
-| Dashboard | Business summary |
-| Customers, Suppliers | Who we sell to and buy from |
-| Items / Products | What we buy and sell |
-| Purchase | Buying goods |
-| Sales / Invoices | Selling goods |
-| Inventory / Stock | Quantity in the store |
-| **Accounts** | **Money: income, expenses, payments, balances, profit** |
-| HR / Payroll | Employees and salary |
-| Reports | Summaries |
-| Users and Roles, Settings | Control and configuration |
+| Module                    | Purpose                                                 |
+| ------------------------- | ------------------------------------------------------- |
+| Dashboard                 | Business summary                                        |
+| Customers, Suppliers      | Who we sell to and buy from                             |
+| Items / Products          | What we buy and sell                                    |
+| Purchase                  | Buying goods                                            |
+| Sales / Invoices          | Selling goods                                           |
+| Inventory / Stock         | Quantity in the store                                   |
+| **Accounts**              | **Money: income, expenses, payments, balances, profit** |
+| HR / Payroll              | Employees and salary                                    |
+| Reports                   | Summaries                                               |
+| Users and Roles, Settings | Control and configuration                               |
 
 ## 2. Why Accounts is the Most Important Module
 
 Every other module deals with **things** (items, stock, customers). The Accounts module deals with **money**, and almost every other module ends up creating an accounting entry.
 
-| Reason | Explanation |
-|--------|-------------|
-| **Shows the real result** | Profit or loss, cash in hand, and what the business owns and owes |
-| **Everything feeds into it** | Sales, purchases, payroll, and expenses all post here |
-| **Basis for decisions** | Prices, budgets, and loans depend on the numbers |
-| **Required by law** | Tax and audit need correct books |
-| **Builds trust** | Owners, banks, and partners rely on the reports |
-| **Catches errors** | Balances that do not match reveal missing or wrong entries |
+| Reason                       | Explanation                                                       |
+| ---------------------------- | ----------------------------------------------------------------- |
+| **Shows the real result**    | Profit or loss, cash in hand, and what the business owns and owes |
+| **Everything feeds into it** | Sales, purchases, payroll, and expenses all post here             |
+| **Basis for decisions**      | Prices, budgets, and loans depend on the numbers                  |
+| **Required by law**          | Tax and audit need correct books                                  |
+| **Builds trust**             | Owners, banks, and partners rely on the reports                   |
+| **Catches errors**           | Balances that do not match reveal missing or wrong entries        |
 
 ```
 Sales, Purchase, Stock, Payroll, Expenses  ->  ACCOUNTS  ->  Profit and Loss, Balance Sheet, Cash Position
@@ -80,37 +81,39 @@ Sales, Purchase, Stock, Payroll, Expenses  ->  ACCOUNTS  ->  Profit and Loss, Ba
 
 ## 3. Basic Accounting Concepts
 
-| Term | Meaning |
-|------|---------|
-| **Account** | A named record that tracks one kind of money (Cash, Sales, Rent Expense) |
-| **Chart of Accounts** | The full list of accounts a business uses |
-| **Transaction** | A money event (a sale, a payment) |
-| **Voucher / Journal entry** | The record of a transaction: which accounts, how much, which side |
-| **Ledger** | All entries of one account, with its running balance |
-| **Trial balance** | A list of every account's balance. Total debits must equal total credits. |
-| **Cash book / Bank book** | Ledger of cash and bank money |
-| **Receivable (due)** | Money customers owe us |
-| **Payable** | Money we owe suppliers |
-| **Opening balance** | Balance at the start (new business or new year) |
-| **Financial year** | The 12-month accounting period |
-| **Reconciliation** | Matching our records with the bank statement or physical cash |
+| Term                        | Meaning                                                                   |
+| --------------------------- | ------------------------------------------------------------------------- |
+| **Account**                 | A named record that tracks one kind of money (Cash, Sales, Rent Expense)  |
+| **Chart of Accounts**       | The full list of accounts a business uses                                 |
+| **Transaction**             | A money event (a sale, a payment)                                         |
+| **Voucher / Journal entry** | The record of a transaction: which accounts, how much, which side         |
+| **Ledger**                  | All entries of one account, with its running balance                      |
+| **Trial balance**           | A list of every account's balance. Total debits must equal total credits. |
+| **Cash book / Bank book**   | Ledger of cash and bank money                                             |
+| **Receivable (due)**        | Money customers owe us                                                    |
+| **Payable**                 | Money we owe suppliers                                                    |
+| **Opening balance**         | Balance at the start (new business or new year)                           |
+| **Financial year**          | The 12-month accounting period                                            |
+| **Reconciliation**          | Matching our records with the bank statement or physical cash             |
 
 ### The five account types
 
-| Type | Meaning | Examples |
-|------|---------|----------|
-| **Asset** | What the business **owns** | Cash, Bank, Inventory, Receivables, Equipment |
-| **Liability** | What the business **owes** | Payables, Loans |
-| **Equity** | The owner's share | Owner's Capital, Retained Earnings |
-| **Income (Revenue)** | Money **earned** | Sales, Service Income |
-| **Expense** | Money **spent** to run the business | Rent, Salary, Fuel, Labor |
+| Type                 | Meaning                             | Examples                                      |
+| -------------------- | ----------------------------------- | --------------------------------------------- |
+| **Asset**            | What the business **owns**          | Cash, Bank, Inventory, Receivables, Equipment |
+| **Liability**        | What the business **owes**          | Payables, Loans                               |
+| **Equity**           | The owner's share                   | Owner's Capital, Retained Earnings            |
+| **Income (Revenue)** | Money **earned**                    | Sales, Service Income                         |
+| **Expense**          | Money **spent** to run the business | Rent, Salary, Fuel, Labor                     |
 
 **The accounting equation**
+
 ```
 Assets  =  Liabilities  +  Equity
 ```
 
 **Profit**
+
 ```
 Profit  =  Income  -  Expenses
 ```
@@ -119,13 +122,13 @@ Profit  =  Income  -  Expenses
 
 **Double-entry bookkeeping:** every transaction is recorded **twice**: a **debit** in one account and a **credit** in another, for the **same amount**. So the books always balance.
 
-| Account type | Increases with | Decreases with |
-|--------------|----------------|----------------|
-| **Asset** | **Debit** | Credit |
-| **Expense** | **Debit** | Credit |
-| **Liability** | **Credit** | Debit |
-| **Equity** | **Credit** | Debit |
-| **Income** | **Credit** | Debit |
+| Account type  | Increases with | Decreases with |
+| ------------- | -------------- | -------------- |
+| **Asset**     | **Debit**      | Credit         |
+| **Expense**   | **Debit**      | Credit         |
+| **Liability** | **Credit**     | Debit          |
+| **Equity**    | **Credit**     | Debit          |
+| **Income**    | **Credit**     | Debit          |
 
 Memory aid: **Assets and Expenses** are increased by **Debit**. **Liabilities, Equity, and Income** are increased by **Credit**.
 
@@ -135,15 +138,15 @@ Memory aid: **Assets and Expenses** are increased by **Debit**. **Liabilities, E
 
 A small farm business records these transactions.
 
-| # | Date | Transaction | Debit | Credit | Amount |
-|---|------|-------------|-------|--------|--------|
-| 1 | 2026-10-01 | Owner puts money into the business | Cash | Owner's Capital | 100000 |
-| 2 | 2026-10-03 | Buy seed for cash | Inventory | Cash | 5000 |
-| 3 | 2026-10-05 | Buy fertilizer on credit | Inventory | Accounts Payable | 8000 |
-| 4 | 2026-10-10 | Sell rice on credit | Accounts Receivable | Sales | 50000 |
-| 5 | 2026-10-15 | Customer pays part of the due | Cash | Accounts Receivable | 30000 |
-| 6 | 2026-10-18 | Pay labor wages in cash | Labor Expense | Cash | 6000 |
-| 7 | 2026-10-20 | Pay the fertilizer supplier | Accounts Payable | Cash | 8000 |
+| #   | Date       | Transaction                        | Debit               | Credit              | Amount |
+| --- | ---------- | ---------------------------------- | ------------------- | ------------------- | ------ |
+| 1   | 2026-10-01 | Owner puts money into the business | Cash                | Owner's Capital     | 100000 |
+| 2   | 2026-10-03 | Buy seed for cash                  | Inventory           | Cash                | 5000   |
+| 3   | 2026-10-05 | Buy fertilizer on credit           | Inventory           | Accounts Payable    | 8000   |
+| 4   | 2026-10-10 | Sell rice on credit                | Accounts Receivable | Sales               | 50000  |
+| 5   | 2026-10-15 | Customer pays part of the due      | Cash                | Accounts Receivable | 30000  |
+| 6   | 2026-10-18 | Pay labor wages in cash            | Labor Expense       | Cash                | 6000   |
+| 7   | 2026-10-20 | Pay the fertilizer supplier        | Accounts Payable    | Cash                | 8000   |
 
 **Reading entry 4:** we sold rice for 50000 but have not been paid yet. The **customer owes us** (asset `Accounts Receivable` goes up, so **debit**), and we **earned income** (`Sales` goes up, so **credit**).
 
@@ -155,26 +158,26 @@ A small farm business records these transactions.
 
 ### Cash ledger (account `Cash`)
 
-| Date | Description | Debit | Credit | Balance |
-|------|-------------|-------|--------|---------|
-| 2026-10-01 | Owner investment | 100000 | | 100000 |
-| 2026-10-03 | Buy seed | | 5000 | 95000 |
-| 2026-10-15 | Customer payment | 30000 | | 125000 |
-| 2026-10-18 | Labor wages | | 6000 | 119000 |
-| 2026-10-20 | Pay supplier | | 8000 | 111000 |
+| Date       | Description      | Debit  | Credit | Balance |
+| ---------- | ---------------- | ------ | ------ | ------- |
+| 2026-10-01 | Owner investment | 100000 |        | 100000  |
+| 2026-10-03 | Buy seed         |        | 5000   | 95000   |
+| 2026-10-15 | Customer payment | 30000  |        | 125000  |
+| 2026-10-18 | Labor wages      |        | 6000   | 119000  |
+| 2026-10-20 | Pay supplier     |        | 8000   | 111000  |
 
 ### Trial balance (after the 7 entries)
 
-| Account | Type | Debit total | Credit total | Balance |
-|---------|------|-------------|--------------|---------|
-| Cash | Asset | 130000 | 19000 | **111000 Dr** |
-| Inventory | Asset | 13000 | 0 | **13000 Dr** |
-| Accounts Receivable | Asset | 50000 | 30000 | **20000 Dr** |
-| Accounts Payable | Liability | 8000 | 8000 | **0** |
-| Owner's Capital | Equity | 0 | 100000 | **100000 Cr** |
-| Sales | Income | 0 | 50000 | **50000 Cr** |
-| Labor Expense | Expense | 6000 | 0 | **6000 Dr** |
-| **Total** | | **207000** | **207000** | Balanced |
+| Account             | Type      | Debit total | Credit total | Balance       |
+| ------------------- | --------- | ----------- | ------------ | ------------- |
+| Cash                | Asset     | 130000      | 19000        | **111000 Dr** |
+| Inventory           | Asset     | 13000       | 0            | **13000 Dr**  |
+| Accounts Receivable | Asset     | 50000       | 30000        | **20000 Dr**  |
+| Accounts Payable    | Liability | 8000        | 8000         | **0**         |
+| Owner's Capital     | Equity    | 0           | 100000       | **100000 Cr** |
+| Sales               | Income    | 0           | 50000        | **50000 Cr**  |
+| Labor Expense       | Expense   | 6000        | 0            | **6000 Dr**   |
+| **Total**           |           | **207000**  | **207000**   | Balanced      |
 
 - Total debits (`207000`) equal total credits (`207000`), so the books **balance**.
 - **Profit** (simple) = Sales `50000` - Labor Expense `6000` = **`44000`**.
@@ -182,40 +185,40 @@ A small farm business records these transactions.
 
 ## 7. How Other Modules Post to Accounts
 
-| Module action | Accounting effect (simplified) |
-|---------------|--------------------------------|
-| **Purchase** on credit | Dr Inventory, Cr Accounts Payable |
-| **Purchase** paid in cash | Dr Inventory, Cr Cash |
-| **Sale** on credit | Dr Accounts Receivable, Cr Sales |
-| **Sale** in cash | Dr Cash, Cr Sales |
-| **Customer payment** | Dr Cash / Bank, Cr Accounts Receivable |
-| **Supplier payment** | Dr Accounts Payable, Cr Cash / Bank |
-| **Expense** (rent, fuel) | Dr Expense account, Cr Cash / Bank |
-| **Salary** | Dr Salary Expense, Cr Cash / Bank |
-| **Stock adjustment** (loss, damage) | Dr Loss / Expense, Cr Inventory |
+| Module action                       | Accounting effect (simplified)         |
+| ----------------------------------- | -------------------------------------- |
+| **Purchase** on credit              | Dr Inventory, Cr Accounts Payable      |
+| **Purchase** paid in cash           | Dr Inventory, Cr Cash                  |
+| **Sale** on credit                  | Dr Accounts Receivable, Cr Sales       |
+| **Sale** in cash                    | Dr Cash, Cr Sales                      |
+| **Customer payment**                | Dr Cash / Bank, Cr Accounts Receivable |
+| **Supplier payment**                | Dr Accounts Payable, Cr Cash / Bank    |
+| **Expense** (rent, fuel)            | Dr Expense account, Cr Cash / Bank     |
+| **Salary**                          | Dr Salary Expense, Cr Cash / Bank      |
+| **Stock adjustment** (loss, damage) | Dr Loss / Expense, Cr Inventory        |
 
 ## 8. Accounts Reports
 
-| Report | What it shows | Why it matters |
-|--------|---------------|----------------|
-| **Ledger** | All entries of one account | Trace a balance back to its entries |
-| **Cash book / Bank book** | Money in and out | Know the cash position every day |
-| **Trial balance** | Balance of every account | Checks that debits equal credits |
-| **Income statement (Profit and Loss)** | Income minus expenses for a period | Is the business making money? |
-| **Balance sheet** | Assets, liabilities, and equity on a date | What the business owns and owes |
-| **Receivable (due) report** | Who owes us and how much | Collect money on time |
-| **Payable report** | Whom we owe | Pay on time |
-| **Expense report** | Spending by category | Find where money goes |
+| Report                                 | What it shows                             | Why it matters                      |
+| -------------------------------------- | ----------------------------------------- | ----------------------------------- |
+| **Ledger**                             | All entries of one account                | Trace a balance back to its entries |
+| **Cash book / Bank book**              | Money in and out                          | Know the cash position every day    |
+| **Trial balance**                      | Balance of every account                  | Checks that debits equal credits    |
+| **Income statement (Profit and Loss)** | Income minus expenses for a period        | Is the business making money?       |
+| **Balance sheet**                      | Assets, liabilities, and equity on a date | What the business owns and owes     |
+| **Receivable (due) report**            | Who owes us and how much                  | Collect money on time               |
+| **Payable report**                     | Whom we owe                               | Pay on time                         |
+| **Expense report**                     | Spending by category                      | Find where money goes               |
 
 ## 9. Accounts Tables and SQL
 
 A simple accounts design:
 
-| Table | Columns |
-|-------|---------|
-| `Accounts` | `AccountId`, `AccountName`, `AccountType` |
-| `JournalEntries` | `EntryId`, `EntryDate`, `Description` |
-| `JournalLines` | `LineId`, `EntryId`, `AccountId`, `Debit`, `Credit` |
+| Table            | Columns                                             |
+| ---------------- | --------------------------------------------------- |
+| `Accounts`       | `AccountId`, `AccountName`, `AccountType`           |
+| `JournalEntries` | `EntryId`, `EntryDate`, `Description`               |
+| `JournalLines`   | `LineId`, `EntryId`, `AccountId`, `Debit`, `Credit` |
 
 ```
 JournalEntries (1) ----< JournalLines (many) >---- (1) Accounts
@@ -273,6 +276,7 @@ INSERT INTO JournalLines (LineId, EntryId, AccountId, Debit, Credit) VALUES
 ```
 
 **Trial balance**
+
 ```sql
 SELECT
     a.AccountName,
@@ -286,6 +290,7 @@ GROUP BY a.AccountName, a.AccountType;
 ```
 
 **Ledger of one account with a running balance** (Cash)
+
 ```sql
 SELECT
     e.EntryDate,
@@ -299,9 +304,11 @@ JOIN Accounts a       ON l.AccountId = a.AccountId
 WHERE a.AccountName = 'Cash'
 ORDER BY e.EntryDate, l.LineId;
 ```
+
 The last running balance is `111000`.
 
 **Profit and loss**
+
 ```sql
 SELECT
     SUM(CASE WHEN a.AccountType = 'Income'  THEN l.Credit - l.Debit ELSE 0 END) AS TotalIncome,
@@ -313,10 +320,11 @@ JOIN Accounts a ON l.AccountId = a.AccountId;
 ```
 
 | TotalIncome | TotalExpense | Profit |
-|-------------|--------------|--------|
-| 50000 | 6000 | 44000 |
+| ----------- | ------------ | ------ |
+| 50000       | 6000         | 44000  |
 
 **Check that every entry balances** (no rows means all entries are correct)
+
 ```sql
 SELECT EntryId, SUM(Debit) AS TotalDebit, SUM(Credit) AS TotalCredit
 FROM JournalLines
@@ -325,6 +333,7 @@ HAVING SUM(Debit) <> SUM(Credit);
 ```
 
 **Expenses in a date range**
+
 ```sql
 SELECT a.AccountName, SUM(l.Debit - l.Credit) AS Amount
 FROM JournalLines l
@@ -338,15 +347,16 @@ GROUP BY a.AccountName;
 
 ## 10. Accounts for a Farm
 
-| Account type | Farm accounts |
-|--------------|---------------|
-| **Asset** | Cash, Bank, Seed Stock, Fertilizer Stock, Feed Stock, Livestock, Tractor and Equipment, Accounts Receivable |
-| **Liability** | Accounts Payable (suppliers), Bank Loan |
-| **Equity** | Owner's Capital, Retained Earnings |
-| **Income** | Crop Sales, Milk Sales, Egg Sales, Other Income |
-| **Expense** | Seed, Fertilizer, Pesticide, Feed, Labor, Fuel, Irrigation, Veterinary, Repair and Maintenance, Transport |
+| Account type  | Farm accounts                                                                                               |
+| ------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Asset**     | Cash, Bank, Seed Stock, Fertilizer Stock, Feed Stock, Livestock, Tractor and Equipment, Accounts Receivable |
+| **Liability** | Accounts Payable (suppliers), Bank Loan                                                                     |
+| **Equity**    | Owner's Capital, Retained Earnings                                                                          |
+| **Income**    | Crop Sales, Milk Sales, Egg Sales, Other Income                                                             |
+| **Expense**   | Seed, Fertilizer, Pesticide, Feed, Labor, Fuel, Irrigation, Veterinary, Repair and Maintenance, Transport   |
 
 Useful farm reports from the accounts:
+
 - **Expense per category** (where the money goes)
 - **Income per product** (which crop or product earns most)
 - **Profit per season or per field** (use a field or cost center tag on each entry)
@@ -355,44 +365,44 @@ Useful farm reports from the accounts:
 
 ## 11. Maintaining Accounts
 
-| Frequency | Task |
-|-----------|------|
-| **Daily** | Enter every income, expense, and payment on the same day. Check the cash balance. |
-| **Weekly** | Check dues and payables. Count the physical cash and compare. |
+| Frequency   | Task                                                                                |
+| ----------- | ----------------------------------------------------------------------------------- |
+| **Daily**   | Enter every income, expense, and payment on the same day. Check the cash balance.   |
+| **Weekly**  | Check dues and payables. Count the physical cash and compare.                       |
 | **Monthly** | Run the trial balance. Reconcile the bank. Review profit and loss. Review expenses. |
-| **Yearly** | Closing: finalize the year, carry forward balances, and archive. |
+| **Yearly**  | Closing: finalize the year, carry forward balances, and archive.                    |
 
-| Good practice | Why |
-|---------------|-----|
-| **Correct with a reversing entry**, do not delete | Keeps an audit trail |
-| **Lock closed periods** | Prevents changes to finished months |
-| **Use clear account names and a fixed chart of accounts** | Reports stay consistent |
-| **Attach a voucher number and description to every entry** | Easy to trace and audit |
-| **Limit who can post or edit entries** (roles) | Prevents fraud and mistakes |
-| **Back up often** | Accounting data is the most critical data |
+| Good practice                                              | Why                                       |
+| ---------------------------------------------------------- | ----------------------------------------- |
+| **Correct with a reversing entry**, do not delete          | Keeps an audit trail                      |
+| **Lock closed periods**                                    | Prevents changes to finished months       |
+| **Use clear account names and a fixed chart of accounts**  | Reports stay consistent                   |
+| **Attach a voucher number and description to every entry** | Easy to trace and audit                   |
+| **Limit who can post or edit entries** (roles)             | Prevents fraud and mistakes               |
+| **Back up often**                                          | Accounting data is the most critical data |
 
-| Common mistake | Effect |
-|----------------|--------|
-| Entry on the wrong account | Wrong reports. Fix with a correcting entry. |
-| One-sided entry | Trial balance does not balance |
-| Entering transactions late | Cash and stock numbers are wrong in the meantime |
-| Deleting old entries | History and audit trail are lost |
-| Mixing personal and business money | Profit becomes unclear |
+| Common mistake                     | Effect                                           |
+| ---------------------------------- | ------------------------------------------------ |
+| Entry on the wrong account         | Wrong reports. Fix with a correcting entry.      |
+| One-sided entry                    | Trial balance does not balance                   |
+| Entering transactions late         | Cash and stock numbers are wrong in the meantime |
+| Deleting old entries               | History and audit trail are lost                 |
+| Mixing personal and business money | Profit becomes unclear                           |
 
 ## 12. What I Saw in the Software
 
-| Accounts feature | Seen? | Notes |
-|------------------|-------|-------|
-| Chart of accounts | [ ] | |
-| Voucher / journal entry screen | [ ] | |
-| Receipts and payments | [ ] | |
-| Expense entry | [ ] | |
-| Cash book / bank book | [ ] | |
-| Ledger report | [ ] | |
-| Trial balance | [ ] | |
-| Profit and loss / balance sheet | [ ] | |
-| Customer due / supplier payable | [ ] | |
-| Opening balance and year closing | [ ] | |
+| Accounts feature                 | Seen? | Notes |
+| -------------------------------- | ----- | ----- |
+| Chart of accounts                | [ ]   |       |
+| Voucher / journal entry screen   | [ ]   |       |
+| Receipts and payments            | [ ]   |       |
+| Expense entry                    | [ ]   |       |
+| Cash book / bank book            | [ ]   |       |
+| Ledger report                    | [ ]   |       |
+| Trial balance                    | [ ]   |       |
+| Profit and loss / balance sheet  | [ ]   |       |
+| Customer due / supplier payable  | [ ]   |       |
+| Opening balance and year closing | [ ]   |       |
 
 ---
 
@@ -403,6 +413,7 @@ Useful farm reports from the accounts:
 A **method** is a **named block of code** that does one task. You write it once and **call** it as many times as you need.
 
 **Syntax**
+
 ```csharp
 accessModifier returnType MethodName(parameters)
 {
@@ -411,13 +422,13 @@ accessModifier returnType MethodName(parameters)
 }
 ```
 
-| Part | Meaning |
-|------|---------|
-| `static` | Belongs to the class, so it can be called without an object |
+| Part        | Meaning                                                                 |
+| ----------- | ----------------------------------------------------------------------- |
+| `static`    | Belongs to the class, so it can be called without an object             |
 | Return type | The type of the result (`int`, `string`, `bool`, or `void` for nothing) |
-| Name | PascalCase (`CalculateTotal`) |
-| Parameters | Inputs the method needs |
-| `return` | Sends the result back |
+| Name        | PascalCase (`CalculateTotal`)                                           |
+| Parameters  | Inputs the method needs                                                 |
+| `return`    | Sends the result back                                                   |
 
 ### Method with no return value (`void`)
 
@@ -499,11 +510,11 @@ if (TryDivide(10, 2, out int answer))
 
 ### Parameters vs arguments, and scope
 
-| Term | Meaning |
-|------|---------|
-| **Parameter** | The variable in the method definition (`int a`) |
-| **Argument** | The value you pass when calling (`Add(10, 5)`) |
-| **Scope** | A variable declared inside a method exists only inside that method |
+| Term          | Meaning                                                            |
+| ------------- | ------------------------------------------------------------------ |
+| **Parameter** | The variable in the method definition (`int a`)                    |
+| **Argument**  | The value you pass when calling (`Add(10, 5)`)                     |
+| **Scope**     | A variable declared inside a method exists only inside that method |
 
 ### Why use methods?
 
@@ -518,22 +529,22 @@ if (TryDivide(10, 2, out int answer))
 
 A **class** is a **blueprint** (a template). An **object** is a **real thing created from that blueprint**.
 
-| | Class | Object |
-|---|-------|--------|
-| Meaning | The blueprint / design | A real instance made from the blueprint |
-| Example | `Student` | Rahim, Karim, and Nusrat as `Student` objects |
-| Memory | No data of its own | Has its own data |
-| How many | One definition | As many objects as you need |
+|          | Class                  | Object                                        |
+| -------- | ---------------------- | --------------------------------------------- |
+| Meaning  | The blueprint / design | A real instance made from the blueprint       |
+| Example  | `Student`              | Rahim, Karim, and Nusrat as `Student` objects |
+| Memory   | No data of its own     | Has its own data                              |
+| How many | One definition         | As many objects as you need                   |
 
 Real-life example: a **house plan** is the class. Each **house built from the plan** is an object.
 
 A class has:
 
-| Member | Meaning | Example |
-|--------|---------|---------|
-| **Fields / Properties** | The data (what the object **has**) | `Name`, `Marks` |
-| **Methods** | The actions (what the object **does**) | `GetGrade()`, `Display()` |
-| **Constructor** | Sets up a new object | `Student(...)` |
+| Member                  | Meaning                                | Example                   |
+| ----------------------- | -------------------------------------- | ------------------------- |
+| **Fields / Properties** | The data (what the object **has**)     | `Name`, `Marks`           |
+| **Methods**             | The actions (what the object **does**) | `GetGrade()`, `Display()` |
+| **Constructor**         | Sets up a new object                   | `Student(...)`            |
 
 ### Creating a class
 
@@ -653,12 +664,12 @@ public Student(int id, string name)
 
 ### Access modifiers
 
-| Modifier | Who can use the member |
-|----------|-----------------------|
-| `public` | **Anyone**, from anywhere |
-| `private` | **Only inside the same class** (the default for class members) |
-| `protected` | The class and its child classes |
-| `internal` | Anywhere in the same project |
+| Modifier    | Who can use the member                                         |
+| ----------- | -------------------------------------------------------------- |
+| `public`    | **Anyone**, from anywhere                                      |
+| `private`   | **Only inside the same class** (the default for class members) |
+| `protected` | The class and its child classes                                |
+| `internal`  | Anywhere in the same project                                   |
 
 ### Encapsulation
 
@@ -727,12 +738,12 @@ public decimal Total => Price * Quantity;         // calculated property
 
 ## 5. Static and Instance Members
 
-| | Instance member | Static member |
-|---|-----------------|---------------|
-| Belongs to | **Each object** | **The class itself** |
-| Called with | `objectName.Member` | `ClassName.Member` |
-| Needs an object? | Yes | No |
-| Example | `s1.Display()` | `Math.Sqrt(16)`, `Console.WriteLine()` |
+|                  | Instance member     | Static member                          |
+| ---------------- | ------------------- | -------------------------------------- |
+| Belongs to       | **Each object**     | **The class itself**                   |
+| Called with      | `objectName.Member` | `ClassName.Member`                     |
+| Needs an object? | Yes                 | No                                     |
+| Example          | `s1.Display()`      | `Math.Sqrt(16)`, `Console.WriteLine()` |
 
 ```csharp
 class BankAccount
@@ -785,10 +796,10 @@ s3.Name = "Nusrat";
 Console.WriteLine(s1.Name);      // Karim  (unchanged)
 ```
 
-| | Value types (`int`, `double`, `bool`) | Reference types (classes, `string`, arrays) |
-|---|---------------------------------------|----------------------------------------------|
-| Assignment `b = a` | **Copies the value** | **Copies the reference** (same object) |
-| Can be `null`? | No (unless `int?`) | Yes |
+|                    | Value types (`int`, `double`, `bool`) | Reference types (classes, `string`, arrays) |
+| ------------------ | ------------------------------------- | ------------------------------------------- |
+| Assignment `b = a` | **Copies the value**                  | **Copies the reference** (same object)      |
+| Can be `null`?     | No (unless `int?`)                    | Yes                                         |
 
 ---
 
@@ -811,6 +822,7 @@ foreach (Student s in students)
 ```
 
 **Output**
+
 ```
 1 | Rahim | 85
 2 | Karim | 62
@@ -818,6 +830,7 @@ foreach (Student s in students)
 ```
 
 Finding the top student:
+
 ```csharp
 Student top = students[0];
 foreach (Student s in students)
@@ -894,6 +907,7 @@ class Program
 ```
 
 **Output**
+
 ```
 Entry balanced? True
 Entry balanced? False
@@ -903,24 +917,25 @@ Entry balanced? False
 
 ## C# Cheat Sheet
 
-| Topic | Key points |
-|-------|------------|
-| **Method** | `returnType Name(parameters) { ... return value; }`. `void` returns nothing. Call it by name. |
-| **Overloading** | Same name, different parameters |
-| **Class** | A blueprint with properties (data) and methods (actions) |
-| **Object** | An instance of a class, created with `new` |
-| **Constructor** | Runs on `new`. Same name as the class, no return type. |
-| **`this`** | The current object |
-| **Access modifiers** | `public` (anyone), `private` (only the class) |
-| **Encapsulation** | Hide data (`private set`) and change it only through methods |
-| **`static`** | Belongs to the class, used as `ClassName.Member` |
-| **Reference type** | `b = a` makes both point to the same object |
+| Topic                | Key points                                                                                    |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| **Method**           | `returnType Name(parameters) { ... return value; }`. `void` returns nothing. Call it by name. |
+| **Overloading**      | Same name, different parameters                                                               |
+| **Class**            | A blueprint with properties (data) and methods (actions)                                      |
+| **Object**           | An instance of a class, created with `new`                                                    |
+| **Constructor**      | Runs on `new`. Same name as the class, no return type.                                        |
+| **`this`**           | The current object                                                                            |
+| **Access modifiers** | `public` (anyone), `private` (only the class)                                                 |
+| **Encapsulation**    | Hide data (`private set`) and change it only through methods                                  |
+| **`static`**         | Belongs to the class, used as `ClassName.Member`                                              |
+| **Reference type**   | `b = a` makes both point to the same object                                                   |
 
 ---
 
 ## Practice Tasks
 
 **Accounts**
+
 1. List the five account types and give two examples of each for a farm.
 2. Write the journal entry (debit and credit) for: selling vegetables for cash 3000, buying feed on credit 4000, and paying electricity 1200 in cash.
 3. Build a trial balance for those three entries and check that it balances.
@@ -928,14 +943,7 @@ Entry balanced? False
 5. Write a query that shows the ledger of the `Accounts Receivable` account with a running balance.
 6. Find the entries in the software that created a `Sales` income and a `Cash` receipt.
 
-**C#**
-7. Write a method `IsEven(int n)` that returns `true` or `false`, and another that returns the **larger of two numbers**.
-8. Write overloaded methods `Area` for a **rectangle** (two parameters) and a **circle** (one parameter).
-9. Create a `Student` class with a constructor, a `GetGrade()` method, and a `Display()` method. Create three objects and display them.
-10. Create a `BankAccount` class with `Deposit` and `Withdraw`, and test an invalid withdrawal.
-11. Add a **static counter** that counts how many objects were created.
-12. Create a `Product` class (`Name`, `Price`, `Quantity`) with a calculated `Total` property, put 5 products in a `List<Product>`, and print the **grand total**.
-13. Create a `JournalLine` class and a method that checks whether a list of lines balances.
+**C#** 7. Write a method `IsEven(int n)` that returns `true` or `false`, and another that returns the **larger of two numbers**. 8. Write overloaded methods `Area` for a **rectangle** (two parameters) and a **circle** (one parameter). 9. Create a `Student` class with a constructor, a `GetGrade()` method, and a `Display()` method. Create three objects and display them. 10. Create a `BankAccount` class with `Deposit` and `Withdraw`, and test an invalid withdrawal. 11. Add a **static counter** that counts how many objects were created. 12. Create a `Product` class (`Name`, `Price`, `Quantity`) with a calculated `Total` property, put 5 products in a `List<Product>`, and print the **grand total**. 13. Create a `JournalLine` class and a method that checks whether a list of lines balances.
 
 ---
 
