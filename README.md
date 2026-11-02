@@ -128,6 +128,7 @@ dotnet-backend-journey/
 | 22  | Business Management Software and SQL Recap   | [Day-22](week-04/day-22) |
 | 23  | Business Management Software                 | [Day-23](week-04/day-23) |
 | 24  | Accounts Module and C# Method, Class, Object | [Day-24](week-04/day-24) |
+| 25  | Stock Investigation: Item 824 (SQL Server)   | [Day-25](week-04/day-25) |
 
 </details>
 
