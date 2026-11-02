@@ -7,6 +7,7 @@ Documentation of the work on **ItemId 824**: checking its stock in and out, its 
 > **Note:** Table and column names come from the queries that were written. Where something is an **assumption** (for example, how `Quantity` is stored for stock-out rows), it is marked, and it should be confirmed with the senior or the data.
 
 ## Table of Contents
+
 - [1. Problem Statement](#1-problem-statement)
 - [2. Database Overview](#2-database-overview)
 - [3. Approach](#3-approach)
@@ -35,30 +36,31 @@ and show them **side by side per project**, so that any difference between the t
 
 ## 2. Database Overview
 
-| Table | Purpose |
-|-------|---------|
-| `Items` | Master list of items (name, low stock level, company). `Id = 824` is the item studied |
-| `Projects` | List of projects. Stock is kept **per project** |
-| `Stock` | **Every stock movement** (in and out) with item, project, quantity, and type |
-| `CurrentStock` | **Current quantity** of each item in each project |
-| `Transfers` | **Header** of a stock transfer (number, date, type, status) |
-| `TransferDetails` | **Items** of a transfer (transfer quantity and received quantity) |
-| `StockAdjustment` | **Header** of a stock adjustment (date, type, remarks) |
-| `StockAdjustmentDetail` | **Items** of an adjustment (quantity, total price, reason) |
+| Table                   | Purpose                                                                               |
+| ----------------------- | ------------------------------------------------------------------------------------- |
+| `Items`                 | Master list of items (name, low stock level, company). `Id = 824` is the item studied |
+| `Projects`              | List of projects. Stock is kept **per project**                                       |
+| `Stock`                 | **Every stock movement** (in and out) with item, project, quantity, and type          |
+| `CurrentStock`          | **Current quantity** of each item in each project                                     |
+| `Transfers`             | **Header** of a stock transfer (number, date, type, status)                           |
+| `TransferDetails`       | **Items** of a transfer (transfer quantity and received quantity)                     |
+| `StockAdjustment`       | **Header** of a stock adjustment (date, type, remarks)                                |
+| `StockAdjustmentDetail` | **Items** of an adjustment (quantity, total price, reason)                            |
 
 **Columns seen in the queries**
 
-| Table | Columns used |
-|-------|--------------|
-| `Stock` | `ItemId`, `ProjectId`, `Quantity`, `StockType` (`In` / `Out`) |
-| `CurrentStock` | `ItemId`, `ProjectId`, `Quantity` |
-| `Transfers` | `Id`, `TransferNo`, `TransferDate`, `TransferType`, `Status` |
-| `TransferDetails` | `TransferId`, `ItemId`, `TransferQuantity`, `ReceivedQuantity` |
-| `StockAdjustment` | `Id`, `AdjustmentDate`, `Remarks`, `AdjustmentType` |
+| Table                   | Columns used                                                      |
+| ----------------------- | ----------------------------------------------------------------- |
+| `Stock`                 | `ItemId`, `ProjectId`, `Quantity`, `StockType` (`In` / `Out`)     |
+| `CurrentStock`          | `ItemId`, `ProjectId`, `Quantity`                                 |
+| `Transfers`             | `Id`, `TransferNo`, `TransferDate`, `TransferType`, `Status`      |
+| `TransferDetails`       | `TransferId`, `ItemId`, `TransferQuantity`, `ReceivedQuantity`    |
+| `StockAdjustment`       | `Id`, `AdjustmentDate`, `Remarks`, `AdjustmentType`               |
 | `StockAdjustmentDetail` | `StockAdjustmentId`, `ItemId`, `Quantity`, `TotalPrice`, `Reason` |
-| `Projects` | `Id`, `Name` |
+| `Projects`              | `Id`, `Name`                                                      |
 
 **Relationships**
+
 ```
 Items (1) ----< Stock
 Items (1) ----< CurrentStock
@@ -84,15 +86,15 @@ Purchase / Sale / Transfer / Adjustment  ->  rows in Stock (history)
 
 ## 3. Approach
 
-| Step | Question | Table |
-|------|----------|-------|
-| 1 | What is item 824? | `Items` |
-| 2 | How much stock came in and went out? | `Stock` |
-| 3 | What is the current stock? | `CurrentStock` |
-| 4 | Was the item transferred? How much? | `Transfers`, `TransferDetails` |
-| 5 | Was the item adjusted? How much? | `StockAdjustment`, `StockAdjustmentDetail` |
-| 6 | Do `Stock` and `CurrentStock` match **per project**? | `Stock`, `CurrentStock`, `Projects` |
-| 7 | If not, why? | Transfers and adjustments from steps 4 and 5 |
+| Step | Question                                             | Table                                        |
+| ---- | ---------------------------------------------------- | -------------------------------------------- |
+| 1    | What is item 824?                                    | `Items`                                      |
+| 2    | How much stock came in and went out?                 | `Stock`                                      |
+| 3    | What is the current stock?                           | `CurrentStock`                               |
+| 4    | Was the item transferred? How much?                  | `Transfers`, `TransferDetails`               |
+| 5    | Was the item adjusted? How much?                     | `StockAdjustment`, `StockAdjustmentDetail`   |
+| 6    | Do `Stock` and `CurrentStock` match **per project**? | `Stock`, `CurrentStock`, `Projects`          |
+| 7    | If not, why?                                         | Transfers and adjustments from steps 4 and 5 |
 
 ---
 
@@ -131,7 +133,7 @@ select count(*) as TotalStockOut from stock where itemid = 824 and stocktype = '
 
 **What it does:** counts the **number of rows** (movements) of type `in` and `out`.
 
-**Important:** `COUNT(*)` counts **rows**, not **quantity**. Five rows of 100 units each is `COUNT = 5` but quantity `500`. To find *how much* stock came in and went out, use **`SUM(Quantity)`**:
+**Important:** `COUNT(*)` counts **rows**, not **quantity**. Five rows of 100 units each is `COUNT = 5` but quantity `500`. To find _how much_ stock came in and went out, use **`SUM(Quantity)`**:
 
 ```sql
 select
@@ -143,10 +145,10 @@ where itemid = 824
 group by stocktype;
 ```
 
-| stocktype | TotalRows | TotalQuantity |
-|-----------|-----------|---------------|
-| In | (rows) | (total quantity in) |
-| Out | (rows) | (total quantity out) |
+| stocktype | TotalRows | TotalQuantity        |
+| --------- | --------- | -------------------- |
+| In        | (rows)    | (total quantity in)  |
+| Out       | (rows)    | (total quantity out) |
 
 ### 5.2 Current stock from `CurrentStock`
 
@@ -180,12 +182,12 @@ where td.ItemId = 824;
 
 **Reading the result:**
 
-| Column | Meaning |
-|--------|---------|
-| `TransferQuantity` | Quantity sent |
-| `ReceivedQuantity` | Quantity received at the other side |
-| `TransferQuantity - ReceivedQuantity` | Quantity **not yet received** (in transit, or a difference to explain) |
-| `Status` | Whether the transfer is pending, approved, or completed (check the actual values) |
+| Column                                | Meaning                                                                           |
+| ------------------------------------- | --------------------------------------------------------------------------------- |
+| `TransferQuantity`                    | Quantity sent                                                                     |
+| `ReceivedQuantity`                    | Quantity received at the other side                                               |
+| `TransferQuantity - ReceivedQuantity` | Quantity **not yet received** (in transit, or a difference to explain)            |
+| `Status`                              | Whether the transfer is pending, approved, or completed (check the actual values) |
 
 ### 5.4 Total transferred
 
@@ -285,32 +287,32 @@ ORDER BY p.Name;
 
 ### How it works
 
-| Part | What it does |
-|------|--------------|
-| `FROM Projects p` | Start from the list of all projects |
-| Subquery `s` | From `Stock`, take only item 824 and **add up the quantity per project** (`GROUP BY ProjectId`) |
-| Subquery `cs` | From `CurrentStock`, take only item 824 and **add up the quantity per project** |
-| `LEFT JOIN ... s` and `LEFT JOIN ... cs` | Attach both totals to each project. A project with no rows gets `NULL` |
-| `ISNULL(..., 0)` | Show `0` instead of `NULL` |
-| `WHERE s.ProjectId IS NOT NULL OR cs.ProjectId IS NOT NULL` | Keep only projects that have **at least one** stock or current stock row for item 824 |
-| `ORDER BY p.Name` | Sort by project name |
+| Part                                                        | What it does                                                                                    |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `FROM Projects p`                                           | Start from the list of all projects                                                             |
+| Subquery `s`                                                | From `Stock`, take only item 824 and **add up the quantity per project** (`GROUP BY ProjectId`) |
+| Subquery `cs`                                               | From `CurrentStock`, take only item 824 and **add up the quantity per project**                 |
+| `LEFT JOIN ... s` and `LEFT JOIN ... cs`                    | Attach both totals to each project. A project with no rows gets `NULL`                          |
+| `ISNULL(..., 0)`                                            | Show `0` instead of `NULL`                                                                      |
+| `WHERE s.ProjectId IS NOT NULL OR cs.ProjectId IS NOT NULL` | Keep only projects that have **at least one** stock or current stock row for item 824           |
+| `ORDER BY p.Name`                                           | Sort by project name                                                                            |
 
 **Why subqueries?** Each table is first **summarized to one row per project**. If `Stock` and `CurrentStock` were joined directly, the rows would multiply and the sums would be wrong. Summarizing first avoids this.
 
 ### Example result (illustrative numbers)
 
 | ProjectName | StockBalance | CurrentStock |
-|-------------|--------------|--------------|
-| Project A | 120 | 120 |
-| Project B | 80 | 75 |
-| Project C | 0 | 30 |
+| ----------- | ------------ | ------------ |
+| Project A   | 120          | 120          |
+| Project B   | 80           | 75           |
+| Project C   | 0            | 30           |
 
 **How to read it**
 
-| Case | Meaning |
-|------|---------|
-| `StockBalance = CurrentStock` (Project A) | The two tables **agree** |
-| Different values (Project B) | **Mismatch.** Check transfers and adjustments |
+| Case                                                  | Meaning                                                       |
+| ----------------------------------------------------- | ------------------------------------------------------------- |
+| `StockBalance = CurrentStock` (Project A)             | The two tables **agree**                                      |
+| Different values (Project B)                          | **Mismatch.** Check transfers and adjustments                 |
 | `StockBalance = 0` but `CurrentStock > 0` (Project C) | Current stock exists with **no matching movement** in `Stock` |
 
 ---
@@ -399,13 +401,13 @@ ORDER BY p.Name;
 WHERE ISNULL(sb.StockBalance, 0) <> ISNULL(cb.CurrentStock, 0)
 ```
 
-| Change | Why |
-|--------|-----|
-| `CASE` for In / Out | Correct balance |
-| `IsDelete` filter | Ignore deleted movements |
-| `FULL JOIN` | Show projects present in only one of the two tables, and rows without a project |
-| `Difference` column | Mismatches are easy to see |
-| `WITH` (CTE) | Same logic as the subqueries, easier to read |
+| Change              | Why                                                                             |
+| ------------------- | ------------------------------------------------------------------------------- |
+| `CASE` for In / Out | Correct balance                                                                 |
+| `IsDelete` filter   | Ignore deleted movements                                                        |
+| `FULL JOIN`         | Show projects present in only one of the two tables, and rows without a project |
+| `Difference` column | Mismatches are easy to see                                                      |
+| `WITH` (CTE)        | Same logic as the subqueries, easier to read                                    |
 
 ---
 
@@ -448,19 +450,21 @@ where ItemId = 824;
 
 `UNION ALL` stacks the results into one small table that can be compared line by line.
 
-| Source | Quantity |
-|--------|----------|
-| Stock IN | (total in) |
-| Stock OUT | (total out) |
-| CurrentStock | (current quantity) |
-| Transferred | (sent) |
-| Received (transfers) | (received) |
-| Adjusted | (adjusted) |
+| Source               | Quantity           |
+| -------------------- | ------------------ |
+| Stock IN             | (total in)         |
+| Stock OUT            | (total out)        |
+| CurrentStock         | (current quantity) |
+| Transferred          | (sent)             |
+| Received (transfers) | (received)         |
+| Adjusted             | (adjusted)         |
 
 **Reconciliation idea:**
+
 ```
 Stock IN - Stock OUT   should equal   CurrentStock
 ```
+
 If it does not, the difference should be explained by **transfers not received** or **adjustments** that were not recorded in `Stock` (or the other way round).
 
 ### 8.2 Transfers not fully received
@@ -491,38 +495,39 @@ order by Id desc;
 
 ### Possible causes of a mismatch
 
-| Cause | What to check |
-|-------|---------------|
-| Transfer sent but **not received** yet | `TransferQuantity` vs `ReceivedQuantity`, and `Status` |
-| Adjustment saved but **not reflected** in `Stock` or `CurrentStock` | Adjustment rows against stock rows |
-| Stock row **deleted** (`IsDelete = 1`) but `CurrentStock` was not updated | `IsDelete` rows |
-| `CurrentStock` not updated after a movement | How and when `CurrentStock` is updated (procedure, trigger, or application) |
-| Data entered **directly** in the database | Rows with no reference to a document |
-| Wrong project on a row | `ProjectId` of the movement |
-| Duplicate stock rows | Same reference entered twice |
+| Cause                                                                     | What to check                                                               |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Transfer sent but **not received** yet                                    | `TransferQuantity` vs `ReceivedQuantity`, and `Status`                      |
+| Adjustment saved but **not reflected** in `Stock` or `CurrentStock`       | Adjustment rows against stock rows                                          |
+| Stock row **deleted** (`IsDelete = 1`) but `CurrentStock` was not updated | `IsDelete` rows                                                             |
+| `CurrentStock` not updated after a movement                               | How and when `CurrentStock` is updated (procedure, trigger, or application) |
+| Data entered **directly** in the database                                 | Rows with no reference to a document                                        |
+| Wrong project on a row                                                    | `ProjectId` of the movement                                                 |
+| Duplicate stock rows                                                      | Same reference entered twice                                                |
 
 ---
 
 ## 9. Concepts Used
 
-| Concept | Where |
-|---------|-------|
-| `SELECT`, `WHERE`, `ORDER BY` | Every query |
-| `COUNT` vs `SUM` | Counting rows vs adding quantity |
-| `GROUP BY` | Totals per project, per stock type, per adjustment type |
-| `INNER JOIN` | Header and detail tables (`Transfers` and `TransferDetails`) |
-| `LEFT JOIN`, `FULL JOIN` | Keep rows that have no match |
-| Subquery / derived table, CTE (`WITH`) | Summarize a table before joining |
-| `ISNULL`, `COALESCE` | Replace `NULL` with a value |
-| `CASE` | In minus out calculation |
-| `UNION ALL` | One summary table from several sources |
-| Aliases (`AS`) | Readable column names |
+| Concept                                | Where                                                        |
+| -------------------------------------- | ------------------------------------------------------------ |
+| `SELECT`, `WHERE`, `ORDER BY`          | Every query                                                  |
+| `COUNT` vs `SUM`                       | Counting rows vs adding quantity                             |
+| `GROUP BY`                             | Totals per project, per stock type, per adjustment type      |
+| `INNER JOIN`                           | Header and detail tables (`Transfers` and `TransferDetails`) |
+| `LEFT JOIN`, `FULL JOIN`               | Keep rows that have no match                                 |
+| Subquery / derived table, CTE (`WITH`) | Summarize a table before joining                             |
+| `ISNULL`, `COALESCE`                   | Replace `NULL` with a value                                  |
+| `CASE`                                 | In minus out calculation                                     |
+| `UNION ALL`                            | One summary table from several sources                       |
+| Aliases (`AS`)                         | Readable column names                                        |
 
 ---
 
 ## 10. Safe Practice and Questions to Ask
 
 **Safe practice**
+
 - Only run **`SELECT`** queries while investigating. Do not change data on a live database.
 - Use **`TOP`** on large tables.
 - Check **one item at a time** and keep the item ID in one place.
@@ -530,6 +535,7 @@ order by Id desc;
 - Do the correction through the **normal process** (for example a stock adjustment), not by editing numbers by hand, so the history stays complete.
 
 **Questions to ask the senior**
+
 - [ ] How is `Quantity` stored for `Out` rows (positive or negative)?
 - [ ] When and how is `CurrentStock` updated (stored procedure, trigger, or application)?
 - [ ] Does a transfer create rows in `Stock` (out from one project, in to another), and when?
