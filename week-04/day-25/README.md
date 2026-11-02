@@ -4,101 +4,17 @@
 
 Documentation of the work on **ItemId 824**: checking its stock in and out, its current stock, its transfers, and its adjustments, then comparing the **stock transactions** with the **current stock** for each project.
 
-> **Note:** Table and column names come from the queries that were written. Where something is an **assumption** (for example, how `Quantity` is stored for stock-out rows), it is marked, and it should be confirmed with the senior or the data.
-
 ## Table of Contents
 
-- [1. Problem Statement](#1-problem-statement)
-- [2. Database Overview](#2-database-overview)
-- [3. Approach](#3-approach)
-- [4. Exploring the Tables](#4-exploring-the-tables)
-- [5. Queries Written](#5-queries-written)
-- [6. Solution: Stock per Project](#6-solution-stock-per-project)
-- [7. Review and Improvements](#7-review-and-improvements)
-- [8. Investigating a Mismatch](#8-investigating-a-mismatch)
-- [9. Concepts Used](#9-concepts-used)
-- [10. Safe Practice and Questions to Ask](#10-safe-practice-and-questions-to-ask)
-- [11. Practice Tasks](#11-practice-tasks)
-- [12. Summary](#12-summary)
+- [1. Exploring the Tables](#1-exploring-the-tables)
+- [2. Queries Written](#2-queries-written)
+- [3. Solution: Stock per Project](#3-solution-stock-per-project)
+- [4. Concepts Used](#4-concepts-used)
+- [5. Summary](#5-summary)
 
 ---
 
-## 1. Problem Statement
-
-For the item with **`Id = 824`**, find out its **stock position in every project**:
-
-- How much stock is recorded in the **`Stock`** table (the history of stock movements), and
-- How much is recorded in the **`CurrentStock`** table (the current quantity),
-
-and show them **side by side per project**, so that any difference between the two can be found and explained using the **transfers** and **adjustments** of that item.
-
----
-
-## 2. Database Overview
-
-| Table                   | Purpose                                                                               |
-| ----------------------- | ------------------------------------------------------------------------------------- |
-| `Items`                 | Master list of items (name, low stock level, company). `Id = 824` is the item studied |
-| `Projects`              | List of projects. Stock is kept **per project**                                       |
-| `Stock`                 | **Every stock movement** (in and out) with item, project, quantity, and type          |
-| `CurrentStock`          | **Current quantity** of each item in each project                                     |
-| `Transfers`             | **Header** of a stock transfer (number, date, type, status)                           |
-| `TransferDetails`       | **Items** of a transfer (transfer quantity and received quantity)                     |
-| `StockAdjustment`       | **Header** of a stock adjustment (date, type, remarks)                                |
-| `StockAdjustmentDetail` | **Items** of an adjustment (quantity, total price, reason)                            |
-
-**Columns seen in the queries**
-
-| Table                   | Columns used                                                      |
-| ----------------------- | ----------------------------------------------------------------- |
-| `Stock`                 | `ItemId`, `ProjectId`, `Quantity`, `StockType` (`In` / `Out`)     |
-| `CurrentStock`          | `ItemId`, `ProjectId`, `Quantity`                                 |
-| `Transfers`             | `Id`, `TransferNo`, `TransferDate`, `TransferType`, `Status`      |
-| `TransferDetails`       | `TransferId`, `ItemId`, `TransferQuantity`, `ReceivedQuantity`    |
-| `StockAdjustment`       | `Id`, `AdjustmentDate`, `Remarks`, `AdjustmentType`               |
-| `StockAdjustmentDetail` | `StockAdjustmentId`, `ItemId`, `Quantity`, `TotalPrice`, `Reason` |
-| `Projects`              | `Id`, `Name`                                                      |
-
-**Relationships**
-
-```
-Items (1) ----< Stock
-Items (1) ----< CurrentStock
-Projects (1) ----< Stock
-Projects (1) ----< CurrentStock
-Transfers (1) ----< TransferDetails >---- (1) Items
-StockAdjustment (1) ----< StockAdjustmentDetail >---- (1) Items
-```
-
-**How the tables work together**
-
-```
-Purchase / Sale / Transfer / Adjustment  ->  rows in Stock (history)
-                                          ->  CurrentStock (current quantity per item and project)
-```
-
-- **`Stock`** is the **history**: every movement is a row.
-- **`CurrentStock`** is the **summary**: the quantity right now.
-- In a healthy system, the balance calculated from `Stock` (in minus out) **matches** `CurrentStock`.
-- **Transfers** move stock between projects. **Adjustments** correct stock (for example loss, damage, or a found item).
-
----
-
-## 3. Approach
-
-| Step | Question                                             | Table                                        |
-| ---- | ---------------------------------------------------- | -------------------------------------------- |
-| 1    | What is item 824?                                    | `Items`                                      |
-| 2    | How much stock came in and went out?                 | `Stock`                                      |
-| 3    | What is the current stock?                           | `CurrentStock`                               |
-| 4    | Was the item transferred? How much?                  | `Transfers`, `TransferDetails`               |
-| 5    | Was the item adjusted? How much?                     | `StockAdjustment`, `StockAdjustmentDetail`   |
-| 6    | Do `Stock` and `CurrentStock` match **per project**? | `Stock`, `CurrentStock`, `Projects`          |
-| 7    | If not, why?                                         | Transfers and adjustments from steps 4 and 5 |
-
----
-
-## 4. Exploring the Tables
+## 1. Exploring the Tables
 
 First look at each table to understand the columns and data.
 
@@ -115,13 +31,9 @@ select * from Items where Id = 824;
 select * from Projects;
 ```
 
-> On large tables, use **`TOP 10`** (for example `select top 10 * from Stock;`) so the query returns quickly.
-
-`select * from Items where Id = 824;` shows which item 824 is (name, low stock level, company).
-
 ---
 
-## 5. Queries Written
+## 2. Queries Written
 
 ### 5.1 Stock in and stock out from `Stock`
 
@@ -132,8 +44,6 @@ select count(*) as TotalStockOut from stock where itemid = 824 and stocktype = '
 ```
 
 **What it does:** counts the **number of rows** (movements) of type `in` and `out`.
-
-**Important:** `COUNT(*)` counts **rows**, not **quantity**. Five rows of 100 units each is `COUNT = 5` but quantity `500`. To find _how much_ stock came in and went out, use **`SUM(Quantity)`**:
 
 ```sql
 select
@@ -252,7 +162,7 @@ group by sa.AdjustmentType;
 
 ---
 
-## 6. Solution: Stock per Project
+## 3. Solution: Stock per Project
 
 **Question:** for item 824, show the stock of each project from the `Stock` table and from the `CurrentStock` table.
 
@@ -507,7 +417,7 @@ order by Id desc;
 
 ---
 
-## 9. Concepts Used
+## 4. Concepts Used
 
 | Concept                                | Where                                                        |
 | -------------------------------------- | ------------------------------------------------------------ |
@@ -524,44 +434,7 @@ order by Id desc;
 
 ---
 
-## 10. Safe Practice and Questions to Ask
-
-**Safe practice**
-
-- Only run **`SELECT`** queries while investigating. Do not change data on a live database.
-- Use **`TOP`** on large tables.
-- Check **one item at a time** and keep the item ID in one place.
-- Before any correction, **take a backup**, run the same condition as a `SELECT` first, and use a **transaction** (`BEGIN TRAN` ... `ROLLBACK` or `COMMIT`).
-- Do the correction through the **normal process** (for example a stock adjustment), not by editing numbers by hand, so the history stays complete.
-
-**Questions to ask the senior**
-
-- [ ] How is `Quantity` stored for `Out` rows (positive or negative)?
-- [ ] When and how is `CurrentStock` updated (stored procedure, trigger, or application)?
-- [ ] Does a transfer create rows in `Stock` (out from one project, in to another), and when?
-- [ ] What are the values of `Transfers.Status` and `Transfers.TransferType`?
-- [ ] What are the values of `StockAdjustment.AdjustmentType` (increase or decrease)?
-- [ ] Is `IsDelete` used on `Stock`, and should deleted rows be ignored?
-- [ ] Should `CurrentStock` always equal In minus Out for each project?
-
----
-
-## 11. Practice Tasks
-
-1. Run the exploration queries and write down what each table stores.
-2. Replace the `COUNT(*)` queries with `SUM(Quantity)` and compare the numbers.
-3. Check how `Out` quantities are stored, then calculate the correct **In minus Out** balance for item 824.
-4. Run the per-project solution query, then the improved version, and compare the results.
-5. Show only the projects where `StockBalance` and `CurrentStock` differ.
-6. Find the transfers of item 824 where `TransferQuantity` is different from `ReceivedQuantity`.
-7. Find the total adjusted quantity of item 824 **per adjustment type**.
-8. Run the same investigation for another item (replace `824`).
-9. Turn the per-project query into a **stored procedure** `Inv_ItemStockCheck @ItemId INT`.
-10. Write a query that finds **all items** where `Stock` (in minus out) and `CurrentStock` do not match, grouped by item and project.
-
----
-
-## 12. Summary
+## 5. Summary
 
 - **Problem:** for item **824**, compare the stock from the **`Stock`** history with **`CurrentStock`** for each project, and explain any difference using **transfers** and **adjustments**.
 - **`COUNT(*)`** counts rows. Use **`SUM(Quantity)`** to get the quantity.
