@@ -1,7 +1,6 @@
 # Stock Report for Item 824: InAmount, OutAmount, StockBalance, CurrentStock, and Difference
 
 **Date:** 3 November 2026
-**Database:** SQL Server
 
 ## Table of Contents
 
@@ -51,8 +50,6 @@ For **ItemId 824**, find the following values for **each project** from the SQL 
 ---
 
 ## 3. Exploring the Tables
-
-The tables were reviewed first to understand their columns and data.
 
 ```sql
 select * from Projects;
@@ -145,8 +142,6 @@ ORDER BY ProjectName;
 
 ## 5. Understanding the Solution
 
-The query is built from the inside out in four steps.
-
 ### Step 1: Summarize the `Stock` table (subquery `s`)
 
 ```sql
@@ -173,8 +168,6 @@ GROUP BY ProjectId
 | `IN` as `+` and `OUT` as `-` | Gives **StockBalance** = In minus Out                        |
 | `ISNULL(Quantity, 0)`        | A `NULL` quantity counts as `0`                              |
 
-This technique is called **conditional aggregation**: a `CASE` inside `SUM` decides, row by row, what to add.
-
 ### Step 2: Summarize the `CurrentStock` table (subquery `c`)
 
 ```sql
@@ -185,8 +178,6 @@ FROM CurrentStock
 WHERE ItemId = 824
 GROUP BY ProjectId
 ```
-
-One row per project, with the current quantity of item 824.
 
 ### Step 3: Combine the two summaries
 
