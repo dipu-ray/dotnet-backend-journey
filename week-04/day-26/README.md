@@ -237,8 +237,6 @@ ORDER BY ProjectName;
 
 ## 6. Practice Queries
 
-These queries break the solution into small parts. The examples use this sample data from the stock table for one item:
-
 | ProjectId | StockType | Quantity |
 | --------- | --------- | -------- |
 | 1         | IN        | 100      |
@@ -248,8 +246,6 @@ These queries break the solution into small parts. The examples use this sample 
 | 2         | OUT       | 5        |
 | 3         | IN        | 20       |
 | 3         | OUT       | 10       |
-
-> The practice queries below are written for a generic stock table. Use `Stock` (or `StockTransactions` where the query says so) as the table name that exists in your database, and add `WHERE ItemId = 824` to limit them to one item.
 
 ### 6.1 Only IN quantity
 
@@ -437,14 +433,6 @@ having
 | StockBalance `> 100` | In minus Out is more than 100 |
 | OutAmount `> 10`     | More than 10 went out         |
 | InAmount `> 30`      | More than 30 came in          |
-
-**Check against the sample data**
-
-| ProjectId | StockBalance > 100 | OutAmount > 10 | InAmount > 30 | Kept?   |
-| --------- | ------------------ | -------------- | ------------- | ------- |
-| 1         | 120: Yes           | 30: Yes        | 150: Yes      | **Yes** |
-| 2         | 75: No             | 5: No          | 80: Yes       | No      |
-| 3         | 10: No             | 10: No         | 20: No        | No      |
 
 **Result**
 
