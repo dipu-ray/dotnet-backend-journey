@@ -4,6 +4,7 @@
 **Database:** SQL Server
 
 ## Table of Contents
+
 - [1. Problem Statement](#1-problem-statement)
 - [2. Database Tables](#2-database-tables)
 - [3. Exploring the Tables](#3-exploring-the-tables)
@@ -18,34 +19,34 @@
 
 For **ItemId 824**, find the following values for **each project** from the SQL Server database:
 
-| Column | Meaning |
-|--------|---------|
-| `InAmount` | Total quantity that came **in** |
-| `OutAmount` | Total quantity that went **out** |
+| Column         | Meaning                                                   |
+| -------------- | --------------------------------------------------------- |
+| `InAmount`     | Total quantity that came **in**                           |
+| `OutAmount`    | Total quantity that went **out**                          |
 | `StockBalance` | `InAmount - OutAmount`, calculated from the stock history |
-| `CurrentStock` | The quantity recorded in the current stock table |
-| `Difference` | `StockBalance - CurrentStock` |
+| `CurrentStock` | The quantity recorded in the current stock table          |
+| `Difference`   | `StockBalance - CurrentStock`                             |
 
 ---
 
 ## 2. Database Tables
 
-| Table | Purpose |
-|-------|---------|
-| `Projects` | List of projects (`Id`, `Name`) |
-| `Stock` | History of every stock movement (item, project, quantity, `StockType` = `IN` / `OUT`) |
-| `CurrentStock` | Current quantity of each item in each project |
-| `Transfers`, `TransferDetails` | Stock transfers (header and items) |
-| `StockAdjustment`, `StockAdjustmentDetail` | Stock adjustments (header and items) |
-| `Items` | List of items (`Id = 824` is the item studied) |
+| Table                                      | Purpose                                                                               |
+| ------------------------------------------ | ------------------------------------------------------------------------------------- |
+| `Projects`                                 | List of projects (`Id`, `Name`)                                                       |
+| `Stock`                                    | History of every stock movement (item, project, quantity, `StockType` = `IN` / `OUT`) |
+| `CurrentStock`                             | Current quantity of each item in each project                                         |
+| `Transfers`, `TransferDetails`             | Stock transfers (header and items)                                                    |
+| `StockAdjustment`, `StockAdjustmentDetail` | Stock adjustments (header and items)                                                  |
+| `Items`                                    | List of items (`Id = 824` is the item studied)                                        |
 
 **Columns used in the solution**
 
-| Table | Columns |
-|-------|---------|
-| `Stock` | `ProjectId`, `ItemId`, `StockType`, `Quantity`, `IsDelete` |
-| `CurrentStock` | `ProjectId`, `ItemId`, `Quantity` |
-| `Projects` | `Id`, `Name` |
+| Table          | Columns                                                    |
+| -------------- | ---------------------------------------------------------- |
+| `Stock`        | `ProjectId`, `ItemId`, `StockType`, `Quantity`, `IsDelete` |
+| `CurrentStock` | `ProjectId`, `ItemId`, `Quantity`                          |
+| `Projects`     | `Id`, `Name`                                               |
 
 ---
 
@@ -162,15 +163,15 @@ WHERE ItemId = 824
 GROUP BY ProjectId
 ```
 
-| Part | Purpose |
-|------|---------|
-| `WHERE ItemId = 824` | Only the item being studied |
-| `ISNULL(IsDelete, 0) = 0` | Ignore deleted rows (`NULL` or `0` means not deleted) |
-| `GROUP BY ProjectId` | One result row per project |
-| `SUM(CASE ... 'IN' ...)` | Adds only the quantities of `IN` rows, giving **InAmount** |
-| `SUM(CASE ... 'OUT' ...)` | Adds only the quantities of `OUT` rows, giving **OutAmount** |
-| `IN` as `+` and `OUT` as `-` | Gives **StockBalance** = In minus Out |
-| `ISNULL(Quantity, 0)` | A `NULL` quantity counts as `0` |
+| Part                         | Purpose                                                      |
+| ---------------------------- | ------------------------------------------------------------ |
+| `WHERE ItemId = 824`         | Only the item being studied                                  |
+| `ISNULL(IsDelete, 0) = 0`    | Ignore deleted rows (`NULL` or `0` means not deleted)        |
+| `GROUP BY ProjectId`         | One result row per project                                   |
+| `SUM(CASE ... 'IN' ...)`     | Adds only the quantities of `IN` rows, giving **InAmount**   |
+| `SUM(CASE ... 'OUT' ...)`    | Adds only the quantities of `OUT` rows, giving **OutAmount** |
+| `IN` as `+` and `OUT` as `-` | Gives **StockBalance** = In minus Out                        |
+| `ISNULL(Quantity, 0)`        | A `NULL` quantity counts as `0`                              |
 
 This technique is called **conditional aggregation**: a `CASE` inside `SUM` decides, row by row, what to add.
 
@@ -197,12 +198,12 @@ LEFT JOIN Projects p
     ON p.Id = COALESCE(s.ProjectId, c.ProjectId)
 ```
 
-| Part | Purpose |
-|------|---------|
-| `FULL JOIN` | Keeps projects that appear in **either** summary, even if they are missing from the other |
-| `COALESCE(s.ProjectId, c.ProjectId)` | Takes the project ID from whichever side has it |
-| `LEFT JOIN Projects p` | Adds the project **name** |
-| `ISNULL(..., 0)` in the `SELECT` | Shows `0` where one side has no row |
+| Part                                 | Purpose                                                                                   |
+| ------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `FULL JOIN`                          | Keeps projects that appear in **either** summary, even if they are missing from the other |
+| `COALESCE(s.ProjectId, c.ProjectId)` | Takes the project ID from whichever side has it                                           |
+| `LEFT JOIN Projects p`               | Adds the project **name**                                                                 |
+| `ISNULL(..., 0)` in the `SELECT`     | Shows `0` where one side has no row                                                       |
 
 ### Step 4: Calculate the difference and sort
 
@@ -220,23 +221,23 @@ ORDER BY ProjectName;
 
 ### Output columns
 
-| Column | Source |
-|--------|--------|
-| `ProjectId` | `Stock` or `CurrentStock` |
-| `ProjectName` | `Projects.Name` |
-| `InAmount` | Sum of `IN` quantities in `Stock` |
-| `OutAmount` | Sum of `OUT` quantities in `Stock` |
-| `StockBalance` | `InAmount - OutAmount` |
+| Column         | Source                              |
+| -------------- | ----------------------------------- |
+| `ProjectId`    | `Stock` or `CurrentStock`           |
+| `ProjectName`  | `Projects.Name`                     |
+| `InAmount`     | Sum of `IN` quantities in `Stock`   |
+| `OutAmount`    | Sum of `OUT` quantities in `Stock`  |
+| `StockBalance` | `InAmount - OutAmount`              |
 | `CurrentStock` | Sum of `Quantity` in `CurrentStock` |
-| `Difference` | `StockBalance - CurrentStock` |
+| `Difference`   | `StockBalance - CurrentStock`       |
 
 ### Example result (illustrative numbers)
 
 | ProjectId | ProjectName | InAmount | OutAmount | StockBalance | CurrentStock | Difference |
-|-----------|-------------|----------|-----------|--------------|--------------|------------|
-| 1 | Project A | 150 | 30 | 120 | 120 | 0 |
-| 2 | Project B | 80 | 5 | 75 | 70 | 5 |
-| 3 | Project C | 20 | 10 | 10 | 10 | 0 |
+| --------- | ----------- | -------- | --------- | ------------ | ------------ | ---------- |
+| 1         | Project A   | 150      | 30        | 120          | 120          | 0          |
+| 2         | Project B   | 80       | 5         | 75           | 70           | 5          |
+| 3         | Project C   | 20       | 10        | 10           | 10           | 0          |
 
 - `Difference = 0`: the stock history and the current stock **agree**.
 - `Difference <> 0` (Project B): the two tables **do not agree** for that project.
@@ -248,14 +249,14 @@ ORDER BY ProjectName;
 These queries break the solution into small parts. The examples use this sample data from the stock table for one item:
 
 | ProjectId | StockType | Quantity |
-|-----------|-----------|----------|
-| 1 | IN | 100 |
-| 1 | IN | 50 |
-| 1 | OUT | 30 |
-| 2 | IN | 80 |
-| 2 | OUT | 5 |
-| 3 | IN | 20 |
-| 3 | OUT | 10 |
+| --------- | --------- | -------- |
+| 1         | IN        | 100      |
+| 1         | IN        | 50       |
+| 1         | OUT       | 30       |
+| 2         | IN        | 80       |
+| 2         | OUT       | 5        |
+| 3         | IN        | 20       |
+| 3         | OUT       | 10       |
 
 > The practice queries below are written for a generic stock table. Use `Stock` (or `StockTransactions` where the query says so) as the table name that exists in your database, and add `WHERE ItemId = 824` to limit them to one item.
 
@@ -278,8 +279,8 @@ FROM Stock;
 **Result**
 
 | InAmount |
-|----------|
-| 250 |
+| -------- |
+| 250      |
 
 ### 6.2 Only OUT quantity
 
@@ -300,8 +301,8 @@ FROM Stock;
 **Result**
 
 | OutAmount |
-|-----------|
-| 45 |
+| --------- |
+| 45        |
 
 ### 6.3 Only StockBalance
 
@@ -332,8 +333,8 @@ FROM Stock;
 **Result**
 
 | StockBalance |
-|--------------|
-| 205 |
+| ------------ |
+| 205          |
 
 `250 (IN) - 45 (OUT) = 205`
 
@@ -373,10 +374,10 @@ GROUP BY ProjectId
 **Result**
 
 | ProjectId | InAmount | OutAmount | StockBalance |
-|-----------|----------|-----------|--------------|
-| 1 | 150 | 30 | 120 |
-| 2 | 80 | 5 | 75 |
-| 3 | 20 | 10 | 10 |
+| --------- | -------- | --------- | ------------ |
+| 1         | 150      | 30        | 120          |
+| 2         | 80       | 5         | 75           |
+| 3         | 20       | 10        | 10           |
 
 ### 6.5 Filter using HAVING
 
@@ -440,34 +441,34 @@ having
 
 **Explanation:** `HAVING` filters the **groups** after `GROUP BY`. A project is kept only if **all three** conditions are true:
 
-| Condition | Meaning |
-|-----------|---------|
+| Condition            | Meaning                       |
+| -------------------- | ----------------------------- |
 | StockBalance `> 100` | In minus Out is more than 100 |
-| OutAmount `> 10` | More than 10 went out |
-| InAmount `> 30` | More than 30 came in |
+| OutAmount `> 10`     | More than 10 went out         |
+| InAmount `> 30`      | More than 30 came in          |
 
 **Check against the sample data**
 
-| ProjectId | StockBalance > 100 | OutAmount > 10 | InAmount > 30 | Kept? |
-|-----------|--------------------|----------------|---------------|-------|
-| 1 | 120: Yes | 30: Yes | 150: Yes | **Yes** |
-| 2 | 75: No | 5: No | 80: Yes | No |
-| 3 | 10: No | 10: No | 20: No | No |
+| ProjectId | StockBalance > 100 | OutAmount > 10 | InAmount > 30 | Kept?   |
+| --------- | ------------------ | -------------- | ------------- | ------- |
+| 1         | 120: Yes           | 30: Yes        | 150: Yes      | **Yes** |
+| 2         | 75: No             | 5: No          | 80: Yes       | No      |
+| 3         | 10: No             | 10: No         | 20: No        | No      |
 
 **Result**
 
 | ProjectId | InAmount | OutAmount | StockBalance |
-|-----------|----------|-----------|--------------|
-| 1 | 150 | 30 | 120 |
+| --------- | -------- | --------- | ------------ |
+| 1         | 150      | 30        | 120          |
 
 **Why the expressions are repeated in `HAVING`:** in SQL Server, a column alias defined in the `SELECT` (such as `StockBalance`) cannot be used in `HAVING`, so the full expression is written again.
 
 **`WHERE` vs `HAVING`**
 
-| | `WHERE` | `HAVING` |
-|---|---------|----------|
-| Filters | Individual **rows**, before grouping | **Groups**, after grouping |
-| Can use `SUM`, `COUNT`? | No | Yes |
+|                         | `WHERE`                              | `HAVING`                   |
+| ----------------------- | ------------------------------------ | -------------------------- |
+| Filters                 | Individual **rows**, before grouping | **Groups**, after grouping |
+| Can use `SUM`, `COUNT`? | No                                   | Yes                        |
 
 ---
 
