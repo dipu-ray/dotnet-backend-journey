@@ -130,6 +130,7 @@ dotnet-backend-journey/
 | 24  | Accounts Module and C# Method, Class, Object | [Day-24](week-04/day-24) |
 | 25  | Stock Investigation: Item 824 (SQL Server)   | [Day-25](week-04/day-25) |
 | 26  | Stock Report for Item 824                    | [Day-26](week-04/day-26) |
+| 27  | Stock and CurrentStock Mismatches            | [Day-27](week-04/day-27) |
 
 </details>
 
