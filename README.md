@@ -50,7 +50,8 @@
 | **Data**      | Entity Framework Core, SQL Server |
 | **Testing**   | xUnit, Moq                        |
 | **DevOps**    | Git, GitHub, Docker               |
-| **Tools**     | VS Code, Postman, Swagger         |
+| **Tools**     | Visual Studio, Postman, Swagger   |
+| **Cloud**     | Azure, AWS                        |
 
 ---
 
