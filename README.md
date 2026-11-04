@@ -30,13 +30,13 @@
 ## 🗺️ Learning Roadmap
 
 - C# fundamentals & OOP
+- SQL & Database fundamentals
 - ASP.NET Core Web API (CRUD)
 - Entity Framework Core & Migrations
 - Authentication & Authorization (JWT)
 - Clean Architecture & Design Patterns
-- Unit & Integration Testing (xUnit)
-- Docker basics
 - Logging, Error Handling & Middleware
+- Unit & Integration Testing (xUnit)
 - System Design fundamentals
 
 ---
@@ -45,8 +45,8 @@
 
 | Category      | Tools                             |
 | :------------ | :-------------------------------- |
-| **Language**  | C# 12                             |
-| **Framework** | .NET 8, ASP.NET Core Web API      |
+| **Language**  | C#                                |
+| **Framework** | .NET, ASP.NET Core Web API        |
 | **Data**      | Entity Framework Core, SQL Server |
 | **Testing**   | xUnit, Moq                        |
 | **DevOps**    | Git, GitHub, Docker               |
