@@ -8,7 +8,6 @@
 - [2. Database Tables](#2-database-tables)
 - [3. Solution](#3-solution)
 - [4. Understanding the Solution](#4-understanding-the-solution)
-- [5. Output Columns](#5-output-columns)
 - [6. Example Result](#6-example-result)
 - [7. Summary](#7-summary)
 
@@ -313,30 +312,6 @@ ORDER BY FinalResult.ProjectName, FinalResult.ItemId;
 ```
 
 The result is sorted by project name, then by item.
-
----
-
-## 5. Output Columns
-
-| Column          | Meaning                                                                                                 |
-| --------------- | ------------------------------------------------------------------------------------------------------- |
-| `ProjectId`     | Project of the mismatch                                                                                 |
-| `ItemId`        | Item of the mismatch                                                                                    |
-| `ProjectName`   | Name of the project                                                                                     |
-| `FromProjectId` | Projects from which the item was transferred (comma-separated), or `NULL` if there are no transfer rows |
-| `ToProjectId`   | Projects to which the item was transferred (comma-separated), or `NULL` if there are no transfer rows   |
-| `InAmount`      | Total quantity in, from `Stock`                                                                         |
-| `OutAmount`     | Total quantity out, from `Stock`                                                                        |
-| `StockBalance`  | `InAmount - OutAmount`                                                                                  |
-| `CurrentStock`  | Quantity in the `CurrentStock` table                                                                    |
-| `Difference`    | `StockBalance - CurrentStock`                                                                           |
-
-**Reading `Difference`**
-
-| Value    | Meaning                                              |
-| -------- | ---------------------------------------------------- |
-| Positive | The stock history shows **more** than `CurrentStock` |
-| Negative | `CurrentStock` is **higher** than the stock history  |
 
 ---
 
