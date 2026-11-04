@@ -8,8 +8,7 @@
 - [2. Database Tables](#2-database-tables)
 - [3. Solution](#3-solution)
 - [4. Understanding the Solution](#4-understanding-the-solution)
-- [6. Example Result](#6-example-result)
-- [7. Summary](#7-summary)
+- [5. Summary](#5-summary)
 
 ---
 
@@ -315,21 +314,7 @@ The result is sorted by project name, then by item.
 
 ---
 
-## 6. Example Result
-
-Illustrative numbers only.
-
-| ProjectId | ItemId | ProjectName | FromProjectId | ToProjectId | InAmount | OutAmount | StockBalance | CurrentStock | Difference |
-| --------- | ------ | ----------- | ------------- | ----------- | -------- | --------- | ------------ | ------------ | ---------- |
-| 2         | 824    | Project B   | 1             | 2           | 80       | 5         | 75           | 70           | 5          |
-| 3         | 910    | Project C   | NULL          | NULL        | 40       | 10        | 30           | 25           | 5          |
-
-- **Row 1:** item 824 in Project B was transferred from project 1 to project 2 and also had a stock adjustment. The stock history shows 75, but the current stock is 70, a difference of 5.
-- **Row 2:** item 910 in Project C had a stock adjustment but no transfer rows, so `FromProjectId` and `ToProjectId` are `NULL`.
-
----
-
-## 7. Summary
+## 5. Summary
 
 - **Goal:** find items with a **stock adjustment** where the balance calculated from `Stock` does not match `CurrentStock`.
 - **Stock summary:** `InAmount`, `OutAmount`, and `StockBalance` are calculated per **project and item** with `SUM(CASE ...)`, ignoring deleted rows.
