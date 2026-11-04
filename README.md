@@ -163,4 +163,3 @@ dotnet-backend-journey/
 | ------------------ | ---------------------- | ---------------------------- |
 | Start SQL Server   | CMD (Administrator)    | `net start MSSQL$SQLEXPRESS` |
 | Stop SQL Server    | CMD (Administrator)    | `net stop MSSQL$SQLEXPRESS`  |
-| New C# console app | VS Code terminal / CMD | `dotnet new console`         |
