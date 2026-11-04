@@ -3,6 +3,7 @@
 **Date:** 4 November 2026
 
 ## Table of Contents
+
 - [1. Problem Statement](#1-problem-statement)
 - [2. Database Tables](#2-database-tables)
 - [3. Solution](#3-solution)
@@ -29,21 +30,21 @@ For each mismatch, the result should show:
 
 ## 2. Database Tables
 
-| Table | Purpose |
-|-------|---------|
-| `Stock` | History of every stock movement (in and out), with a reference to the document that created it |
-| `CurrentStock` | Current quantity of each item in each project |
-| `Projects` | List of projects |
-| `Transfers` | Stock transfers between projects |
+| Table          | Purpose                                                                                        |
+| -------------- | ---------------------------------------------------------------------------------------------- |
+| `Stock`        | History of every stock movement (in and out), with a reference to the document that created it |
+| `CurrentStock` | Current quantity of each item in each project                                                  |
+| `Projects`     | List of projects                                                                               |
+| `Transfers`    | Stock transfers between projects                                                               |
 
 **Columns used**
 
-| Table | Columns |
-|-------|---------|
-| `Stock` | `ProjectId`, `ItemId`, `StockType` (`IN` / `OUT`), `Quantity`, `IsDelete`, `ReferenceTable`, `ReferenceId` |
-| `CurrentStock` | `ProjectId`, `ItemId`, `Quantity` |
-| `Projects` | `Id`, `Name` |
-| `Transfers` | `Id`, `FromProjectId`, `ToProjectId` |
+| Table          | Columns                                                                                                    |
+| -------------- | ---------------------------------------------------------------------------------------------------------- |
+| `Stock`        | `ProjectId`, `ItemId`, `StockType` (`IN` / `OUT`), `Quantity`, `IsDelete`, `ReferenceTable`, `ReferenceId` |
+| `CurrentStock` | `ProjectId`, `ItemId`, `Quantity`                                                                          |
+| `Projects`     | `Id`, `Name`                                                                                               |
+| `Transfers`    | `Id`, `FromProjectId`, `ToProjectId`                                                                       |
 
 **How the tables are linked**
 
@@ -201,14 +202,14 @@ WHERE ISNULL(IsDelete, 0) = 0
 GROUP BY ProjectId, ItemId
 ```
 
-| Part | Purpose |
-|------|---------|
-| `WHERE ISNULL(IsDelete, 0) = 0` | Ignores deleted rows |
-| `GROUP BY ProjectId, ItemId` | One row for each item in each project |
-| `SUM(CASE ... 'IN' ...)` | **InAmount**: total quantity that came in |
-| `SUM(CASE ... 'OUT' ...)` | **OutAmount**: total quantity that went out |
-| `IN` as `+` and `OUT` as `-` | **StockBalance**: In minus Out |
-| `ISNULL(Quantity, 0)` | Treats a `NULL` quantity as `0` |
+| Part                            | Purpose                                     |
+| ------------------------------- | ------------------------------------------- |
+| `WHERE ISNULL(IsDelete, 0) = 0` | Ignores deleted rows                        |
+| `GROUP BY ProjectId, ItemId`    | One row for each item in each project       |
+| `SUM(CASE ... 'IN' ...)`        | **InAmount**: total quantity that came in   |
+| `SUM(CASE ... 'OUT' ...)`       | **OutAmount**: total quantity that went out |
+| `IN` as `+` and `OUT` as `-`    | **StockBalance**: In minus Out              |
+| `ISNULL(Quantity, 0)`           | Treats a `NULL` quantity as `0`             |
 
 ### Step 2: Summarize the `CurrentStock` table (subquery `c`)
 
@@ -234,12 +235,12 @@ LEFT JOIN Projects p
     ON p.Id = COALESCE(s.ProjectId, c.ProjectId)
 ```
 
-| Part | Purpose |
-|------|---------|
-| `FULL JOIN` on **both** `ProjectId` and `ItemId` | Matches the stock summary with the current stock summary for the same item in the same project. Keeps combinations that exist in only one of the two. |
-| `COALESCE(s.ProjectId, c.ProjectId)` and `COALESCE(s.ItemId, c.ItemId)` | Takes the project and item from whichever side has them |
-| `LEFT JOIN Projects` | Adds the project name |
-| `ISNULL(..., 0)` | Shows `0` where one side has no row |
+| Part                                                                    | Purpose                                                                                                                                               |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FULL JOIN` on **both** `ProjectId` and `ItemId`                        | Matches the stock summary with the current stock summary for the same item in the same project. Keeps combinations that exist in only one of the two. |
+| `COALESCE(s.ProjectId, c.ProjectId)` and `COALESCE(s.ItemId, c.ItemId)` | Takes the project and item from whichever side has them                                                                                               |
+| `LEFT JOIN Projects`                                                    | Adds the project name                                                                                                                                 |
+| `ISNULL(..., 0)`                                                        | Shows `0` where one side has no row                                                                                                                   |
 
 The result of this step is called `FinalResult`. It holds, for each item in each project: `InAmount`, `OutAmount`, `StockBalance`, and `CurrentStock`.
 
@@ -268,15 +269,15 @@ OUTER APPLY
 
 For **each row of `FinalResult`**, this part looks up the transfers connected to that item and project.
 
-| Part | Purpose |
-|------|---------|
-| `FROM Stock st INNER JOIN Transfers tr ON tr.Id = st.ReferenceId` | Finds the transfer that created each stock row |
-| `st.ReferenceTable = 'Transfers'` | Only stock rows created by transfers |
-| `st.ItemId = FinalResult.ItemId` and `st.ProjectId = FinalResult.ProjectId` | Only the current row's item and project (a **correlated** subquery) |
-| `SELECT DISTINCT` | Removes repeated from/to pairs |
-| `CONVERT(NVARCHAR(20), ...)` | Converts the project IDs to text so they can be joined into a string |
-| `STRING_AGG(..., ', ')` | Joins the IDs into one comma-separated value, for example `1, 3` |
-| `OUTER APPLY` | Works like a `LEFT JOIN` for a correlated subquery: the row stays in the result even when it has no transfers (`FromProjectId` and `ToProjectId` are then `NULL`) |
+| Part                                                                        | Purpose                                                                                                                                                           |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FROM Stock st INNER JOIN Transfers tr ON tr.Id = st.ReferenceId`           | Finds the transfer that created each stock row                                                                                                                    |
+| `st.ReferenceTable = 'Transfers'`                                           | Only stock rows created by transfers                                                                                                                              |
+| `st.ItemId = FinalResult.ItemId` and `st.ProjectId = FinalResult.ProjectId` | Only the current row's item and project (a **correlated** subquery)                                                                                               |
+| `SELECT DISTINCT`                                                           | Removes repeated from/to pairs                                                                                                                                    |
+| `CONVERT(NVARCHAR(20), ...)`                                                | Converts the project IDs to text so they can be joined into a string                                                                                              |
+| `STRING_AGG(..., ', ')`                                                     | Joins the IDs into one comma-separated value, for example `1, 3`                                                                                                  |
+| `OUTER APPLY`                                                               | Works like a `LEFT JOIN` for a correlated subquery: the row stays in the result even when it has no transfers (`FromProjectId` and `ToProjectId` are then `NULL`) |
 
 `FromProjectId` and `ToProjectId` are aggregated separately. Each one is a list of project IDs that took part in transfers of that item for that project.
 
@@ -299,10 +300,10 @@ WHERE
 
 A row is kept only when **all three** conditions are true:
 
-| Condition | Meaning |
-|-----------|---------|
-| `StockBalance <> CurrentStock` | The two tables **do not match** |
-| `CurrentStock <> 0` | The item has **current stock** (rows where the current stock is `0` are excluded) |
+| Condition                            | Meaning                                                                               |
+| ------------------------------------ | ------------------------------------------------------------------------------------- |
+| `StockBalance <> CurrentStock`       | The two tables **do not match**                                                       |
+| `CurrentStock <> 0`                  | The item has **current stock** (rows where the current stock is `0` are excluded)     |
 | `EXISTS (... 'StockAdjustment' ...)` | The item in that project has **at least one stock row created by a stock adjustment** |
 
 ### Step 6: Sort
@@ -317,25 +318,25 @@ The result is sorted by project name, then by item.
 
 ## 5. Output Columns
 
-| Column | Meaning |
-|--------|---------|
-| `ProjectId` | Project of the mismatch |
-| `ItemId` | Item of the mismatch |
-| `ProjectName` | Name of the project |
+| Column          | Meaning                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------- |
+| `ProjectId`     | Project of the mismatch                                                                                 |
+| `ItemId`        | Item of the mismatch                                                                                    |
+| `ProjectName`   | Name of the project                                                                                     |
 | `FromProjectId` | Projects from which the item was transferred (comma-separated), or `NULL` if there are no transfer rows |
-| `ToProjectId` | Projects to which the item was transferred (comma-separated), or `NULL` if there are no transfer rows |
-| `InAmount` | Total quantity in, from `Stock` |
-| `OutAmount` | Total quantity out, from `Stock` |
-| `StockBalance` | `InAmount - OutAmount` |
-| `CurrentStock` | Quantity in the `CurrentStock` table |
-| `Difference` | `StockBalance - CurrentStock` |
+| `ToProjectId`   | Projects to which the item was transferred (comma-separated), or `NULL` if there are no transfer rows   |
+| `InAmount`      | Total quantity in, from `Stock`                                                                         |
+| `OutAmount`     | Total quantity out, from `Stock`                                                                        |
+| `StockBalance`  | `InAmount - OutAmount`                                                                                  |
+| `CurrentStock`  | Quantity in the `CurrentStock` table                                                                    |
+| `Difference`    | `StockBalance - CurrentStock`                                                                           |
 
 **Reading `Difference`**
 
-| Value | Meaning |
-|-------|---------|
+| Value    | Meaning                                              |
+| -------- | ---------------------------------------------------- |
 | Positive | The stock history shows **more** than `CurrentStock` |
-| Negative | `CurrentStock` is **higher** than the stock history |
+| Negative | `CurrentStock` is **higher** than the stock history  |
 
 ---
 
@@ -344,9 +345,9 @@ The result is sorted by project name, then by item.
 Illustrative numbers only.
 
 | ProjectId | ItemId | ProjectName | FromProjectId | ToProjectId | InAmount | OutAmount | StockBalance | CurrentStock | Difference |
-|-----------|--------|-------------|---------------|-------------|----------|-----------|--------------|--------------|------------|
-| 2 | 824 | Project B | 1 | 2 | 80 | 5 | 75 | 70 | 5 |
-| 3 | 910 | Project C | NULL | NULL | 40 | 10 | 30 | 25 | 5 |
+| --------- | ------ | ----------- | ------------- | ----------- | -------- | --------- | ------------ | ------------ | ---------- |
+| 2         | 824    | Project B   | 1             | 2           | 80       | 5         | 75           | 70           | 5          |
+| 3         | 910    | Project C   | NULL          | NULL        | 40       | 10        | 30           | 25           | 5          |
 
 - **Row 1:** item 824 in Project B was transferred from project 1 to project 2 and also had a stock adjustment. The stock history shows 75, but the current stock is 70, a difference of 5.
 - **Row 2:** item 910 in Project C had a stock adjustment but no transfer rows, so `FromProjectId` and `ToProjectId` are `NULL`.
