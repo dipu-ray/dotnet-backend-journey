@@ -154,12 +154,3 @@ dotnet-backend-journey/
 ---
 
 <p align="center"><sub>Built while learning. Updated regularly.</sub></p>
-
-# Quick Notes:
-
-## Command Summary
-
-| Task               | Where to run           | Command                      |
-| ------------------ | ---------------------- | ---------------------------- |
-| Start SQL Server   | CMD (Administrator)    | `net start MSSQL$SQLEXPRESS` |
-| Stop SQL Server    | CMD (Administrator)    | `net stop MSSQL$SQLEXPRESS`  |
