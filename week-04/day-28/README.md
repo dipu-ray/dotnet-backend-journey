@@ -6,6 +6,7 @@
 > **Important:** this guide was written **without access to the actual data**. It gives a safe method to **find the cause** and to **fix** the mismatches, but the queries that depend on how the application posts transfers and adjustments are marked as **assumptions**. Confirm them first (see [Assumptions to Confirm](#9-assumptions-to-confirm)). A data fix must be run **inside a transaction, after a backup, and with the senior's approval**.
 
 ## Table of Contents
+
 - [1. Problem Statement](#1-problem-statement)
 - [2. Understanding the Rule](#2-understanding-the-rule)
 - [3. Approach](#3-approach)
@@ -41,9 +42,9 @@ After a **Transfer** or a **Stock Adjustment**, some items have a `StockBalance`
 
 ## 2. Understanding the Rule
 
-| Table | Role |
-|-------|------|
-| `Stock` | The **ledger**: every movement (`IN` / `OUT`) is a row |
+| Table          | Role                                                    |
+| -------------- | ------------------------------------------------------- |
+| `Stock`        | The **ledger**: every movement (`IN` / `OUT`) is a row  |
 | `CurrentStock` | The **summary**: the quantity now, per project and item |
 
 **The rule that must always be true, for each project and item:**
@@ -54,11 +55,11 @@ CurrentStock  =  SUM(IN quantity)  -  SUM(OUT quantity)      (from Stock, ignori
 
 **What a Transfer and a Stock Adjustment should do**
 
-| Operation | Expected effect on `Stock` | Expected effect on `CurrentStock` |
-|-----------|---------------------------|-----------------------------------|
+| Operation                             | Expected effect on `Stock`                                                 | Expected effect on `CurrentStock`                |
+| ------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------ |
 | **Transfer** (project A to project B) | `OUT` row in project A and `IN` row in project B, referencing the transfer | Project A **decreases**, project B **increases** |
-| **Stock Adjustment** (increase) | `IN` row referencing the adjustment | **Increases** |
-| **Stock Adjustment** (decrease) | `OUT` row referencing the adjustment | **Decreases** |
+| **Stock Adjustment** (increase)       | `IN` row referencing the adjustment                                        | **Increases**                                    |
+| **Stock Adjustment** (decrease)       | `OUT` row referencing the adjustment                                       | **Decreases**                                    |
 
 A mismatch appears when **one side was updated and the other was not**, for example a `Stock` row was created but `CurrentStock` was not updated, or the other way around.
 
@@ -66,13 +67,13 @@ A mismatch appears when **one side was updated and the other was not**, for exam
 
 ## 3. Approach
 
-| Step | Action |
-|------|--------|
-| 1 | **Back up** the data and **list** every mismatch (with its difference) |
-| 2 | **Find the cause** using the transfers, adjustments, and deleted rows |
-| 3 | **Decide the source of truth**: `Stock` or `CurrentStock` |
-| 4 | **Fix** inside a transaction (dry run first) |
-| 5 | **Verify** that the difference is `0`, and find why it happened so it does not repeat |
+| Step | Action                                                                                |
+| ---- | ------------------------------------------------------------------------------------- |
+| 1    | **Back up** the data and **list** every mismatch (with its difference)                |
+| 2    | **Find the cause** using the transfers, adjustments, and deleted rows                 |
+| 3    | **Decide the source of truth**: `Stock` or `CurrentStock`                             |
+| 4    | **Fix** inside a transaction (dry run first)                                          |
+| 5    | **Verify** that the difference is `0`, and find why it happened so it does not repeat |
 
 ---
 
@@ -141,15 +142,16 @@ LEFT JOIN Projects p ON p.Id = m.ProjectId
 ORDER BY p.Name, m.ItemId;
 ```
 
-| Column | Meaning |
-|--------|---------|
-| `StockBalance` | In minus out, from `Stock` |
-| `CurrentStock` | Quantity in `CurrentStock` |
-| `Difference` | `StockBalance - CurrentStock` |
+| Column         | Meaning                       |
+| -------------- | ----------------------------- |
+| `StockBalance` | In minus out, from `Stock`    |
+| `CurrentStock` | Quantity in `CurrentStock`    |
+| `Difference`   | `StockBalance - CurrentStock` |
 
 ### 4.3 Checks before going further
 
 **Several `CurrentStock` rows for the same project and item?** (A simple update would then be wrong.)
+
 ```sql
 SELECT ProjectId, ItemId, COUNT(*) AS TotalRows
 FROM CurrentStock
@@ -158,6 +160,7 @@ HAVING COUNT(*) > 1;
 ```
 
 **Negative balances?** (These usually point to wrong data in `Stock`.)
+
 ```sql
 SELECT * FROM #Mismatch WHERE StockBalance < 0 OR CurrentStock < 0;
 ```
@@ -168,12 +171,12 @@ SELECT * FROM #Mismatch WHERE StockBalance < 0 OR CurrentStock < 0;
 
 ### 5.1 Read the pattern of the difference
 
-| Pattern | Likely cause |
-|---------|--------------|
-| `CurrentStock` **higher** than `StockBalance` (Difference negative) | An `OUT` row is missing or was deleted in `Stock`, or `CurrentStock` did not decrease after a transfer out or an adjustment decrease |
-| `CurrentStock` **lower** than `StockBalance` (Difference positive) | An `IN` row is missing from `CurrentStock`, for example a transfer was received or an adjustment increase was saved, but `CurrentStock` did not increase |
-| `StockBalance = 0` but `CurrentStock > 0` | Current stock exists with **no history** in `Stock` |
-| `CurrentStock = 0` (or no row) but `StockBalance <> 0` | The `CurrentStock` row is missing or was reset |
+| Pattern                                                             | Likely cause                                                                                                                                             |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CurrentStock` **higher** than `StockBalance` (Difference negative) | An `OUT` row is missing or was deleted in `Stock`, or `CurrentStock` did not decrease after a transfer out or an adjustment decrease                     |
+| `CurrentStock` **lower** than `StockBalance` (Difference positive)  | An `IN` row is missing from `CurrentStock`, for example a transfer was received or an adjustment increase was saved, but `CurrentStock` did not increase |
+| `StockBalance = 0` but `CurrentStock > 0`                           | Current stock exists with **no history** in `Stock`                                                                                                      |
+| `CurrentStock = 0` (or no row) but `StockBalance <> 0`              | The `CurrentStock` row is missing or was reset                                                                                                           |
 
 ### 5.2 Transfers that do not match the stock rows
 
@@ -224,10 +227,10 @@ WHERE (ISNULL(o.OutQty, 0) <> td.TransferQuantity
 ORDER BY t.Id, td.ItemId;
 ```
 
-| What the result means | Meaning |
-|-----------------------|---------|
-| `StockOutQty <> TransferQuantity` | The transfer out is missing from `Stock`, or is different |
-| `StockInQty <> ReceivedQuantity` | The receipt is missing from `Stock`, or is different (it may not be received yet) |
+| What the result means             | Meaning                                                                           |
+| --------------------------------- | --------------------------------------------------------------------------------- |
+| `StockOutQty <> TransferQuantity` | The transfer out is missing from `Stock`, or is different                         |
+| `StockInQty <> ReceivedQuantity`  | The receipt is missing from `Stock`, or is different (it may not be received yet) |
 
 ### 5.3 Adjustments that do not match the stock rows
 
@@ -291,11 +294,11 @@ The same document posted twice doubles its effect on `StockBalance`.
 
 The fix depends on **which side is correct**.
 
-| Option | Use when | Action |
-|--------|----------|--------|
-| **A. `Stock` is correct** | The `Stock` rows match the real transfers and adjustments (the usual case, because `Stock` is the ledger and reports such as `Inv_StockReport` calculate from it) | Set `CurrentStock` to the `StockBalance` |
-| **B. `CurrentStock` is correct** | The physical count or the quantity in the application is right, and `Stock` is missing movements | Add the missing movements to `Stock` (for example through a **stock adjustment**) so the history reaches `CurrentStock` |
-| **C. A specific record is wrong** | Step 2 found one wrong record (a wrongly deleted row, a duplicate, a missing receipt) | Correct that record, then re-check the difference |
+| Option                            | Use when                                                                                                                                                          | Action                                                                                                                  |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **A. `Stock` is correct**         | The `Stock` rows match the real transfers and adjustments (the usual case, because `Stock` is the ledger and reports such as `Inv_StockReport` calculate from it) | Set `CurrentStock` to the `StockBalance`                                                                                |
+| **B. `CurrentStock` is correct**  | The physical count or the quantity in the application is right, and `Stock` is missing movements                                                                  | Add the missing movements to `Stock` (for example through a **stock adjustment**) so the history reaches `CurrentStock` |
+| **C. A specific record is wrong** | Step 2 found one wrong record (a wrongly deleted row, a duplicate, a missing receipt)                                                                             | Correct that record, then re-check the difference                                                                       |
 
 > **Decide with the senior before changing data.** If the cause is a wrongly deleted or duplicated `Stock` row, fix that row first (Option C), then check what is still different.
 
@@ -358,6 +361,7 @@ ROLLBACK TRAN;      -- dry run. Change to COMMIT TRAN after the check above retu
 ```
 
 **Notes**
+
 - If `CurrentStock` has **several rows** for the same project and item (see the check in 4.3), the update skips them. Handle those manually, because setting each row to the full balance would double-count.
 - Rows where `StockBalance = 0` are updated to `0`, which also covers the case where `CurrentStock` should have been `0`.
 - If the `INSERT` fails because of a required column, add that column to the column list and the `SELECT`.
@@ -369,19 +373,19 @@ When `CurrentStock` is the correct quantity:
 - Create a **stock adjustment through the application** for the `Difference`, so that `Stock`, `StockAdjustment`, and `CurrentStock` are all updated by the normal process.
 - Avoid inserting directly into `Stock`, because the required columns (item type, unit price, reference columns, project and sub project) and the update of `CurrentStock` must follow the application's rules.
 
-| Difference | Adjustment to make |
-|------------|--------------------|
-| `Difference < 0` (`CurrentStock` is higher) | Increase the stock history by the amount (`IN` adjustment) |
-| `Difference > 0` (`CurrentStock` is lower) | Decrease the stock history by the amount (`OUT` adjustment) |
+| Difference                                  | Adjustment to make                                          |
+| ------------------------------------------- | ----------------------------------------------------------- |
+| `Difference < 0` (`CurrentStock` is higher) | Increase the stock history by the amount (`IN` adjustment)  |
+| `Difference > 0` (`CurrentStock` is lower)  | Decrease the stock history by the amount (`OUT` adjustment) |
 
 ### Option C: Fix a specific wrong record
 
-| Finding | Fix |
-|---------|-----|
-| Stock row deleted by mistake | Restore it (`IsDelete = 0`), after confirming with the senior |
-| Duplicate stock row | Mark one of the duplicates as deleted (`IsDelete = 1`) |
+| Finding                                  | Fix                                                                             |
+| ---------------------------------------- | ------------------------------------------------------------------------------- |
+| Stock row deleted by mistake             | Restore it (`IsDelete = 0`), after confirming with the senior                   |
+| Duplicate stock row                      | Mark one of the duplicates as deleted (`IsDelete = 1`)                          |
 | Transfer or adjustment with no stock row | Create the missing row through the application's process or a controlled script |
-| Receipt not posted | Complete the receive process for that transfer |
+| Receipt not posted                       | Complete the receive process for that transfer                                  |
 
 After each correction, **re-run the Step 1 query** to see what difference remains.
 
@@ -434,14 +438,14 @@ EXEC sp_helptext '[dbo].[ProcedureName]';
 
 **Points to check in the procedures and the application**
 
-| Check | Question |
-|-------|----------|
-| Transfer | Are the `OUT` row (from project) and `IN` row (to project) both created, and is `CurrentStock` updated for both projects? |
-| Receive | Is the `IN` row and the `CurrentStock` increase created when the transfer is received? |
-| Adjustment | Does it create a `Stock` row **and** update `CurrentStock`, for both increases and decreases? |
-| Delete / cancel | Does deleting or cancelling a document reverse its `CurrentStock` effect? |
-| Transactions | Are both updates in one transaction, so one cannot succeed without the other? |
-| Direct edits | Was data changed directly in the database? |
+| Check           | Question                                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Transfer        | Are the `OUT` row (from project) and `IN` row (to project) both created, and is `CurrentStock` updated for both projects? |
+| Receive         | Is the `IN` row and the `CurrentStock` increase created when the transfer is received?                                    |
+| Adjustment      | Does it create a `Stock` row **and** update `CurrentStock`, for both increases and decreases?                             |
+| Delete / cancel | Does deleting or cancelling a document reverse its `CurrentStock` effect?                                                 |
+| Transactions    | Are both updates in one transaction, so one cannot succeed without the other?                                             |
+| Direct edits    | Was data changed directly in the database?                                                                                |
 
 Report the finding to the senior, so the root cause can be corrected in the code.
 
@@ -449,16 +453,16 @@ Report the finding to the senior, so the root cause can be corrected in the code
 
 ## 9. Assumptions to Confirm
 
-| # | Assumption | How to confirm |
-|---|------------|----------------|
-| 1 | `Quantity` in `Stock` is positive for both `IN` and `OUT`, and `StockType` gives the direction | `select top 20 StockType, Quantity from Stock;` |
-| 2 | `CurrentStock` should equal In minus Out of non-deleted `Stock` rows, per project and item | Ask the senior |
-| 3 | Transfers create `OUT` (from project) and `IN` (to project) rows with `ReferenceTable = 'Transfers'` and `ReferenceId = Transfers.Id` | `select top 20 * from Stock where ReferenceTable = 'Transfers';` |
-| 4 | Adjustments create rows with `ReferenceTable = 'StockAdjustment'`, and `ReferenceId` is the **header** ID | `select top 20 * from Stock where ReferenceTable = 'StockAdjustment';` |
-| 5 | `CurrentStock` has one row per project and item | Check in 4.3 |
-| 6 | Only the columns listed are required to insert a `CurrentStock` row | `EXEC sp_help 'CurrentStock';` |
-| 7 | `Stock` is the source of truth (Option A) | Ask the senior |
-| 8 | All item types should be compared (the `Inv_StockReport` procedure counts only `ItemType = 'Good'`; add that condition if the same rule applies here) | Ask the senior |
+| #   | Assumption                                                                                                                                            | How to confirm                                                         |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| 1   | `Quantity` in `Stock` is positive for both `IN` and `OUT`, and `StockType` gives the direction                                                        | `select top 20 StockType, Quantity from Stock;`                        |
+| 2   | `CurrentStock` should equal In minus Out of non-deleted `Stock` rows, per project and item                                                            | Ask the senior                                                         |
+| 3   | Transfers create `OUT` (from project) and `IN` (to project) rows with `ReferenceTable = 'Transfers'` and `ReferenceId = Transfers.Id`                 | `select top 20 * from Stock where ReferenceTable = 'Transfers';`       |
+| 4   | Adjustments create rows with `ReferenceTable = 'StockAdjustment'`, and `ReferenceId` is the **header** ID                                             | `select top 20 * from Stock where ReferenceTable = 'StockAdjustment';` |
+| 5   | `CurrentStock` has one row per project and item                                                                                                       | Check in 4.3                                                           |
+| 6   | Only the columns listed are required to insert a `CurrentStock` row                                                                                   | `EXEC sp_help 'CurrentStock';`                                         |
+| 7   | `Stock` is the source of truth (Option A)                                                                                                             | Ask the senior                                                         |
+| 8   | All item types should be compared (the `Inv_StockReport` procedure counts only `ItemType = 'Good'`; add that condition if the same rule applies here) | Ask the senior                                                         |
 
 ---
 
