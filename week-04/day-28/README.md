@@ -34,8 +34,6 @@ select * from StockAdjustment;
 select * from StockAdjustmentDetail;
 ```
 
-After a **Transfer** or a **Stock Adjustment**, some items have a `StockBalance` (calculated from the `Stock` table) that **does not match** `CurrentStock` (or `CurrentStock` was not set to `0` when it should be).
-
 **Task:** find those items and **fix the mismatch so that `Difference = StockBalance - CurrentStock` becomes `0`**.
 
 ---
@@ -60,8 +58,6 @@ CurrentStock  =  SUM(IN quantity)  -  SUM(OUT quantity)      (from Stock, ignori
 | **Transfer** (project A to project B) | `OUT` row in project A and `IN` row in project B, referencing the transfer | Project A **decreases**, project B **increases** |
 | **Stock Adjustment** (increase)       | `IN` row referencing the adjustment                                        | **Increases**                                    |
 | **Stock Adjustment** (decrease)       | `OUT` row referencing the adjustment                                       | **Decreases**                                    |
-
-A mismatch appears when **one side was updated and the other was not**, for example a `Stock` row was created but `CurrentStock` was not updated, or the other way around.
 
 ---
 
