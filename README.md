@@ -132,6 +132,7 @@ dotnet-backend-journey/
 | 25  | Stock Investigation: Item 824 (SQL Server)   | [Day-25](week-04/day-25) |
 | 26  | Stock Report for Item 824                    | [Day-26](week-04/day-26) |
 | 27  | Stock and CurrentStock Mismatches            | [Day-27](week-04/day-27) |
+| 28  | Fixing StockBalance and CurrentStock         | [Day-28](week-04/day-28) |
 
 </details>
 
