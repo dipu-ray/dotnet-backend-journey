@@ -1,7 +1,6 @@
 # Fixing StockBalance and CurrentStock Mismatches: Day 2
 
 **Date:** 6 November 2026
-**Database:** SQL Server
 
 > **Note:** this is the **second-day** plan for the mismatch problem between the `Stock` table (the ledger) and the `CurrentStock` table. It continues the first-day document (_Fixing StockBalance and CurrentStock Mismatches After Transfer and Stock Adjustment_). I have not seen the data or the result of the first day, so the sections marked `[ ... ]` are for **your findings**. The queries are written to **find the cause with evidence**, and any data change must be done after a **backup**, inside a **transaction**, and with the senior's approval.
 
@@ -51,8 +50,6 @@ CurrentStock  =  SUM(IN)  -  SUM(OUT)     per project and item, from non-deleted
 | 4    | **Fix each category** with the right action  | Differences become `0`                          |
 | 5    | **Verify** that no mismatch remains          | Empty mismatch list                             |
 
-The key idea of Day 2: **do not try to fix everything at once.** Understand **one case completely**, then use what it shows to handle the rest.
-
 ---
 
 ## 3. Step 1: Rebuild the Mismatch List
@@ -97,26 +94,6 @@ WHERE ISNULL(s.StockBalance, 0) <> ISNULL(c.CurrentStock, 0);
 
 This version has **no transfer or adjustment filter**, so it lists **every** mismatch. The transfer and adjustment checks are handled in Step 3, where each row is labelled with its likely cause.
 
-**Overview**
-
-```sql
-SELECT COUNT(*) AS TotalMismatches,
-       SUM(Difference) AS NetDifference,
-       SUM(ABS(Difference)) AS TotalAbsoluteDifference
-FROM #Mismatch;
-```
-
-**Find a small case to trace** (the smallest non-zero difference is the easiest to understand)
-
-```sql
-SELECT TOP 20 m.*, p.Name AS ProjectName
-FROM #Mismatch m
-LEFT JOIN Projects p ON p.Id = m.ProjectId
-ORDER BY ABS(m.Difference), m.ItemId;
-```
-
-Pick **one** project and item from this list for Step 2: `[ProjectId = ___ , ItemId = ___ ]`
-
 ---
 
 ## 4. Step 2: Trace One Case from Start to End
@@ -158,88 +135,6 @@ WHERE ProjectId = @ProjectId
 - The **last `RunningBalance`** is the `StockBalance`. Compare it with `CurrentStock`.
 - Look at the rows with `ReferenceTable = 'Transfers'` and `'StockAdjustment'`. These are the ones the problem is about.
 - If `Stock` has a date column, order by it as well.
-
-### 4.2 What the documents say should exist
-
-For the same project and item, list each **transfer** and **adjustment** with the quantity that **should** be in `Stock` and the quantity that **is** in `Stock`.
-
-> **Assumptions:** a transfer creates an `OUT` row in the **from** project (quantity `TransferQuantity`) and an `IN` row in the **to** project (quantity `ReceivedQuantity`), referenced by `Transfers.Id`. An adjustment creates a row referenced by `StockAdjustment.Id`. If `StockAdjustment` has a project column, filter on it too.
-
-```sql
-SELECT
-    'Transfer'                         AS DocType,
-    t.Id                               AS DocId,
-    CAST(t.TransferNo AS NVARCHAR(50)) AS DocNo,
-    CAST(t.Status AS NVARCHAR(50))     AS DocStatus,
-    CASE WHEN t.FromProjectId = @ProjectId THEN 'OUT' ELSE 'IN' END AS ExpectedDirection,
-    CASE WHEN t.FromProjectId = @ProjectId
-         THEN td.TransferQuantity
-         ELSE ISNULL(td.ReceivedQuantity, 0) END AS ExpectedQty,
-    (SELECT SUM(ISNULL(st.Quantity, 0))
-     FROM Stock st
-     WHERE st.ReferenceTable = 'Transfers'
-       AND st.ReferenceId    = t.Id
-       AND st.ItemId         = @ItemId
-       AND st.ProjectId      = @ProjectId
-       AND ISNULL(st.IsDelete, 0) = 0)  AS QtyInStock
-FROM Transfers t
-INNER JOIN TransferDetails td ON td.TransferId = t.Id
-WHERE td.ItemId = @ItemId
-  AND @ProjectId IN (t.FromProjectId, t.ToProjectId)
-
-UNION ALL
-
-SELECT
-    'Adjustment',
-    sa.Id,
-    CAST(sa.Id AS NVARCHAR(50)),
-    CAST(sa.AdjustmentType AS NVARCHAR(50)),
-    CAST(sa.AdjustmentType AS NVARCHAR(50)),
-    sad.Quantity,
-    (SELECT SUM(ISNULL(st.Quantity, 0))
-     FROM Stock st
-     WHERE st.ReferenceTable = 'StockAdjustment'
-       AND st.ReferenceId    = sa.Id
-       AND st.ItemId         = @ItemId
-       AND st.ProjectId      = @ProjectId
-       AND ISNULL(st.IsDelete, 0) = 0)
-FROM StockAdjustment sa
-INNER JOIN StockAdjustmentDetail sad ON sad.StockAdjustmentId = sa.Id
-WHERE sad.ItemId = @ItemId;
-```
-
-**How to read each row**
-
-| What you see                                            | Meaning                                                          |
-| ------------------------------------------------------- | ---------------------------------------------------------------- |
-| `ExpectedQty = QtyInStock`                              | The document is correctly reflected in `Stock`                   |
-| `QtyInStock` is `NULL` or `0`                           | The document has **no stock row** (never posted, or deleted)     |
-| `QtyInStock` is **double** the expected quantity        | The stock row was **posted twice**                               |
-| `QtyInStock` is different from the expected quantity    | The quantity changed after posting, or was partly posted         |
-| Transfer with `ExpectedQty = 0` and status not received | The transfer is **not received yet**, so no `IN` row is expected |
-| Adjustment of another project shows `NULL`              | Not a problem if it belongs to a different project               |
-
-### 4.3 Deleted rows for this case
-
-```sql
-SELECT *
-FROM Stock
-WHERE ProjectId = @ProjectId
-  AND ItemId    = @ItemId
-  AND ISNULL(IsDelete, 0) = 1;
-```
-
-### 4.4 Write down the finding
-
-| Question                                                         | Answer |
-| ---------------------------------------------------------------- | ------ |
-| Project and item traced                                          | [ ]    |
-| `StockBalance` / `CurrentStock` / `Difference`                   | [ ]    |
-| Document(s) that explain the difference                          | [ ]    |
-| What exactly is missing, duplicated, or deleted                  | [ ]    |
-| Which table is correct for this case (`Stock` or `CurrentStock`) | [ ]    |
-
-If the difference is **fully explained** by the documents, you have found the cause for this case. Repeat with a second case from a **different** group to see whether it is the same cause.
 
 ---
 
@@ -347,75 +242,6 @@ Decide the **source of truth** with the senior first (see the first-day document
 | **4. Transfer not posted**                | The transfer exists with no `OUT` / `IN` rows in `Stock`                          | Post the missing movement through the application's process (or a controlled script), or set `CurrentStock` to the `StockBalance` if the transfer should not count |
 | **5. Adjustment not posted**              | The adjustment exists with no stock row                                           | Post the missing row through the application's process, or set `CurrentStock` to the `StockBalance`                                                                |
 | **6. Other**                              | No clear document cause                                                           | Trace each case as in Step 2 and ask the senior                                                                                                                    |
-
-### Apply the fix: set `CurrentStock` to the `StockBalance` for selected categories
-
-Start with a **dry run** (`ROLLBACK`). Change it to `COMMIT` only after the check query returns no rows. Take a backup before this step.
-
-```sql
-BEGIN TRAN;
-
--- 1. Keep a copy of the rows that will change
-SELECT cs.*
-INTO CurrentStock_Backup_20261106
-FROM CurrentStock cs
-INNER JOIN #Classified k
-    ON cs.ProjectId = k.ProjectId
-   AND cs.ItemId    = k.ItemId
-WHERE k.LikelyCause IN ('3. Deleted Stock row (transfer or adjustment)',
-                        '4. Transfer not posted in Stock',
-                        '5. Adjustment not posted in Stock');   -- choose the categories you agreed on
-
--- 2. Update existing rows (only where there is exactly one CurrentStock row for the project and item)
-UPDATE cs
-SET cs.Quantity = k.StockBalance
-FROM CurrentStock cs
-INNER JOIN #Classified k
-    ON cs.ProjectId = k.ProjectId
-   AND cs.ItemId    = k.ItemId
-WHERE k.LikelyCause IN ('3. Deleted Stock row (transfer or adjustment)',
-                        '4. Transfer not posted in Stock',
-                        '5. Adjustment not posted in Stock')
-  AND (SELECT COUNT(*) FROM CurrentStock x
-       WHERE x.ProjectId = cs.ProjectId AND x.ItemId = cs.ItemId) = 1;
-
-PRINT 'Rows updated: ' + CAST(@@ROWCOUNT AS VARCHAR(20));
-
--- 3. Insert missing rows (category 1). Add every column the table requires.
-INSERT INTO CurrentStock (ProjectId, ItemId, Quantity /*, other required columns */)
-SELECT k.ProjectId, k.ItemId, k.StockBalance
-FROM #Classified k
-WHERE k.LikelyCause = '1. No CurrentStock row'
-  AND NOT EXISTS (SELECT 1 FROM CurrentStock cs
-                  WHERE cs.ProjectId = k.ProjectId AND cs.ItemId = k.ItemId);
-
--- 4. Check: rows of the chosen categories that still differ (should return no rows)
-SELECT k.ProjectId, k.ItemId, k.StockBalance, ISNULL(cs.Quantity, 0) AS CurrentStock
-FROM #Classified k
-LEFT JOIN (SELECT ProjectId, ItemId, SUM(ISNULL(Quantity, 0)) AS Quantity
-           FROM CurrentStock GROUP BY ProjectId, ItemId) cs
-       ON cs.ProjectId = k.ProjectId AND cs.ItemId = k.ItemId
-WHERE k.LikelyCause IN ('1. No CurrentStock row',
-                        '3. Deleted Stock row (transfer or adjustment)',
-                        '4. Transfer not posted in Stock',
-                        '5. Adjustment not posted in Stock')
-  AND ISNULL(cs.Quantity, 0) <> k.StockBalance;
-
-ROLLBACK TRAN;      -- dry run. Change to COMMIT TRAN after the check returns no rows.
-```
-
-**Before running**
-
-- Check for **duplicate `CurrentStock` rows** for the same project and item (the update skips them, and they need manual handling):
-
-```sql
-SELECT ProjectId, ItemId, COUNT(*) AS TotalRows
-FROM CurrentStock
-GROUP BY ProjectId, ItemId
-HAVING COUNT(*) > 1;
-```
-
-- Fix categories **2** and **6** **one case at a time**, because the right fix depends on the cause.
 
 ---
 
