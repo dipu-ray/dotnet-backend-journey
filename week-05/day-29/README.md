@@ -3,9 +3,10 @@
 **Date:** 6 November 2026
 **Database:** SQL Server
 
-> **Note:** this is the **second-day** plan for the mismatch problem between the `Stock` table (the ledger) and the `CurrentStock` table. It continues the first-day document (*Fixing StockBalance and CurrentStock Mismatches After Transfer and Stock Adjustment*). I have not seen the data or the result of the first day, so the sections marked `[ ... ]` are for **your findings**. The queries are written to **find the cause with evidence**, and any data change must be done after a **backup**, inside a **transaction**, and with the senior's approval.
+> **Note:** this is the **second-day** plan for the mismatch problem between the `Stock` table (the ledger) and the `CurrentStock` table. It continues the first-day document (_Fixing StockBalance and CurrentStock Mismatches After Transfer and Stock Adjustment_). I have not seen the data or the result of the first day, so the sections marked `[ ... ]` are for **your findings**. The queries are written to **find the cause with evidence**, and any data change must be done after a **backup**, inside a **transaction**, and with the senior's approval.
 
 ## Table of Contents
+
 - [1. Day 1 Recap](#1-day-1-recap)
 - [2. Day 2 Goal and Plan](#2-day-2-goal-and-plan)
 - [3. Step 1: Rebuild the Mismatch List](#3-step-1-rebuild-the-mismatch-list)
@@ -24,16 +25,17 @@
 **Problem:** after a **Transfer** or a **Stock Adjustment**, some items have a `StockBalance` (In minus Out from `Stock`) that does not equal `CurrentStock`. The task is to find them and make `Difference = StockBalance - CurrentStock` equal to `0`.
 
 **The rule**
+
 ```
 CurrentStock  =  SUM(IN)  -  SUM(OUT)     per project and item, from non-deleted Stock rows
 ```
 
-| Day 1 | Result |
-|-------|--------|
-| Tables studied | `Projects`, `Stock`, `CurrentStock`, `Transfers`, `TransferDetails`, `StockAdjustment`, `StockAdjustmentDetail` |
-| Mismatch query written | Stock summary and current stock summary joined with a `FULL JOIN`, with transfer projects (`OUTER APPLY`) and a stock adjustment check |
-| What worked | [Fill in] |
-| What did not work / where I got stuck | [Fill in] |
+| Day 1                                 | Result                                                                                                                                 |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Tables studied                        | `Projects`, `Stock`, `CurrentStock`, `Transfers`, `TransferDetails`, `StockAdjustment`, `StockAdjustmentDetail`                        |
+| Mismatch query written                | Stock summary and current stock summary joined with a `FULL JOIN`, with transfer projects (`OUTER APPLY`) and a stock adjustment check |
+| What worked                           | [Fill in]                                                                                                                              |
+| What did not work / where I got stuck | [Fill in]                                                                                                                              |
 
 ---
 
@@ -41,13 +43,13 @@ CurrentStock  =  SUM(IN)  -  SUM(OUT)     per project and item, from non-deleted
 
 **Goal:** understand **why** the mismatches happen, then fix them **by cause** instead of one by one.
 
-| Step | Action | Result |
-|------|--------|--------|
-| 1 | Rebuild the list of mismatches (`#Mismatch`) | Every project and item with a difference |
-| 2 | **Trace one small case** from start to end | The exact missing, duplicate, or deleted record |
-| 3 | **Classify** all mismatches by likely cause | A count per cause |
-| 4 | **Fix each category** with the right action | Differences become `0` |
-| 5 | **Verify** that no mismatch remains | Empty mismatch list |
+| Step | Action                                       | Result                                          |
+| ---- | -------------------------------------------- | ----------------------------------------------- |
+| 1    | Rebuild the list of mismatches (`#Mismatch`) | Every project and item with a difference        |
+| 2    | **Trace one small case** from start to end   | The exact missing, duplicate, or deleted record |
+| 3    | **Classify** all mismatches by likely cause  | A count per cause                               |
+| 4    | **Fix each category** with the right action  | Differences become `0`                          |
+| 5    | **Verify** that no mismatch remains          | Empty mismatch list                             |
 
 The key idea of Day 2: **do not try to fix everything at once.** Understand **one case completely**, then use what it shows to handle the rest.
 
@@ -96,6 +98,7 @@ WHERE ISNULL(s.StockBalance, 0) <> ISNULL(c.CurrentStock, 0);
 This version has **no transfer or adjustment filter**, so it lists **every** mismatch. The transfer and adjustment checks are handled in Step 3, where each row is labelled with its likely cause.
 
 **Overview**
+
 ```sql
 SELECT COUNT(*) AS TotalMismatches,
        SUM(Difference) AS NetDifference,
@@ -104,6 +107,7 @@ FROM #Mismatch;
 ```
 
 **Find a small case to trace** (the smallest non-zero difference is the easiest to understand)
+
 ```sql
 SELECT TOP 20 m.*, p.Name AS ProjectName
 FROM #Mismatch m
@@ -206,14 +210,14 @@ WHERE sad.ItemId = @ItemId;
 
 **How to read each row**
 
-| What you see | Meaning |
-|--------------|---------|
-| `ExpectedQty = QtyInStock` | The document is correctly reflected in `Stock` |
-| `QtyInStock` is `NULL` or `0` | The document has **no stock row** (never posted, or deleted) |
-| `QtyInStock` is **double** the expected quantity | The stock row was **posted twice** |
-| `QtyInStock` is different from the expected quantity | The quantity changed after posting, or was partly posted |
+| What you see                                            | Meaning                                                          |
+| ------------------------------------------------------- | ---------------------------------------------------------------- |
+| `ExpectedQty = QtyInStock`                              | The document is correctly reflected in `Stock`                   |
+| `QtyInStock` is `NULL` or `0`                           | The document has **no stock row** (never posted, or deleted)     |
+| `QtyInStock` is **double** the expected quantity        | The stock row was **posted twice**                               |
+| `QtyInStock` is different from the expected quantity    | The quantity changed after posting, or was partly posted         |
 | Transfer with `ExpectedQty = 0` and status not received | The transfer is **not received yet**, so no `IN` row is expected |
-| Adjustment of another project shows `NULL` | Not a problem if it belongs to a different project |
+| Adjustment of another project shows `NULL`              | Not a problem if it belongs to a different project               |
 
 ### 4.3 Deleted rows for this case
 
@@ -227,13 +231,13 @@ WHERE ProjectId = @ProjectId
 
 ### 4.4 Write down the finding
 
-| Question | Answer |
-|----------|--------|
-| Project and item traced | [ ] |
-| `StockBalance` / `CurrentStock` / `Difference` | [ ] |
-| Document(s) that explain the difference | [ ] |
-| What exactly is missing, duplicated, or deleted | [ ] |
-| Which table is correct for this case (`Stock` or `CurrentStock`) | [ ] |
+| Question                                                         | Answer |
+| ---------------------------------------------------------------- | ------ |
+| Project and item traced                                          | [ ]    |
+| `StockBalance` / `CurrentStock` / `Difference`                   | [ ]    |
+| Document(s) that explain the difference                          | [ ]    |
+| What exactly is missing, duplicated, or deleted                  | [ ]    |
+| Which table is correct for this case (`Stock` or `CurrentStock`) | [ ]    |
 
 If the difference is **fully explained** by the documents, you have found the cause for this case. Repeat with a second case from a **different** group to see whether it is the same cause.
 
@@ -313,20 +317,21 @@ ORDER BY LikelyCause;
 ```
 
 **Notes**
+
 - The labels are **likely** causes, checked in order. The first matching rule wins.
 - Category 5 can be a **false positive** when an adjustment belongs to a **different project** (the adjustment has no stock row in this project). If `StockAdjustment` has a project column, add it to the check.
 - Compare the labels with the case traced in Step 2. They should agree.
 
 **Result table to fill in**
 
-| LikelyCause | TotalCases | NetDifference |
-|-------------|------------|---------------|
-| 1. No CurrentStock row | [ ] | [ ] |
-| 2. CurrentStock without Stock history | [ ] | [ ] |
-| 3. Deleted Stock row (transfer or adjustment) | [ ] | [ ] |
-| 4. Transfer not posted in Stock | [ ] | [ ] |
-| 5. Adjustment not posted in Stock | [ ] | [ ] |
-| 6. Other (manual review) | [ ] | [ ] |
+| LikelyCause                                   | TotalCases | NetDifference |
+| --------------------------------------------- | ---------- | ------------- |
+| 1. No CurrentStock row                        | [ ]        | [ ]           |
+| 2. CurrentStock without Stock history         | [ ]        | [ ]           |
+| 3. Deleted Stock row (transfer or adjustment) | [ ]        | [ ]           |
+| 4. Transfer not posted in Stock               | [ ]        | [ ]           |
+| 5. Adjustment not posted in Stock             | [ ]        | [ ]           |
+| 6. Other (manual review)                      | [ ]        | [ ]           |
 
 ---
 
@@ -334,14 +339,14 @@ ORDER BY LikelyCause;
 
 Decide the **source of truth** with the senior first (see the first-day document). The table assumes **`Stock` is the source of truth** unless the cause shows otherwise.
 
-| Category | Meaning | Recommended fix |
-|----------|---------|-----------------|
-| **1. No CurrentStock row** | `CurrentStock` was never created | Insert the row with `Quantity = StockBalance` |
-| **2. CurrentStock without Stock history** | Stock exists with no ledger | Decide with the senior: set `CurrentStock` to `0`, or create the missing history through a **stock adjustment** if the quantity is real |
-| **3. Deleted Stock row** | A transfer or adjustment row was deleted but its effect remains in `CurrentStock` | If the delete was a **mistake**, restore the row (`IsDelete = 0`). If it was **intended**, set `CurrentStock` to the `StockBalance` |
-| **4. Transfer not posted** | The transfer exists with no `OUT` / `IN` rows in `Stock` | Post the missing movement through the application's process (or a controlled script), or set `CurrentStock` to the `StockBalance` if the transfer should not count |
-| **5. Adjustment not posted** | The adjustment exists with no stock row | Post the missing row through the application's process, or set `CurrentStock` to the `StockBalance` |
-| **6. Other** | No clear document cause | Trace each case as in Step 2 and ask the senior |
+| Category                                  | Meaning                                                                           | Recommended fix                                                                                                                                                    |
+| ----------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1. No CurrentStock row**                | `CurrentStock` was never created                                                  | Insert the row with `Quantity = StockBalance`                                                                                                                      |
+| **2. CurrentStock without Stock history** | Stock exists with no ledger                                                       | Decide with the senior: set `CurrentStock` to `0`, or create the missing history through a **stock adjustment** if the quantity is real                            |
+| **3. Deleted Stock row**                  | A transfer or adjustment row was deleted but its effect remains in `CurrentStock` | If the delete was a **mistake**, restore the row (`IsDelete = 0`). If it was **intended**, set `CurrentStock` to the `StockBalance`                                |
+| **4. Transfer not posted**                | The transfer exists with no `OUT` / `IN` rows in `Stock`                          | Post the missing movement through the application's process (or a controlled script), or set `CurrentStock` to the `StockBalance` if the transfer should not count |
+| **5. Adjustment not posted**              | The adjustment exists with no stock row                                           | Post the missing row through the application's process, or set `CurrentStock` to the `StockBalance`                                                                |
+| **6. Other**                              | No clear document cause                                                           | Trace each case as in Step 2 and ask the senior                                                                                                                    |
 
 ### Apply the fix: set `CurrentStock` to the `StockBalance` for selected categories
 
@@ -400,13 +405,16 @@ ROLLBACK TRAN;      -- dry run. Change to COMMIT TRAN after the check returns no
 ```
 
 **Before running**
+
 - Check for **duplicate `CurrentStock` rows** for the same project and item (the update skips them, and they need manual handling):
+
 ```sql
 SELECT ProjectId, ItemId, COUNT(*) AS TotalRows
 FROM CurrentStock
 GROUP BY ProjectId, ItemId
 HAVING COUNT(*) > 1;
 ```
+
 - Fix categories **2** and **6** **one case at a time**, because the right fix depends on the cause.
 
 ---
@@ -423,6 +431,7 @@ SELECT COUNT(*) AS RemainingMismatches FROM #Mismatch;
 `RemainingMismatches` should be `0`, or only the cases that were intentionally left for review.
 
 Also confirm:
+
 - [ ] The stock report in the application shows the same numbers for a few checked items
 - [ ] The backup table (`CurrentStock_Backup_20261106`) exists and can be used to undo the change
 - [ ] The categories and the fixes were agreed with the senior
@@ -431,13 +440,13 @@ Also confirm:
 
 ## 8. Day 2 Progress Log
 
-| Time | What I tried | Result | Next |
-|------|--------------|--------|------|
-| [ ] | Rebuilt the mismatch list | [ ] | [ ] |
-| [ ] | Traced one case (project ___, item ___) | [ ] | [ ] |
-| [ ] | Classified all mismatches | [ ] | [ ] |
-| [ ] | Fixed category ___ | [ ] | [ ] |
-| [ ] | Verified | [ ] | [ ] |
+| Time | What I tried                            | Result | Next |
+| ---- | --------------------------------------- | ------ | ---- |
+| [ ]  | Rebuilt the mismatch list               | [ ]    | [ ]  |
+| [ ]  | Traced one case (project **_, item _**) | [ ]    | [ ]  |
+| [ ]  | Classified all mismatches               | [ ]    | [ ]  |
+| [ ]  | Fixed category \_\_\_                   | [ ]    | [ ]  |
+| [ ]  | Verified                                | [ ]    | [ ]  |
 
 **Cause found:** [ ]
 **Cases fixed:** [ ] of [ ]
@@ -449,15 +458,16 @@ Also confirm:
 
 Collect this information. It lets the senior (or anyone helping) understand the problem quickly:
 
-| Item | Where from |
-|------|------------|
-| The **summary table** from Step 3 (cases per cause) | Step 3 |
-| **One traced case**: the `Stock` rows, the `CurrentStock` value, and the document list | Step 2 |
-| The **source of the procedure** that performs a transfer and the one that performs an adjustment | `EXEC sp_helptext '[dbo].[ProcedureName]'` |
-| Which procedures update `CurrentStock` | `SELECT OBJECT_NAME(object_id) FROM sys.sql_modules WHERE definition LIKE '%CurrentStock%';` |
-| How `Quantity`, `StockType`, `ReferenceTable`, and `ReferenceId` look in sample rows | `SELECT TOP 20 * FROM Stock WHERE ReferenceTable IN ('Transfers','StockAdjustment');` |
+| Item                                                                                             | Where from                                                                                   |
+| ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| The **summary table** from Step 3 (cases per cause)                                              | Step 3                                                                                       |
+| **One traced case**: the `Stock` rows, the `CurrentStock` value, and the document list           | Step 2                                                                                       |
+| The **source of the procedure** that performs a transfer and the one that performs an adjustment | `EXEC sp_helptext '[dbo].[ProcedureName]'`                                                   |
+| Which procedures update `CurrentStock`                                                           | `SELECT OBJECT_NAME(object_id) FROM sys.sql_modules WHERE definition LIKE '%CurrentStock%';` |
+| How `Quantity`, `StockType`, `ReferenceTable`, and `ReferenceId` look in sample rows             | `SELECT TOP 20 * FROM Stock WHERE ReferenceTable IN ('Transfers','StockAdjustment');`        |
 
 **Questions for the senior**
+
 - [ ] Which table is the source of truth, `Stock` or `CurrentStock`?
 - [ ] When and how is `CurrentStock` updated (procedure, trigger, or application code)?
 - [ ] Does a transfer update both projects, and when (on send or on receive)?
