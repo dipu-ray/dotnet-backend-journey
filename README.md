@@ -136,6 +136,17 @@ dotnet-backend-journey/
 
 </details>
 
+<details>
+<summary><b>Week 04</b> — Software Logic, SQL & C#</summary>
+
+<br>
+
+| Day | Topic                                        | Notes                    |
+| :-- | :------------------------------------------- | :----------------------- |
+| 29  | Fixing StockBalance and CurrentStock 2nd Day | [Day-29](week-05/day-29) |
+
+</details>
+
 ---
 
 ## 🧪 Projects
