@@ -1,7 +1,6 @@
 # Fixing StockBalance and CurrentStock Mismatches After Transfer and Stock Adjustment
 
 **Date:** 5 November 2026
-**Database:** SQL Server
 
 > **Important:** this guide was written **without access to the actual data**. It gives a safe method to **find the cause** and to **fix** the mismatches, but the queries that depend on how the application posts transfers and adjustments are marked as **assumptions**. Confirm them first (see [Assumptions to Confirm](#9-assumptions-to-confirm)). A data fix must be run **inside a transaction, after a backup, and with the senior's approval**.
 
