@@ -103,7 +103,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 03</b> — SQL Advanced Queries</summary>
+<summary><b>Week 03</b> — SQL Advanced Queries and C#</summary>
 
 <br>
 
@@ -137,7 +137,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 04</b> — Software Logic, SQL & C#</summary>
+<summary><b>Week 05</b> — SaaS Product, Database, OOP</summary>
 
 <br>
 

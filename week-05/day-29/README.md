@@ -1,6 +1,6 @@
 # Fixing StockBalance and CurrentStock Mismatches: Day 2
 
-**Date:** 6 November 2026
+**Date:** 8 November 2026
 
 > **Note:** this is the **second-day** plan for the mismatch problem between the `Stock` table (the ledger) and the `CurrentStock` table. It continues the first-day document (_Fixing StockBalance and CurrentStock Mismatches After Transfer and Stock Adjustment_). I have not seen the data or the result of the first day, so the sections marked `[ ... ]` are for **your findings**. The queries are written to **find the cause with evidence**, and any data change must be done after a **backup**, inside a **transaction**, and with the senior's approval.
 
