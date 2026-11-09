@@ -144,6 +144,7 @@ dotnet-backend-journey/
 | Day | Topic                                        | Notes                    |
 | :-- | :------------------------------------------- | :----------------------- |
 | 29  | Fixing StockBalance and CurrentStock 2nd Day | [Day-29](week-05/day-29) |
+| 30  | C# OOP: Constructor, Encapsulation etc       | [Day-30](week-05/day-30) |
 
 </details>
 
