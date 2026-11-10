@@ -8,6 +8,7 @@ Today's topics:
 2. **Arrays:** about half completed. The completed part is documented below, and the remaining topics are listed in the [progress table](#arrays-progress).
 
 ## Table of Contents
+
 - [Part 1: Exception Handling](#part-1-exception-handling)
   - [What is an Exception?](#what-is-an-exception)
   - [try and catch](#try-and-catch)
@@ -42,18 +43,19 @@ Console.WriteLine(numbers[10]);      // runtime error: the program crashes
 
 **Exception handling** means **catching** the error so the program can **continue** or **show a clear message** instead of crashing.
 
-| Keyword | Purpose |
-|---------|---------|
-| `try` | The code that **might** cause an error |
-| `catch` | The code that **handles** the error |
+| Keyword   | Purpose                                                          |
+| --------- | ---------------------------------------------------------------- |
+| `try`     | The code that **might** cause an error                           |
+| `catch`   | The code that **handles** the error                              |
 | `finally` | The code that **always runs**, whether or not there was an error |
-| `throw` | **Creates** (raises) an exception on purpose |
+| `throw`   | **Creates** (raises) an exception on purpose                     |
 
 ---
 
 ## try and catch
 
 **Syntax**
+
 ```csharp
 try
 {
@@ -66,6 +68,7 @@ catch (Exception e)
 ```
 
 **Example**
+
 ```csharp
 try
 {
@@ -81,6 +84,7 @@ Console.WriteLine("The program continues.");
 ```
 
 **Output**
+
 ```
 Something went wrong: Index was outside the bounds of the array.
 The program continues.
@@ -100,6 +104,7 @@ try block runs
 - `e` is the **exception object**. `e.Message` describes the error.
 
 **Another example: divide by zero**
+
 ```csharp
 try
 {
@@ -117,17 +122,17 @@ catch (DivideByZeroException e)
 
 ## Common Exception Types
 
-| Exception | When it happens | Example |
-|-----------|-----------------|---------|
-| `Exception` | **Base class** of all exceptions (catches everything) | |
-| `DivideByZeroException` | Dividing an integer by zero | `10 / 0` |
-| `IndexOutOfRangeException` | Using an array index that does not exist | `numbers[10]` on a 3-item array |
-| `FormatException` | A string is not in the right format for the conversion | `int.Parse("abc")` |
-| `NullReferenceException` | Using an object that is `null` | `string s = null; s.Length` |
-| `InvalidCastException` | An invalid type conversion | Casting a `string` object to `int` |
-| `OverflowException` | A value is too large or small for the type (in a `checked` context or a conversion) | `Convert.ToByte(300)` |
-| `ArgumentException` | A method received an invalid argument | `throw new ArgumentException(...)` |
-| `FileNotFoundException` | The file does not exist | Opening a missing file |
+| Exception                  | When it happens                                                                     | Example                            |
+| -------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------- |
+| `Exception`                | **Base class** of all exceptions (catches everything)                               |                                    |
+| `DivideByZeroException`    | Dividing an integer by zero                                                         | `10 / 0`                           |
+| `IndexOutOfRangeException` | Using an array index that does not exist                                            | `numbers[10]` on a 3-item array    |
+| `FormatException`          | A string is not in the right format for the conversion                              | `int.Parse("abc")`                 |
+| `NullReferenceException`   | Using an object that is `null`                                                      | `string s = null; s.Length`        |
+| `InvalidCastException`     | An invalid type conversion                                                          | Casting a `string` object to `int` |
+| `OverflowException`        | A value is too large or small for the type (in a `checked` context or a conversion) | `Convert.ToByte(300)`              |
+| `ArgumentException`        | A method received an invalid argument                                               | `throw new ArgumentException(...)` |
+| `FileNotFoundException`    | The file does not exist                                                             | Opening a missing file             |
 
 ```csharp
 try
@@ -180,11 +185,11 @@ catch (Exception e)
 }
 ```
 
-| Input | Output |
-|-------|--------|
-| `5` | `20` |
+| Input | Output                               |
+| ----- | ------------------------------------ |
+| `5`   | `20`                                 |
 | `abc` | `Please enter a valid whole number.` |
-| `0` | `The number cannot be zero.` |
+| `0`   | `The number cannot be zero.`         |
 
 **Rule:** put the **specific** exceptions first and the general `Exception` **last**. If `catch (Exception)` comes first, the compiler gives an error, because it would catch everything before the specific blocks.
 
@@ -212,6 +217,7 @@ finally
 ```
 
 **Output**
+
 ```
 Trying...
 Error: Index was outside the bounds of the array.
@@ -220,10 +226,10 @@ The 'try catch' is finished.
 
 **Order of execution**
 
-| Case | try | catch | finally |
-|------|-----|-------|---------|
-| No error | Runs fully | Skipped | **Runs** |
-| Error | Runs until the error | Runs | **Runs** |
+| Case     | try                  | catch   | finally  |
+| -------- | -------------------- | ------- | -------- |
+| No error | Runs fully           | Skipped | **Runs** |
+| Error    | Runs until the error | Runs    | **Runs** |
 
 ---
 
@@ -255,6 +261,7 @@ catch (ArgumentException e)
 ```
 
 **Output**
+
 ```
 Access denied - you must be at least 18 years old.
 ```
@@ -274,11 +281,11 @@ catch (Exception e)
 
 ## Exception Properties
 
-| Property | Meaning | Example |
-|----------|---------|---------|
-| `e.Message` | A description of the error | `Attempted to divide by zero.` |
-| `e.GetType().Name` | The name of the exception type | `DivideByZeroException` |
-| `e.StackTrace` | Where the error happened (method calls) | Used for debugging |
+| Property           | Meaning                                 | Example                        |
+| ------------------ | --------------------------------------- | ------------------------------ |
+| `e.Message`        | A description of the error              | `Attempted to divide by zero.` |
+| `e.GetType().Name` | The name of the exception type          | `DivideByZeroException`        |
+| `e.StackTrace`     | Where the error happened (method calls) | Used for debugging             |
 
 ```csharp
 try
@@ -311,12 +318,12 @@ string car3 = "Ford";
 string[] cars = { "Volvo", "BMW", "Ford" };
 ```
 
-| Property | Detail |
-|----------|--------|
-| Same type | All elements have the **same data type** |
-| Fixed size | The size is set when the array is created and **cannot change** |
-| Zero-based index | The first element has index **`0`** |
-| Reference type | The array variable holds a reference to the array |
+| Property         | Detail                                                          |
+| ---------------- | --------------------------------------------------------------- |
+| Same type        | All elements have the **same data type**                        |
+| Fixed size       | The size is set when the array is created and **cannot change** |
+| Zero-based index | The first element has index **`0`**                             |
+| Reference type   | The array variable holds a reference to the array               |
 
 ```
 Index:     0        1       2       3
@@ -353,12 +360,12 @@ cars3[1] = "BMW";
 
 **Default values** of a new array (`new type[size]`):
 
-| Type | Default element value |
-|------|-----------------------|
-| `int`, `long`, `double`, `decimal` | `0` |
-| `bool` | `false` |
-| `char` | `'\0'` |
-| `string` and other reference types | `null` |
+| Type                               | Default element value |
+| ---------------------------------- | --------------------- |
+| `int`, `long`, `double`, `decimal` | `0`                   |
+| `bool`                             | `false`               |
+| `char`                             | `'\0'`                |
+| `string` and other reference types | `null`                |
 
 ```csharp
 int[] scores = new int[3];
@@ -379,6 +386,7 @@ Console.WriteLine(cars[2]);       // Ford
 ```
 
 **Change an element**
+
 ```csharp
 cars[0] = "Opel";
 Console.WriteLine(cars[0]);       // Opel
@@ -415,8 +423,8 @@ Console.WriteLine(cars[cars.Length - 1]);          // Mazda (the last element)
 ```
 
 | Array length | First index | Last index |
-|--------------|-------------|------------|
-| `n` | `0` | `n - 1` |
+| ------------ | ----------- | ---------- |
+| `n`          | `0`         | `n - 1`    |
 
 ---
 
@@ -450,11 +458,11 @@ foreach (string car in cars)
 
 **Syntax:** `foreach (type variableName in arrayName)`
 
-| | `for` | `foreach` |
-|---|-------|-----------|
-| Uses an index | Yes | No |
-| Can change the elements | **Yes** (`arr[i] = ...`) | No (the loop variable is read-only) |
-| Best for | Needing the index or changing values | Just reading every element |
+|                         | `for`                                | `foreach`                           |
+| ----------------------- | ------------------------------------ | ----------------------------------- |
+| Uses an index           | Yes                                  | No                                  |
+| Can change the elements | **Yes** (`arr[i] = ...`)             | No (the loop variable is read-only) |
+| Best for                | Needing the index or changing values | Just reading every element          |
 
 ### Example: sum and average
 
@@ -494,6 +502,7 @@ foreach (string car in cars)
 ```
 
 **Output**
+
 ```
 BMW
 Ford
@@ -564,27 +573,27 @@ class Program
 }
 ```
 
-| Method | Returns |
-|--------|---------|
-| `Max()` | The largest value |
-| `Min()` | The smallest value |
-| `Sum()` | The total of all values |
+| Method      | Returns                  |
+| ----------- | ------------------------ |
+| `Max()`     | The largest value        |
+| `Min()`     | The smallest value       |
+| `Sum()`     | The total of all values  |
 | `Average()` | The average (a `double`) |
 
 ---
 
 ## Arrays Progress
 
-| Arrays topic | Status |
-|--------------|--------|
-| Declare and initialize | Done |
-| Access and change elements | Done |
-| Array length | Done |
-| Loop through an array (`for`, `foreach`) | Done |
-| Sort an array (`Array.Sort`, `Array.Reverse`, `Array.IndexOf`) | Done |
-| `System.Linq` (`Min`, `Max`, `Sum`, `Average`) | Done |
-| Multidimensional arrays | Not completed yet |
-| Remaining array topics | Not completed yet |
+| Arrays topic                                                   | Status            |
+| -------------------------------------------------------------- | ----------------- |
+| Declare and initialize                                         | Done              |
+| Access and change elements                                     | Done              |
+| Array length                                                   | Done              |
+| Loop through an array (`for`, `foreach`)                       | Done              |
+| Sort an array (`Array.Sort`, `Array.Reverse`, `Array.IndexOf`) | Done              |
+| `System.Linq` (`Min`, `Max`, `Sum`, `Average`)                 | Done              |
+| Multidimensional arrays                                        | Not completed yet |
+| Remaining array topics                                         | Not completed yet |
 
 > Update this table when the remaining topics are finished.
 
@@ -593,6 +602,7 @@ class Program
 # Summary
 
 **Exception Handling**
+
 - An **exception** is a run-time error. Without handling, the program crashes.
 - **`try`** holds the risky code, **`catch`** handles the error, **`finally`** always runs, and **`throw`** raises an exception on purpose.
 - Use **several `catch` blocks**, with **specific** exceptions first and `Exception` last.
@@ -600,6 +610,7 @@ class Program
 - `e.Message` describes the error, and `e.GetType().Name` gives its type.
 
 **Arrays**
+
 - An array stores **many values of the same type** in one variable, with a **fixed size** and a **zero-based index**.
 - Declare with `type[] name = { ... }` or `new type[size]`.
 - Access and change elements with `arr[index]`. A wrong index throws `IndexOutOfRangeException`.
