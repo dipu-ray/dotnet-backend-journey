@@ -1,6 +1,6 @@
 # C#: Exception Handling and Arrays
 
-**Date:** 8 November 2026
+**Date:** 10 November 2026
 
 Today's topics:
 
@@ -23,8 +23,6 @@ Today's topics:
   - [Access and Change Elements](#access-and-change-elements)
   - [Array Length](#array-length)
   - [Loop Through an Array](#loop-through-an-array)
-  - [Sort an Array](#sort-an-array)
-  - [System.Linq: Min, Max, Sum, Average](#systemlinq-min-max-sum-average)
   - [Arrays Progress](#arrays-progress)
 - [Summary](#summary)
 
@@ -40,8 +38,6 @@ An **exception** is an **error that happens while the program is running**. If i
 int[] numbers = { 1, 2, 3 };
 Console.WriteLine(numbers[10]);      // runtime error: the program crashes
 ```
-
-**Exception handling** means **catching** the error so the program can **continue** or **show a clear message** instead of crashing.
 
 | Keyword   | Purpose                                                          |
 | --------- | ---------------------------------------------------------------- |
@@ -90,34 +86,6 @@ Something went wrong: Index was outside the bounds of the array.
 The program continues.
 ```
 
-**How it works**
-
-```
-try block runs
-   |
-   |-- no error   -> catch is skipped
-   |
-   |-- error      -> the rest of try is skipped -> catch runs -> the program continues after the catch
-```
-
-- As soon as an error happens in `try`, the **remaining lines of `try` are skipped**.
-- `e` is the **exception object**. `e.Message` describes the error.
-
-**Another example: divide by zero**
-
-```csharp
-try
-{
-    int x = 10;
-    int y = 0;
-    Console.WriteLine(x / y);
-}
-catch (DivideByZeroException e)
-{
-    Console.WriteLine("Error: " + e.Message);     // Error: Attempted to divide by zero.
-}
-```
-
 ---
 
 ## Common Exception Types
@@ -133,29 +101,6 @@ catch (DivideByZeroException e)
 | `OverflowException`        | A value is too large or small for the type (in a `checked` context or a conversion) | `Convert.ToByte(300)`              |
 | `ArgumentException`        | A method received an invalid argument                                               | `throw new ArgumentException(...)` |
 | `FileNotFoundException`    | The file does not exist                                                             | Opening a missing file             |
-
-```csharp
-try
-{
-    int number = int.Parse("abc");
-}
-catch (FormatException e)
-{
-    Console.WriteLine("Invalid number format.");
-}
-
-try
-{
-    string text = null;
-    Console.WriteLine(text.Length);
-}
-catch (NullReferenceException e)
-{
-    Console.WriteLine("The string is null.");
-}
-```
-
-> The exact `Message` text depends on the .NET version.
 
 ---
 
@@ -184,14 +129,6 @@ catch (Exception e)
     Console.WriteLine("Unexpected error: " + e.Message);
 }
 ```
-
-| Input | Output                               |
-| ----- | ------------------------------------ |
-| `5`   | `20`                                 |
-| `abc` | `Please enter a valid whole number.` |
-| `0`   | `The number cannot be zero.`         |
-
-**Rule:** put the **specific** exceptions first and the general `Exception` **last**. If `catch (Exception)` comes first, the compiler gives an error, because it would catch everything before the specific blocks.
 
 ---
 
@@ -223,13 +160,6 @@ Trying...
 Error: Index was outside the bounds of the array.
 The 'try catch' is finished.
 ```
-
-**Order of execution**
-
-| Case     | try                  | catch   | finally  |
-| -------- | -------------------- | ------- | -------- |
-| No error | Runs fully           | Skipped | **Runs** |
-| Error    | Runs until the error | Runs    | **Runs** |
 
 ---
 
@@ -264,17 +194,6 @@ catch (ArgumentException e)
 
 ```
 Access denied - you must be at least 18 years old.
-```
-
-- If `CheckAge(15)` were called **without** `try / catch`, the program would crash with that message.
-- Inside a `catch` block, write **`throw;`** to **pass the same exception on** to the caller (it keeps the original details).
-
-```csharp
-catch (Exception e)
-{
-    Console.WriteLine("Logging the error...");
-    throw;
-}
 ```
 
 ---
@@ -318,20 +237,6 @@ string car3 = "Ford";
 string[] cars = { "Volvo", "BMW", "Ford" };
 ```
 
-| Property         | Detail                                                          |
-| ---------------- | --------------------------------------------------------------- |
-| Same type        | All elements have the **same data type**                        |
-| Fixed size       | The size is set when the array is created and **cannot change** |
-| Zero-based index | The first element has index **`0`**                             |
-| Reference type   | The array variable holds a reference to the array               |
-
-```
-Index:     0        1       2       3
-         ┌───────┬───────┬───────┬───────┐
-cars  =  │ Volvo │  BMW  │ Ford  │ Mazda │
-         └───────┴───────┴───────┴───────┘
-```
-
 ---
 
 ## Declare and Initialize
@@ -358,20 +263,6 @@ cars3[0] = "Volvo";
 cars3[1] = "BMW";
 ```
 
-**Default values** of a new array (`new type[size]`):
-
-| Type                               | Default element value |
-| ---------------------------------- | --------------------- |
-| `int`, `long`, `double`, `decimal` | `0`                   |
-| `bool`                             | `false`               |
-| `char`                             | `'\0'`                |
-| `string` and other reference types | `null`                |
-
-```csharp
-int[] scores = new int[3];
-Console.WriteLine(scores[0]);     // 0
-```
-
 ---
 
 ## Access and Change Elements
@@ -392,23 +283,6 @@ cars[0] = "Opel";
 Console.WriteLine(cars[0]);       // Opel
 ```
 
-**Using an index that does not exist** causes an exception:
-
-```csharp
-Console.WriteLine(cars[4]);       // IndexOutOfRangeException (valid indexes are 0 to 3)
-```
-
-```csharp
-try
-{
-    Console.WriteLine(cars[4]);
-}
-catch (IndexOutOfRangeException e)
-{
-    Console.WriteLine("Invalid index: " + e.Message);
-}
-```
-
 ---
 
 ## Array Length
@@ -421,10 +295,6 @@ string[] cars = { "Volvo", "BMW", "Ford", "Mazda" };
 Console.WriteLine(cars.Length);                    // 4
 Console.WriteLine(cars[cars.Length - 1]);          // Mazda (the last element)
 ```
-
-| Array length | First index | Last index |
-| ------------ | ----------- | ---------- |
-| `n`          | `0`         | `n - 1`    |
 
 ---
 
@@ -483,105 +353,6 @@ Console.WriteLine("Average: " + average);    // Average: 77.5
 
 ---
 
-## Sort an Array
-
-The `Array` class has ready-made methods.
-
-### `Array.Sort`
-
-Sorts in **ascending order** (A to Z for text, small to large for numbers).
-
-```csharp
-string[] cars = { "Volvo", "BMW", "Ford", "Mazda" };
-Array.Sort(cars);
-
-foreach (string car in cars)
-{
-    Console.WriteLine(car);
-}
-```
-
-**Output**
-
-```
-BMW
-Ford
-Mazda
-Volvo
-```
-
-```csharp
-int[] numbers = { 5, 1, 8, 9, 3 };
-Array.Sort(numbers);
-
-foreach (int n in numbers)
-{
-    Console.Write(n + " ");      // 1 3 5 8 9
-}
-```
-
-### `Array.Reverse`
-
-Reverses the order of the elements. Sort first and then reverse to get **descending** order.
-
-```csharp
-int[] numbers = { 5, 1, 8, 9, 3 };
-
-Array.Sort(numbers);
-Array.Reverse(numbers);
-
-foreach (int n in numbers)
-{
-    Console.Write(n + " ");      // 9 8 5 3 1
-}
-```
-
-### `Array.IndexOf`
-
-Finds the **index** of a value. It returns **`-1`** when the value is not found.
-
-```csharp
-string[] cars = { "Volvo", "BMW", "Ford", "Mazda" };
-
-Console.WriteLine(Array.IndexOf(cars, "Ford"));     // 2
-Console.WriteLine(Array.IndexOf(cars, "Audi"));     // -1
-```
-
-> These methods change the original array. `Array.Sort` and `Array.Reverse` do not create a new one.
-
----
-
-## System.Linq: Min, Max, Sum, Average
-
-Add `using System.Linq;` at the top of the file. It gives extra methods for arrays.
-
-```csharp
-using System;
-using System.Linq;
-
-class Program
-{
-    static void Main()
-    {
-        int[] myNumbers = { 5, 1, 8, 9 };
-
-        Console.WriteLine(myNumbers.Max());        // 9   (largest)
-        Console.WriteLine(myNumbers.Min());        // 1   (smallest)
-        Console.WriteLine(myNumbers.Sum());        // 23  (total)
-        Console.WriteLine(myNumbers.Average());    // 5.75
-    }
-}
-```
-
-| Method      | Returns                  |
-| ----------- | ------------------------ |
-| `Max()`     | The largest value        |
-| `Min()`     | The smallest value       |
-| `Sum()`     | The total of all values  |
-| `Average()` | The average (a `double`) |
-
----
-
 ## Arrays Progress
 
 | Arrays topic                                                   | Status            |
@@ -590,8 +361,8 @@ class Program
 | Access and change elements                                     | Done              |
 | Array length                                                   | Done              |
 | Loop through an array (`for`, `foreach`)                       | Done              |
-| Sort an array (`Array.Sort`, `Array.Reverse`, `Array.IndexOf`) | Done              |
-| `System.Linq` (`Min`, `Max`, `Sum`, `Average`)                 | Done              |
+| Sort an array (`Array.Sort`, `Array.Reverse`, `Array.IndexOf`) | Not completed yet |
+| `System.Linq` (`Min`, `Max`, `Sum`, `Average`)                 | Not completed yet |
 | Multidimensional arrays                                        | Not completed yet |
 | Remaining array topics                                         | Not completed yet |
 
@@ -616,5 +387,4 @@ class Program
 - Access and change elements with `arr[index]`. A wrong index throws `IndexOutOfRangeException`.
 - `Length` gives the number of elements, and the last index is `Length - 1`.
 - Loop with `for` (needs the index, can change values) or `foreach` (reads every element).
-- `Array.Sort`, `Array.Reverse`, and `Array.IndexOf` sort, reverse, and search. `System.Linq` adds `Min`, `Max`, `Sum`, and `Average`.
-- **Remaining:** multidimensional arrays and the rest of the arrays topics.
+- **Remaining:** `Array.Sort`, `Array.Reverse`, and `Array.IndexOf` sort, reverse, and search. `System.Linq` adds `Min`, `Max`, `Sum`, and `Average`. Multidimensional arrays and the rest of the arrays topics.
