@@ -137,7 +137,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 05</b> — SaaS Product, Database, OOP</summary>
+<summary><b>Week 05</b> — SaaS Product, Database, C# OOP</summary>
 
 <br>
 
@@ -145,6 +145,7 @@ dotnet-backend-journey/
 | :-- | :------------------------------------------- | :----------------------- |
 | 29  | Fixing StockBalance and CurrentStock 2nd Day | [Day-29](week-05/day-29) |
 | 30  | C# OOP: Constructor, Encapsulation etc       | [Day-30](week-05/day-30) |
+| 31  | C#: Exception Handling and Arrays            | [Day-31](week-05/day-31) |
 
 </details>
 
