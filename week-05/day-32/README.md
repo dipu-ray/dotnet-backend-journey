@@ -1,6 +1,6 @@
 # SaaS Product Data Entry and C# 2D Arrays with Nested Loops
 
-**Date:** 9 November 2026
+**Date:** 11 November 2026
 
 Today's work:
 
@@ -12,89 +12,34 @@ Today's work:
 ## Table of Contents
 
 - [Part 1: SaaS Product](#part-1-saas-product)
-  - [What is SaaS?](#1-what-is-saas)
-  - [Parts of a SaaS Website](#2-parts-of-a-saas-website)
-  - [How I Explored the Product](#3-how-i-explored-the-product)
-  - [Data Entry](#4-data-entry)
-  - [Product Notes](#5-product-notes)
+  - [How I Explored the Product](#1-how-i-explored-the-product)
+  - [Data Entry](#2-data-entry)
 - [Part 2: C# 2D Arrays and Nested Loops](#part-2-c-2d-arrays-and-nested-loops)
   - [2D Arrays](#1-2d-arrays)
   - [Nested Loops with a 2D Array](#2-nested-loops-with-a-2d-array)
   - [Nested Loops with a 1D Array](#3-nested-loops-with-a-1d-array)
-  - [Arrays Progress](#arrays-progress)
 - [Summary](#summary)
 
 ---
 
 # Part 1: SaaS Product
 
-## 1. What is SaaS?
+## 1. How I Explored the Product
 
-**SaaS** (Software as a Service) is software that is **hosted online by the provider** and used **through a web browser** (or an app). The customer usually pays a **subscription** and does not install or maintain anything.
-
-|                        | Traditional software                 | SaaS                                       |
-| ---------------------- | ------------------------------------ | ------------------------------------------ |
-| Installation           | Installed on your computer or server | **No installation.** Use it in the browser |
-| Payment                | Often a one-time purchase            | **Subscription** (monthly or yearly)       |
-| Updates                | You install them                     | **Automatic**, by the provider             |
-| Server and maintenance | You manage them                      | **The provider** manages them              |
-| Access                 | On that computer or network          | **From anywhere** with internet            |
-| Data                   | Stored on your own system            | Stored on the **provider's cloud**         |
-
-**Key points about SaaS**
-
-- **Multi-tenant:** many customers use the same software, and each customer's data is kept **separate**.
-- **Plans:** products usually offer plans (for example Free, Basic, Pro, Enterprise) with different limits and features.
-- **Free trial or demo:** most products let you try before you pay.
-
-**Examples of SaaS products:** Google Workspace, Microsoft 365, Slack, Zoho, Shopify, Salesforce, Trello, Notion.
+| Step | What to do                                                                                     | Done |
+| ---- | ---------------------------------------------------------------------------------------------- | ---- |
+| 1    | Read the **Dashboard**, **features**, and **accounts** to understand the product and its plans | [ ]  |
+| 3    | Look at the **dashboard** and the menu                                                         | [ ]  |
+| 4    | Complete the **profile and company settings**                                                  | [ ]  |
+| 5    | **Enter data** (see the next section)                                                          | [ ]  |
+| 6    | Try the **main features** with that data                                                       | [ ]  |
+| 7    | Look at the **reports** and check that they match the entered data                             | [ ]  |
+| 8    | Check **users and roles**                                                                      | [ ]  |
+| 9    | Check **import and export**                                                                    | [ ]  |
 
 ---
 
-## 2. Parts of a SaaS Website
-
-| Part                            | What it is                                                                   |
-| ------------------------------- | ---------------------------------------------------------------------------- |
-| **Marketing pages**             | Home, features, pricing, blog, and customer stories that explain the product |
-| **Sign up / free trial / demo** | Create an account or request a demo                                          |
-| **Login**                       | Access to your own account                                                   |
-| **Dashboard**                   | The main page with a summary of your data                                    |
-| **Modules / features**          | The main working areas (for example customers, products, orders, reports)    |
-| **Settings and profile**        | Company information, preferences, and notifications                          |
-| **Users and roles**             | Invite team members and control what each can see and do                     |
-| **Billing and subscription**    | Plan, payment method, and invoices                                           |
-| **Import and export**           | Upload data from a file, or download your data                               |
-| **Integrations and API**        | Connect to other tools                                                       |
-| **Help center and support**     | Guides, documentation, and chat or email support                             |
-
----
-
-## 3. How I Explored the Product
-
-| Product detail | Notes                           |
-| -------------- | ------------------------------- |
-| Product name   | [Name]                          |
-| Website        | [URL]                           |
-| What it does   | [One or two lines]              |
-| Plan used      | [Free trial / Free / Paid plan] |
-| Date explored  | 9 November 2026                 |
-
-| Step | What to do                                                                                    | Done |
-| ---- | --------------------------------------------------------------------------------------------- | ---- |
-| 1    | Read the **home page**, **features**, and **pricing** to understand the product and its plans | [ ]  |
-| 2    | **Sign up** for the free trial or free plan                                                   | [ ]  |
-| 3    | Look at the **dashboard** and the menu                                                        | [ ]  |
-| 4    | Complete the **profile and company settings**                                                 | [ ]  |
-| 5    | **Enter data** (see the next section)                                                         | [ ]  |
-| 6    | Try the **main features** with that data                                                      | [ ]  |
-| 7    | Look at the **reports** and check that they match the entered data                            | [ ]  |
-| 8    | Check **users and roles**                                                                     | [ ]  |
-| 9    | Check **import and export**                                                                   | [ ]  |
-| 10   | Read the **help center** for anything unclear                                                 | [ ]  |
-
----
-
-## 4. Data Entry
+## 2. Data Entry
 
 **Data entry** means **typing or uploading information into the system** so that it can be stored, searched, and used in reports. The quality of every report depends on the quality of the entered data.
 
@@ -112,17 +57,6 @@ Prepare the data  ->  Enter it in the system  ->  Check it  ->  Save  ->  Verify
 | 4. **Save**    | Save the record                                                          |
 | 5. **Verify**  | Open the list or report and compare it with the source                   |
 | 6. **Correct** | Fix mistakes in the system                                               |
-
-### Types of fields
-
-| Field type                            | Examples            | Tip                                             |
-| ------------------------------------- | ------------------- | ----------------------------------------------- |
-| **Text**                              | Name, address       | Use the same style every time                   |
-| **Number**                            | Quantity, price     | Do not add symbols or extra spaces              |
-| **Date**                              | Order date          | Use one date format                             |
-| **Dropdown / list**                   | Category, status    | Choose from the list, do not type a new variant |
-| **Required field** (often marked `*`) | Name, email         | The record cannot be saved without it           |
-| **Unique field**                      | Email, product code | Duplicate values are rejected                   |
 
 ### Entering data one by one (form)
 
@@ -161,34 +95,6 @@ Prepare the data  ->  Enter it in the system  ->  Check it  ->  Save  ->  Verify
 | Extra spaces or symbols in numbers       | Errors or wrong totals                  |
 | Skipping optional but useful fields      | Reports are incomplete                  |
 | Entering the same record twice           | Duplicate data                          |
-
-### Data entry log
-
-| Item                        | Details                                   |
-| --------------------------- | ----------------------------------------- |
-| What data was entered       | [For example products, customers, orders] |
-| Number of records entered   | [ ]                                       |
-| Method                      | [One by one / import]                     |
-| Source                      | [Spreadsheet, document, list]             |
-| Problems faced              | [ ]                                       |
-| How I fixed them            | [ ]                                       |
-| Verified against the source | [Yes / No]                                |
-
----
-
-## 5. Product Notes
-
-| Question                                      | Answer |
-| --------------------------------------------- | ------ |
-| Who is the product for?                       | [ ]    |
-| Main features I used                          | [ ]    |
-| What I liked                                  | [ ]    |
-| What was difficult or missing                 | [ ]    |
-| Free plan limits (users, records, features)   | [ ]    |
-| Paid plans and prices                         | [ ]    |
-| Import and export available?                  | [ ]    |
-| Support and help available?                   | [ ]    |
-| What I learned about how a SaaS product works | [ ]    |
 
 ---
 
@@ -283,15 +189,6 @@ for (int i = 0; i < numbers.GetLength(0); i++)          // rows
 4 5 6
 ```
 
-**How it runs**
-
-| i (row) | j (column) | Element |
-| ------- | ---------- | ------- |
-| 0       | 0, 1, 2    | 1, 2, 3 |
-| 1       | 0, 1, 2    | 4, 5, 6 |
-
-For each value of `i`, the inner loop runs **all** values of `j`.
-
 ### `foreach` with a 2D array
 
 `foreach` visits **every element**, row by row, without indexes.
@@ -303,12 +200,6 @@ foreach (int n in numbers)
 }
 // 1 2 3 4 5 6
 ```
-
-|                                | Nested `for` | `foreach`         |
-| ------------------------------ | ------------ | ----------------- |
-| Gives row and column positions | **Yes**      | No                |
-| Can change elements            | **Yes**      | No                |
-| Prints as a table (row by row) | **Yes**      | No (one sequence) |
 
 ### Fill an array: multiplication table
 
@@ -460,61 +351,11 @@ if (!found)
 
 ---
 
-## 3. Nested Loops with a 1D Array
-
-Nested loops are also used with a **1D array**, when each element must be **compared with the other elements**.
-
-### Find duplicate values
-
-```csharp
-int[] data = { 4, 2, 7, 2, 9, 4 };
-
-for (int i = 0; i < data.Length; i++)
-{
-    for (int j = i + 1; j < data.Length; j++)      // j starts after i, so each pair is checked once
-    {
-        if (data[i] == data[j])
-        {
-            Console.WriteLine("Duplicate: " + data[i]);
-        }
-    }
-}
-```
-
-**Output**
-
-```
-Duplicate: 4
-Duplicate: 2
-```
-
-- The **outer loop** picks one element (`data[i]`).
-- The **inner loop** compares it with every element **after** it (`data[j]`).
-- `j = i + 1` avoids comparing an element with itself and avoids comparing the same pair twice.
-
----
-
-## Arrays Progress
-
-| Arrays topic                                                   | Status   |
-| -------------------------------------------------------------- | -------- |
-| Declare and initialize                                         | Done     |
-| Access and change elements                                     | Done     |
-| Array length                                                   | Done     |
-| Loop through an array (`for`, `foreach`)                       | Done     |
-| Sort an array (`Array.Sort`, `Array.Reverse`, `Array.IndexOf`) | Done     |
-| `System.Linq` (`Min`, `Max`, `Sum`, `Average`)                 | Done     |
-| **2D arrays**                                                  | **Done** |
-| **Nested loops with arrays**                                   | **Done** |
-
----
-
 # Summary
 
 **SaaS product**
 
-- **SaaS** is software hosted online by the provider and used through a browser, usually on a **subscription**, with automatic updates and no installation.
-- A SaaS website has marketing pages, sign-up or demo, a dashboard, modules, settings, users and roles, billing, import and export, and a help center.
+- A SaaS website has marketing pages, sign-up or demo, a dashboard, modules, settings, users and roles, billing, import and export.
 - **Data entry** means putting information into the system, one record at a time (form) or in bulk (import). Prepare the data, enter it, check it, and **verify** it against the source.
 - Good data entry uses **consistent formats**, avoids **duplicates**, fills in **required fields**, and is **verified** afterwards.
 
