@@ -147,6 +147,7 @@ dotnet-backend-journey/
 | 30  | C# OOP: Constructor, Encapsulation etc       | [Day-30](week-05/day-30) |
 | 31  | C#: Exception Handling and Arrays            | [Day-31](week-05/day-31) |
 | 32  | SaaS Product Data Entry and C# 2D Arrays     | [Day-32](week-05/day-32) |
+| 33  | Inheritance, Polymorphism, and Abstraction   | [Day-33](week-05/day-33) |
 
 </details>
 
