@@ -17,7 +17,6 @@ Today's work:
 - [Part 2: C# 2D Arrays and Nested Loops](#part-2-c-2d-arrays-and-nested-loops)
   - [2D Arrays](#1-2d-arrays)
   - [Nested Loops with a 2D Array](#2-nested-loops-with-a-2d-array)
-  - [Nested Loops with a 1D Array](#3-nested-loops-with-a-1d-array)
 - [Summary](#summary)
 
 ---
