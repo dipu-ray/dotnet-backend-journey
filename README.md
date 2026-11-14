@@ -148,6 +148,7 @@ dotnet-backend-journey/
 | 31  | C#: Exception Handling and Arrays            | [Day-31](week-05/day-31) |
 | 32  | SaaS Product Data Entry and C# 2D Arrays     | [Day-32](week-05/day-32) |
 | 33  | Inheritance, Polymorphism, and Abstraction   | [Day-33](week-05/day-33) |
+| 34  | Problem Solving: Encapsulation, Inheritance  | [Day-34](week-05/day-34) |
 
 </details>
 
