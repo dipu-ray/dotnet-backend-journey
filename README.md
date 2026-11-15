@@ -59,9 +59,10 @@
 
 ```text
 dotnet-backend-journey/
-├── days/            # Daily Notes & Code Snippets
-├── projects/        # Weekly Practice Projects & Mini APIs
-└── README.md
+├── weeks/							# Weekly learning modules
+│   ├── days/						# Daily practice folders
+│   │   └── files and projects		# Daily notes, C# code files & mini projects
+└── README.md						# Repository overview
 ```
 
 ---
@@ -149,6 +150,7 @@ dotnet-backend-journey/
 | 32  | SaaS Product Data Entry and C# 2D Arrays     | [Day-32](week-05/day-32) |
 | 33  | Inheritance, Polymorphism, and Abstraction   | [Day-33](week-05/day-33) |
 | 34  | Problem Solving: Encapsulation, Inheritance  | [Day-34](week-05/day-34) |
+| 35  | Problem Solving: Polymorphism, Abstraction   | [Day-35](week-05/day-35) |
 
 </details>
 
@@ -159,7 +161,6 @@ dotnet-backend-journey/
 | Project                              | Description         | Stack |
 | :----------------------------------- | :------------------ | :---- |
 | [Calculator](week-01/day-07-project) | Console Application | C#    |
-| _Next project_                       | _Planned_           | -     |
 
 ---
 
