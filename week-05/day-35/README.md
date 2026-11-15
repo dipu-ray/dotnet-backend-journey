@@ -1,4 +1,4 @@
-# C# Recap and Problem Solving: Polymorphism and Abstraction
+# C#: Polymorphism and Abstraction
 
 **Date:** 15 November 2026
 
