@@ -1,6 +1,6 @@
 # C# Fundamentals and OOP: Basic Debugging and Static Members
 
-**Date:** 13 November 2026
+**Date:** 16 November 2026
 
 Today's topics:
 
@@ -30,89 +30,6 @@ Today's topics:
 ---
 
 # Part 1: Basic Debugging
-
-## 1. What is Debugging?
-
-**Debugging** is the process of **finding and fixing errors (bugs)** in a program. The **debugger** lets you **pause** the program while it runs, run it **one line at a time**, and **look at the values** of variables.
-
-| Type of bug | When it appears | Example |
-|-------------|-----------------|---------|
-| **Syntax / compile error** | Before running (the compiler reports it) | A missing `;` |
-| **Runtime error** | While running (an exception) | `IndexOutOfRangeException`, `DivideByZeroException` |
-| **Logic error** | The program runs but gives a **wrong result** | Integer division giving `81` instead of `81.67` |
-
-The debugger is most useful for **runtime** and **logic** errors.
-
-This document uses **Visual Studio**. The same ideas and most shortcuts also work in Visual Studio Code.
-
----
-
-## 2. Starting and Stopping the Debugger
-
-| Action | Shortcut | Menu |
-|--------|----------|------|
-| **Start Debugging** (runs with the debugger, stops at breakpoints) | `F5` | Debug > Start Debugging |
-| **Start Without Debugging** (runs normally, breakpoints are ignored) | `Ctrl + F5` | Debug > Start Without Debugging |
-| **Stop Debugging** | `Shift + F5` | Debug > Stop Debugging |
-| **Restart** | `Ctrl + Shift + F5` | Debug > Restart |
-
-While the program is **paused**, a **yellow arrow** points to the line that is **about to run**. That line has **not run yet**.
-
----
-
-## 3. Breakpoints
-
-A **breakpoint** tells the debugger to **pause the program** at a specific line.
-
-### Set and remove a breakpoint
-
-| Way | How |
-|-----|-----|
-| Click the **grey margin** to the left of the line number | A **red dot** appears. Click again to remove it |
-| Place the cursor on the line and press **`F9`** | Toggles the breakpoint |
-
-```csharp
-static void Main()
-{
-    int x = 5;
-    int y = 3;
-    int sum = x + y;         // <- breakpoint here (red dot)
-    Console.WriteLine(sum);
-}
-```
-
-Press **`F5`**. The program runs and **pauses before** the line with the red dot.
-
-### Managing breakpoints
-
-| Task | How |
-|------|-----|
-| See all breakpoints | Debug > Windows > **Breakpoints** (`Ctrl + Alt + B`) |
-| **Disable** a breakpoint (keep it, but skip it) | Right-click the red dot > Disable (the dot becomes hollow) |
-| **Delete all** breakpoints | Debug > Delete All Breakpoints (`Ctrl + Shift + F9`) |
-
-### Conditional breakpoint
-
-Pause **only when a condition is true**. This is useful inside loops.
-
-1. Right-click the red dot and choose **Conditions...**
-2. Enter a condition, for example `i == 50`.
-
-```csharp
-for (int i = 0; i < 100; i++)
-{
-    Process(i);          // breakpoint with the condition  i == 50  pauses only when i is 50
-}
-```
-
-### Other breakpoint options
-
-| Option | Meaning |
-|--------|---------|
-| **Hit Count** | Pause only on the 5th time the line runs, for example |
-| **Action (tracepoint)** | Write a message to the Output window **without pausing** |
-
----
 
 ## 4. Stepping: Over, Into, and Out
 
