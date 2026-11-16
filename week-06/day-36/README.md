@@ -9,13 +9,7 @@ Today's topics:
 
 ## Table of Contents
 - [Part 1: Basic Debugging](#part-1-basic-debugging)
-  - [1. What is Debugging?](#1-what-is-debugging)
-  - [2. Starting and Stopping the Debugger](#2-starting-and-stopping-the-debugger)
-  - [3. Breakpoints](#3-breakpoints)
-  - [4. Stepping: Over, Into, and Out](#4-stepping-over-into-and-out)
-  - [5. Inspecting Values](#5-inspecting-values)
-  - [6. Debugging Example: Finding a Bug](#6-debugging-example-finding-a-bug)
-  - [7. Debugging Shortcuts](#7-debugging-shortcuts)
+  - [1. Stepping: Over, Into, and Out](#1-stepping-over-into-and-out)
 - [Part 2: Static Members and Static Classes](#part-2-static-members-and-static-classes)
   - [1. What is static?](#1-what-is-static)
   - [2. Static Fields and Properties](#2-static-fields-and-properties)
@@ -31,7 +25,7 @@ Today's topics:
 
 # Part 1: Basic Debugging
 
-## 4. Stepping: Over, Into, and Out
+## 1. Stepping: Over, Into, and Out
 
 Once the program is paused, you control it **one step at a time**.
 
@@ -124,106 +118,6 @@ Use **Step Out** when you stepped into a method and **do not need to see the res
 - Visual Studio normally **skips code that is not yours** (for example `Console.WriteLine`) when you press `F11`. This is the **Just My Code** setting.
 - If you pressed `F11` into a method by mistake, press `Shift + F11` to get back out.
 - **Continue** (`F5`) is used to jump to the next breakpoint.
-
----
-
-## 5. Inspecting Values
-
-While paused, you can look at the **state of the program**.
-
-| Tool | How to open | What it shows |
-|------|-------------|---------------|
-| **DataTip** | **Hover** the mouse over a variable | Its current value |
-| **Locals** | Debug > Windows > Locals | All variables of the **current method** |
-| **Autos** | Debug > Windows > Autos | Variables used on the **current and previous lines** |
-| **Watch** | Debug > Windows > Watch | Variables or **expressions you choose** (type `total / marks.Length`) |
-| **Call Stack** | Debug > Windows > Call Stack (`Ctrl + Alt + C`) | The chain of method calls that led to the current line |
-| **Immediate Window** | Debug > Windows > Immediate (`Ctrl + Alt + I`) | Type an expression, for example `x + y`, and see the result |
-
-You can also **change a value** while paused (edit it in Locals or Watch) to test what would happen.
-
-**Reading the Call Stack**
-```
-Add(int a, int b)        <- currently here
-Main()                   <- called from here
-```
-
-Red text in Locals or Watch means the **value just changed** on the last step.
-
----
-
-## 6. Debugging Example: Finding a Bug
-
-**Goal:** calculate the average of the marks `80, 75, 90`. The expected average is `81.67`.
-
-```csharp
-using System;
-
-class Program
-{
-    static void Main()
-    {
-        int[] marks = { 80, 75, 90 };
-        int total = 0;
-
-        for (int i = 0; i < marks.Length; i++)
-        {
-            total += marks[i];
-        }
-
-        double average = total / marks.Length;       // set a breakpoint on this line
-        Console.WriteLine($"Average: {average}");
-    }
-}
-```
-
-**Output:** `Average: 81`. The result is wrong, because the expected value is `81.67`.
-
-### Steps to find the bug
-
-1. **Set a breakpoint** on the line `total += marks[i];` and press `F5`.
-2. Press `F5` (Continue) three times, and watch `i`, `marks[i]`, and `total` in **Locals**.
-
-| Pass | `i` | `marks[i]` | `total` after the line |
-|------|-----|------------|------------------------|
-| 1 | 0 | 80 | 80 |
-| 2 | 1 | 75 | 155 |
-| 3 | 2 | 90 | 245 |
-
-The loop is correct: `total = 245`.
-
-3. Move the breakpoint to `double average = total / marks.Length;` and press `F5`.
-4. Add `total / marks.Length` to the **Watch** window. It shows **`81`**, not `81.666...`.
-5. **Cause:** `total` and `marks.Length` are both **`int`**, so the division is an **integer division**. The decimal part is cut off **before** the result is stored in the `double`.
-
-### Fix
-
-```csharp
-double average = (double)total / marks.Length;       // 81.666666666666671
-Console.WriteLine($"Average: {average:F2}");          // Average: 81.67
-```
-
-**Debugging method used:** breakpoint, check the values, compare with the expected result, find the exact line where the value goes wrong, fix, and run again.
-
----
-
-## 7. Debugging Shortcuts
-
-| Action | Shortcut |
-|--------|----------|
-| Start Debugging / Continue | `F5` |
-| Start Without Debugging | `Ctrl + F5` |
-| Stop Debugging | `Shift + F5` |
-| Restart | `Ctrl + Shift + F5` |
-| Toggle Breakpoint | `F9` |
-| Step Over | `F10` |
-| Step Into | `F11` |
-| Step Out | `Shift + F11` |
-| Run to Cursor | `Ctrl + F10` |
-| Breakpoints window | `Ctrl + Alt + B` |
-| Call Stack window | `Ctrl + Alt + C` |
-| Immediate window | `Ctrl + Alt + I` |
-| Delete All Breakpoints | `Ctrl + Shift + F9` |
 
 ---
 
