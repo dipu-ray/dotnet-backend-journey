@@ -59,10 +59,10 @@
 
 ```text
 dotnet-backend-journey/
-├── weeks/							# Weekly learning modules
-│   ├── days/						# Daily practice folders
+├── weeks/				# Weekly learning modules
+│   ├── days/				# Daily practice folders
 │   │   └── files and projects		# Daily notes, C# code files & mini projects
-└── README.md						# Repository overview
+└── README.md				# Repository overview
 ```
 
 ---
