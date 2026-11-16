@@ -154,6 +154,17 @@ dotnet-backend-journey/
 
 </details>
 
+<details>
+<summary><b>Week 06</b> — C# OOP</summary>
+
+<br>
+
+| Day | Topic                                        | Notes                    |
+| :-- | :------------------------------------------- | :----------------------- |
+| 36  | Basic Debugging and Static Members			 | [Day-36](week-06/day-36) |
+
+</details>
+
 ---
 
 ## 🧪 Projects

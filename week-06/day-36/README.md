@@ -11,15 +11,10 @@ Today's topics:
 - [Part 1: Basic Debugging](#part-1-basic-debugging)
   - [1. Stepping: Over, Into, and Out](#1-stepping-over-into-and-out)
 - [Part 2: Static Members and Static Classes](#part-2-static-members-and-static-classes)
-  - [1. What is static?](#1-what-is-static)
-  - [2. Static Fields and Properties](#2-static-fields-and-properties)
-  - [3. Static Methods](#3-static-methods)
-  - [4. Static Constructor](#4-static-constructor)
-  - [5. Static Classes](#5-static-classes)
-  - [6. Static vs Instance](#6-static-vs-instance)
-  - [7. Putting It Together](#7-putting-it-together)
-  - [8. When to Use Static](#8-when-to-use-static)
-- [Summary](#summary)
+  - [1. Static Methods](#1-static-methods)
+  - [2. Static Classes](#2-static-classes)
+  - [3. Static vs Instance](#3-static-vs-instance)
+  - [4. When to Use Static](#4-when-to-use-static)
 
 ---
 
@@ -123,73 +118,7 @@ Use **Step Out** when you stepped into a method and **do not need to see the res
 
 # Part 2: Static Members and Static Classes
 
-## 1. What is static?
-
-A **`static`** member belongs to the **class itself**, **not to any object**. There is **only one copy**, shared by everything, and it is used through the **class name**.
-
-| | Instance member | Static member |
-|---|-----------------|---------------|
-| Belongs to | **Each object** | **The class** |
-| Copies | One per object | **One** for the whole class |
-| Used with | `objectName.Member` | `ClassName.Member` |
-| Needs an object? | Yes | **No** |
-
-You already use static members: `Console.WriteLine()`, `Math.Sqrt()`, `int.Parse()`.
-
----
-
-## 2. Static Fields and Properties
-
-A **static field** holds **one value shared by all objects** of the class.
-
-```csharp
-class Student
-{
-    public static int Count { get; private set; }     // static property: shared by all students
-
-    public int Id { get; }                            // instance property: one per student
-    public string Name { get; }
-
-    public Student(string name)
-    {
-        Count++;                // increases the single shared counter
-        Id = Count;
-        Name = name;
-    }
-}
-```
-
-```csharp
-Student s1 = new Student("Rahim");
-Student s2 = new Student("Karim");
-Student s3 = new Student("Nusrat");
-
-Console.WriteLine(Student.Count);      // 3  (through the class name)
-Console.WriteLine(s1.Id);              // 1
-Console.WriteLine(s2.Id);              // 2
-Console.WriteLine(s3.Id);              // 3
-```
-
-```
-Student.Count  ->  3         (one value, shared)
-
-s1.Id = 1      s2.Id = 2      s3.Id = 3      (each object has its own)
-```
-
-- `Count` is shared by every `Student`.
-- `Id` is separate for each `Student`.
-- A static member is reached with the **class name** (`Student.Count`), **not** with an object (`s1.Count` is an error).
-
-### Static readonly and const
-
-```csharp
-public const double Pi = 3.14159;                           // constant, implicitly static
-public static readonly string AppName = "MyApp";            // static, assigned once
-```
-
----
-
-## 3. Static Methods
+## 1. Static Methods
 
 A **static method** is called with the **class name**, with **no object** needed.
 
@@ -224,84 +153,9 @@ Console.WriteLine(product);                 // 15
 | Cannot use `this` | There is no current object |
 | Called with | `ClassName.Method()` |
 
-```csharp
-class Demo
-{
-    int x = 5;                  // instance field
-    static int y = 10;          // static field
-
-    static void Show()
-    {
-        // Console.WriteLine(x);     // Error: a static method cannot use an instance field
-        Console.WriteLine(y);        // 10
-    }
-
-    void Display()                   // an instance method can use both
-    {
-        Console.WriteLine(x);        // 5
-        Console.WriteLine(y);        // 10
-    }
-}
-```
-
-> `Main` is `static`, because the program starts **before any object exists**. That is why `Main` can call other **static** methods of its class directly, but needs an **object** to call instance methods.
-
 ---
 
-## 4. Static Constructor
-
-A **static constructor** **initializes the static members** of a class.
-
-| Rule | Detail |
-|------|--------|
-| Keyword | `static`, with **no access modifier** and **no parameters** |
-| Runs | **Once**, automatically, **before** the class is first used |
-| Called by you? | **No** |
-| Count | Only **one** per class |
-
-```csharp
-class Config
-{
-    public static readonly string AppName;
-
-    static Config()                                         // static constructor
-    {
-        Console.WriteLine("Static constructor runs once.");
-        AppName = "MyApp";
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        Console.WriteLine("Program started");
-        Console.WriteLine(Config.AppName);
-        Console.WriteLine(Config.AppName);
-    }
-}
-```
-
-**Output**
-```
-Program started
-Static constructor runs once.
-MyApp
-MyApp
-```
-
-The static constructor ran **once**, the first time `Config` was used, and **not** again for the second use.
-
-| | Static constructor | Instance constructor |
-|---|--------------------|----------------------|
-| Runs | **Once** per class | **Every time** an object is created |
-| Parameters | None | Allowed |
-| Access modifier | None | Allowed |
-| Initializes | Static members | Instance members |
-
----
-
-## 5. Static Classes
+## 2. Static Classes
 
 A **static class** contains **only static members**.
 
@@ -338,42 +192,9 @@ Console.WriteLine(MathHelper.Pi);              // 3.14159
 | Instance constructors | Not allowed (a static constructor is allowed) |
 | Inheritance | Cannot be inherited, and cannot inherit from another class (only from `object`) |
 
-### Where static classes are used
-
-- **Utility / helper methods:** `Math`, `Console`, `Convert`, `File`
-- **Constants and settings** shared by the program
-- **Extension methods** (in a static class)
-
-Helper example:
-```csharp
-static class Validator
-{
-    public static bool IsValidAmount(decimal amount)
-    {
-        return amount > 0;
-    }
-
-    public static bool IsValidName(string name)
-    {
-        return !string.IsNullOrWhiteSpace(name);
-    }
-}
-
-Console.WriteLine(Validator.IsValidAmount(500));      // True
-Console.WriteLine(Validator.IsValidName(""));         // False
-```
-
-### Static class vs class with static members
-
-| | Static class | Normal class with static members |
-|---|--------------|----------------------------------|
-| Can create objects | **No** | **Yes** |
-| Instance members | **None** | **Allowed** |
-| Use when | Only helper functions or shared data | Objects are needed, plus some shared data (such as a counter) |
-
 ---
 
-## 6. Static vs Instance
+## 3. Static vs Instance
 
 | | Static | Instance |
 |---|--------|----------|
@@ -387,93 +208,7 @@ Console.WriteLine(Validator.IsValidName(""));         // False
 
 ---
 
-## 7. Putting It Together
-
-```csharp
-using System;
-
-class BankAccount
-{
-    // Static members: shared by all accounts
-    public static int TotalAccounts { get; private set; }
-    public static decimal InterestRate { get; private set; } = 5m;
-
-    // Instance members: one set per account
-    public string Owner { get; }
-    public decimal Balance { get; private set; }
-
-    public BankAccount(string owner, decimal balance)
-    {
-        Owner = owner;
-        Balance = balance;
-        TotalAccounts++;
-    }
-
-    // Static method: changes the shared interest rate
-    public static void ChangeInterestRate(decimal rate)
-    {
-        InterestRate = rate;
-    }
-
-    // Instance method: uses the object's balance and the shared rate
-    public decimal CalculateInterest()
-    {
-        return Balance * InterestRate / 100;
-    }
-}
-
-// Static class: helper methods
-static class Validator
-{
-    public static bool IsValidAmount(decimal amount)
-    {
-        return amount > 0;
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        BankAccount a1 = new BankAccount("Rahim", 10000m);
-        BankAccount a2 = new BankAccount("Karim", 20000m);
-
-        Console.WriteLine($"Total accounts: {BankAccount.TotalAccounts}");
-        Console.WriteLine($"Rahim interest: {a1.CalculateInterest()}");
-        Console.WriteLine($"Karim interest: {a2.CalculateInterest()}");
-
-        BankAccount.ChangeInterestRate(6m);
-        Console.WriteLine("After changing the rate to 6:");
-        Console.WriteLine($"Rahim interest: {a1.CalculateInterest()}");
-        Console.WriteLine($"Karim interest: {a2.CalculateInterest()}");
-
-        Console.WriteLine($"Is -5 valid? {Validator.IsValidAmount(-5)}");
-    }
-}
-```
-
-**Output**
-```
-Total accounts: 2
-Rahim interest: 500
-Karim interest: 1000
-After changing the rate to 6:
-Rahim interest: 600
-Karim interest: 1200
-Is -5 valid? False
-```
-
-| Concept | Where |
-|---------|-------|
-| **Static field / property** | `TotalAccounts` (a counter) and `InterestRate` (one rate for all accounts) |
-| **Static method** | `ChangeInterestRate`, called as `BankAccount.ChangeInterestRate(6m)` |
-| **Instance members** | `Owner`, `Balance`, `CalculateInterest()` |
-| **Static class** | `Validator` |
-| **Shared state** | Changing the rate once changes the interest of **both** accounts |
-
----
-
-## 8. When to Use Static
+## 4. When to Use Static
 
 | Use static for | Example |
 |----------------|---------|
@@ -487,21 +222,3 @@ Is -5 valid? False
 - Static state is **shared across the whole program**, so it needs care when several threads use it.
 - Code that depends heavily on static members is **harder to test** and to change.
 - If a method needs the **data of an object**, make it an **instance** method.
-
----
-
-# Summary
-
-**Debugging**
-- **Debugging** finds and fixes bugs. The debugger pauses the program and lets you check values line by line.
-- A **breakpoint** (`F9` or a click in the margin) pauses the program at a line. **Conditional breakpoints** pause only when a condition is true.
-- **Step Over** (`F10`) runs the current line, including its method calls. **Step Into** (`F11`) goes inside a called method. **Step Out** (`Shift + F11`) finishes the current method and returns to the caller. **Continue** (`F5`) runs to the next breakpoint.
-- Inspect values with **DataTips**, **Locals**, **Autos**, **Watch**, the **Call Stack**, and the **Immediate** window.
-- Debug by checking values, comparing with the expected result, and finding the exact line where the value goes wrong.
-
-**Static members and static classes**
-- A **static** member belongs to the **class**, with **one shared copy**, and is used with the class name (`Student.Count`).
-- **Static methods** cannot use instance members or `this`.
-- A **static constructor** runs **once**, before the class is first used, to initialize static members.
-- A **static class** has only static members, cannot be instantiated or inherited, and is used for helper methods and constants (`Math`, `Console`).
-- Use static for **utilities, shared counters, and constants**. Avoid it for data that belongs to a single object.
