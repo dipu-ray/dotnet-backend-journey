@@ -24,8 +24,6 @@ Aggregation   ->  has-a (shared)      (medium)
 Composition   ->  part-of (owned)     (strongest)
 ```
 
-Association, aggregation, and composition are all **"has-a" / "uses-a"** relationships. They differ in **ownership** and in **how long the objects live**.
-
 ---
 
 ## 2. Association
@@ -123,40 +121,11 @@ One customer is **shared** by several orders. Neither owns the other.
 
 ### Direction and multiplicity
 
-| Direction | Meaning | Example |
-|-----------|---------|---------|
-| **Unidirectional** | Only **one side** knows the other | `Order` knows `Customer`, but `Customer` does not know its orders |
-| **Bidirectional** | **Both** sides know each other | `Student` has courses, and `Course` has students |
-
 | Multiplicity | Meaning | Example |
 |--------------|---------|---------|
 | **One-to-one** | One object relates to one object | `Person` and `Passport` |
 | **One-to-many** | One object relates to many objects | `Customer` and `Order`s |
 | **Many-to-many** | Many objects relate to many objects | `Student`s and `Course`s |
-
-```csharp
-class Student
-{
-    public string Name { get; }
-    public List<Course> Courses { get; } = new List<Course>();
-
-    public Student(string name) { Name = name; }
-}
-
-class Course
-{
-    public string Title { get; }
-    public List<Student> Students { get; } = new List<Student>();
-
-    public Course(string title) { Title = title; }
-}
-
-Student s1 = new Student("Rahim");
-Course c1 = new Course("C#");
-
-s1.Courses.Add(c1);          // many-to-many: both sides reference each other
-c1.Students.Add(s1);
-```
 
 ---
 
