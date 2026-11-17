@@ -162,6 +162,7 @@ dotnet-backend-journey/
 | Day | Topic                                        | Notes                    |
 | :-- | :------------------------------------------- | :----------------------- |
 | 36  | Basic Debugging and Static Members			 | [Day-36](week-06/day-36) |
+| 37  | C# OOP Relationships						 | [Day-37](week-06/day-37) |
 
 </details>
 
