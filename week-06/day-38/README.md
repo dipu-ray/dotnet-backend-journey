@@ -27,8 +27,6 @@ Aggregation   ->  has-a (shared, independent parts)
 Composition   ->  part-of (owned, dependent parts)
 ```
 
-> Inheritance is **"is-a"** (`Dog` is an `Animal`). These three are **"has-a" / "uses-a"**.
-
 ---
 
 ## Association
@@ -47,9 +45,6 @@ class Doctor
     }
 }
 ```
-
-- Used through a **method parameter** or a **stored reference** (`Order` keeps a `Customer`).
-- Multiplicity: **one-to-one**, **one-to-many**, **many-to-many**.
 
 ---
 
@@ -92,8 +87,6 @@ class Car
     }
 }
 ```
-
-A **private nested class** makes it strict: an `OrderItem` inside `Order` cannot exist outside the order.
 
 ---
 
