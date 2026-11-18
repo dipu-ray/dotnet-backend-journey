@@ -1,8 +1,6 @@
 # Recap: C# OOP Relationships (Association, Aggregation, Composition)
 
-**Date:** 15 November 2026
-
-A quick recap of how classes are connected through **"uses-a"** and **"has-a"** relationships.
+**Date:** 18 November 2026
 
 ## Table of Contents
 - [The Three Relationships](#the-three-relationships)
