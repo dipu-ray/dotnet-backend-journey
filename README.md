@@ -164,6 +164,7 @@ dotnet-backend-journey/
 | 36  | Basic Debugging and Static Members			 | [Day-36](week-06/day-36) |
 | 37  | C# OOP Relationships						 | [Day-37](week-06/day-37) |
 | 38  | Recap: C# OOP Relationships					 | [Day-38](week-06/day-38) |
+| 39  | C# OOP: SOLID Principles					 | [Day-39](week-06/day-39) |
 
 </details>
 
