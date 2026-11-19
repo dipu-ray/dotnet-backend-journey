@@ -9,14 +9,11 @@
 - [1. SOLID Overview](#1-solid-overview)
 - [2. Season 1: S and O](#2-season-1-s-and-o)
 - [3. Season 2: L (Liskov Substitution Principle)](#3-season-2-l-liskov-substitution-principle)
-- [4. Season 1 vs Season 2](#4-season-1-vs-season-2)
 - [Summary](#summary)
 
 ---
 
 ## 1. SOLID Overview
-
-**SOLID** is a set of **five design principles** for writing object-oriented code that is **easy to understand, change, and extend**.
 
 | Letter | Principle | Idea |
 |--------|-----------|------|
@@ -25,8 +22,6 @@
 | **L** | **Liskov Substitution** | A child class must be usable **wherever its parent is expected**, without breaking the program |
 | **I** | Interface Segregation | Many small, specific interfaces are better than one large one |
 | **D** | Dependency Inversion | Depend on **abstractions**, not on concrete classes |
-
-Covered today: **S, O, and L**.
 
 ---
 
@@ -157,36 +152,6 @@ Total: 75000 BDT
 Saved Rahim Bhuiyan to database!
 -----------------------------------
 ```
-
-`Dipu Ray` was created with a salary of `0`, which is not valid, so the constructor used the default `10000`.
-
-### How the code applies each principle
-
-**S: Single Responsibility**
-
-Each class has **one job**:
-
-| Class | Single responsibility |
-|-------|-----------------------|
-| `Employee` and its children | Hold the employee data and know **how to calculate the bonus** |
-| `SalarySlipPrinter` | **Print** the salary slip |
-| `EmployeeRepository` | **Save** the employee to the database |
-
-Printing and saving are **not** inside `Employee`. If the slip layout changes, only `SalarySlipPrinter` changes. If the saving method changes, only `EmployeeRepository` changes.
-
-**O: Open/Closed**
-
-- `Employee` is **abstract** and declares `CalculateBonus()`.
-- Each employee type (`Developer`, `TeamLead`, `Manager`) **overrides** it with its own rate:
-
-| Class | Bonus rate |
-|-------|-----------|
-| `Developer` | 20% of the base salary |
-| `TeamLead` | 25% of the base salary |
-| `Manager` | 30% of the base salary |
-
-- `SalarySlipPrinter.PrintSlip(Employee emp)` works with **any** `Employee` through `emp.CalculateBonus()`.
-- To add a **new employee type**, write a **new class** that inherits `Employee` and overrides `CalculateBonus()`. `SalarySlipPrinter` and `EmployeeRepository` **do not change**: the system is **open for extension** and **closed for modification**.
 
 ### OOP concepts used in this code
 
@@ -374,29 +339,6 @@ Total: 20000 BDT
 Saved Peter to database!
 -----------------------------------
 ```
-
-### How the code applies LSP
-
-| Point | Explanation |
-|-------|-------------|
-| `Employee` promises only what **all** employees have | Name and base salary. There is no bonus promise that some employees cannot keep |
-| `IBonusEligible` is the **bonus contract** | Only `Developer`, `TeamLead`, and `Manager` implement it, so they are the only ones that promise a bonus |
-| `Intern` **is an** `Employee` and works everywhere an `Employee` is expected | `PrintSlip(itn)` and `SaveToDatabase(itn)` run **without any exception** |
-| `SalarySlipPrinter` checks `emp is IBonusEligible bonusEmp` | If the employee is eligible, it calls `CalculateBonus()`. Otherwise the bonus stays `0` |
-
-Every `Employee` object, including the `Intern`, can be **substituted** into `PrintSlip` and `SaveToDatabase` safely. This is **Liskov Substitution**.
-
----
-
-## 4. Season 1 vs Season 2
-
-| | Season 1 | Season 2 |
-|---|----------|----------|
-| **Bonus method** | `abstract CalculateBonus()` inside `Employee` | Moved to the interface `IBonusEligible` |
-| **What `Employee` promises** | Name, salary, **and a bonus** | Name and salary only |
-| **Intern** | Cannot be added safely (it would have to throw an exception) | Added without breaking anything (it is not bonus eligible) |
-| **How `PrintSlip` gets the bonus** | `emp.CalculateBonus()` directly | `emp is IBonusEligible` first, then `CalculateBonus()` |
-| **Principles shown** | S and O | S, O, and **L** |
 
 ---
 
