@@ -1,8 +1,6 @@
 # C# OOP: SOLID Principles (Introductory Understanding)
 
-**Date:** 16 November 2026
-
-Today's work: an introductory understanding of the **SOLID principles**, built step by step on one example, the **Employee Bonus and Slip System**.
+**Date:** 19 November 2026
 
 - **Season 1:** **S** (Single Responsibility) and **O** (Open/Closed)
 - **Season 2:** **L** (Liskov Substitution Principle)
