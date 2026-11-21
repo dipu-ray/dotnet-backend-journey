@@ -165,6 +165,7 @@ dotnet-backend-journey/
 | 37  | C# OOP Relationships						 | [Day-37](week-06/day-37) |
 | 38  | Recap: C# OOP Relationships					 | [Day-38](week-06/day-38) |
 | 39  | C# OOP: SOLID Principles					 | [Day-39](week-06/day-39) |
+| 40  | Client Office Visit Report					 | [Day-40](week-06/day-40) |
 
 </details>
 
