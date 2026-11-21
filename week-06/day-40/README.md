@@ -8,13 +8,9 @@
 ## Table of Contents
 - [1. Visit Overview](#1-visit-overview)
 - [2. Purpose of the Visit](#2-purpose-of-the-visit)
-- [6. Demonstration and Presentation](#6-demonstration-and-presentation)
-- [7. Client Feedback](#7-client-feedback)
-- [8. Decisions Made](#8-decisions-made)
-- [9. Action Items](#9-action-items)
-- [10. Issues and Risks](#10-issues-and-risks)
-- [11. Follow-up and Next Steps](#11-follow-up-and-next-steps)
-- [12. Summary](#12-summary)
+- [3. Demonstration and Presentation](#3-demonstration-and-presentation)
+- [4. Client Feedback](#4-client-feedback)
+- [5. Summary](#5-summary)
 
 ---
 
@@ -39,84 +35,36 @@ The client wanted a few **small customizations** in the software. The visit was 
 
 ---
 
-## 6. Demonstration and Presentation
+## 3. Demonstration and Presentation
 
 What was shown to the client during the visit.
 
-| # | What was demonstrated | Related request | How it was shown | Client reaction |
-|---|-----------------------|-----------------|------------------|-----------------|
-| 1 | [Feature, screen, or report] | [Request #] | [Live in the software / slides / sample data] | [Satisfied / Needs changes / Questions] |
-| 2 | [ ] | [ ] | [ ] | [ ] |
-| 3 | [ ] | [ ] | [ ] | [ ] |
-| 4 | [ ] | [ ] | [ ] | [ ] |
+| # | What was demonstrated | How it was shown | Client reaction |
+|---|-----------------------|------------------|-----------------|
+| 1 | The software			| Live in the software | Satisfied   |
 
 **How the presentation was done**
-- [Steps you followed, for example: explained the request, showed the current screen, showed the result, and asked for feedback]
-- [Data or sample records used for the demonstration]
-- [Questions the client asked and the answers given]
+- Steps you followed, for example: explained the request, showed the current screen, showed the result, and asked for feedback
+- Data or sample records used for the demonstration
+- Questions the client asked and the answers given
 
 ---
 
-## 7. Client Feedback
+## 4. Client Feedback
 
 | Topic | Client's feedback |
 |-------|-------------------|
-| What the client **liked** | [ ] |
-| What the client wants **changed** | [ ] |
-| **New requests** raised during the visit | [ ] |
-| **Concerns** (time, cost, ease of use) | [ ] |
-| Overall impression | [ ] |
+| What the client **liked** | Daily milk production |
+| What the client wants **changed** | Now, overall okey |
+| **New requests** raised during the visit | Nothing |
+| **Concerns** (time, cost, ease of use) | Training time for non-tech staff |
+| Overall impression | Very positive |
 
 ---
 
-## 8. Decisions Made
-
-| # | Decision | Agreed by |
-|---|----------|-----------|
-| 1 | [For example: request 1 and 2 will be delivered first] | [Name] |
-| 2 | [ ] | [ ] |
-| 3 | [ ] | [ ] |
-
----
-
-## 9. Action Items
-
-| # | Action | Owner | Deadline | Status |
-|---|--------|-------|----------|--------|
-| 1 | [For example: prepare an estimate for the customization requests] | [Name] | [Date] | Pending |
-| 2 | [For example: send the summary of the visit to the client] | [Name] | [Date] | Pending |
-| 3 | [For example: client to send the sample data or documents] | Client | [Date] | Pending |
-| 4 | [ ] | [ ] | [ ] | Pending |
-
----
-
-## 10. Issues and Risks
-
-| Issue / risk | Impact | How to handle |
-|--------------|--------|---------------|
-| [For example: a request is outside the current scope] | [Extra time or cost] | [Raise a change request and get written approval] |
-| [For example: unclear requirement] | [Rework] | [Ask the client to confirm in writing] |
-| [ ] | [ ] | [ ] |
-
----
-
-## 11. Follow-up and Next Steps
-
-| Step | Details | When |
-|------|---------|------|
-| 1 | Send a **summary of the visit** to the client and confirm the requests in writing | [Within 24 hours] |
-| 2 | Prepare the **estimate** (time and cost) for the requests that need work | [Date] |
-| 3 | Get the client's **approval** before starting any customization | [Date] |
-| 4 | Do the customization, test it, and show the result to the client | [Date] |
-| 5 | Plan the next meeting or visit | [Date] |
-
----
-
-## 12. Summary
+## 5. Summary
 
 - The client's office was visited on **17 November 2026**, from about **12:00 PM to 6:00 PM**, for **customization requests**.
 - The requested changes were **discussed**, and the related items were **presented and demonstrated** to the client.
 - The client's **feedback**, the **decisions**, and the **action items** are recorded above.
 - Next: send the written summary, prepare the estimate, get the client's approval, and deliver the customizations.
-
-**Key points of the visit:** [Write 3 to 5 short points in your own words.]
