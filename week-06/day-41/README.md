@@ -1,6 +1,6 @@
 # C# OOP: SOLID Principles, Seasons 3 and 4 (ISP and DIP)
 
-**Date:** 18 November 2026
+**Date:** 22 November 2026
 
 Introductory understanding of the **SOLID** principles, continued:
 
@@ -49,40 +49,6 @@ Each season has an example and three problems (easy, medium, and hard).
 ## The Principle
 
 **Interface Segregation Principle (ISP):** a class should **not be forced to implement methods it does not use**. Instead of one **large** interface, create **several small, focused interfaces**, and let each class implement **only the ones it needs**.
-
-| Idea | Meaning |
-|------|---------|
-| **Segregate** | Split a big interface into smaller ones, each with **one purpose** |
-| **Implement only what you need** | A class picks the interfaces that match its abilities |
-| **No empty or throwing methods** | No class has to write a method it cannot really perform |
-
-## What Goes Wrong Without ISP
-
-An illustration of a **"fat" interface**:
-
-```csharp
-interface IAnimal
-{
-    void Eat();
-    void Walk();
-    void Swim();
-}
-
-class Fish : IAnimal
-{
-    public void Eat()  { Console.WriteLine("Fish is eating."); }
-    public void Walk() { throw new NotImplementedException(); }     // a fish cannot walk, but is forced to have this method
-    public void Swim() { Console.WriteLine("Fish is swimming."); }
-}
-```
-
-- `Fish` is **forced** to implement `Walk()`, which it cannot do.
-- The class carries a **useless method** that throws an exception.
-- Any change to `IAnimal` affects **every** class that implements it.
-
-The solution is to **split the interface** by ability: `IEatable`, `IWalkable`, and `ISwimmable`.
-
----
 
 ## Example: Dog and Fish
 
@@ -154,17 +120,6 @@ Dog is Walk.
 Fish is eat.
 Fish is swimming.
 ```
-
-**How the code applies ISP**
-
-| Class | Interfaces implemented | Abilities |
-|-------|------------------------|-----------|
-| `Dog` | `IEatable`, `IWalkable` | Eat, walk |
-| `Fish` | `IEatable`, `ISwimmable` | Eat, swim |
-
-- `Dog` does **not** have to implement `Swim()`, and `Fish` does **not** have to implement `Walk()`.
-- Every method in every class is **real behavior**. There are no empty or throwing methods.
-- `IEatable` is **shared** by both classes, because both can eat.
 
 ---
 
@@ -238,15 +193,6 @@ Printer is printing.
 Printer is scaning.
 Printer is Faxing.
 ```
-
-**How the code applies ISP**
-
-| Class | Interfaces implemented |
-|-------|------------------------|
-| `NormalPrinter` | `IPrint` |
-| `AdvancedPrinter` | `IPrint`, `IScan`, `IFax` |
-
-A single interface such as `IMachine { Print(); Scan(); Fax(); }` would force `NormalPrinter` to implement `Scan()` and `Fax()`. Three small interfaces avoid this.
 
 ---
 
@@ -351,19 +297,6 @@ Manager is generating report.
 
 Intern is writing code.
 ```
-
-(`Console.WriteLine("\n")` prints a new line **and** ends the line, so two blank lines appear between the groups.)
-
-**How the code applies ISP**
-
-| Role | `ICodeWriter` | `IMeetingManager` | `IReportGenerator` |
-|------|:-------------:|:-----------------:|:------------------:|
-| `Developer` | Yes | Yes | Yes |
-| `Manager` | | Yes | Yes |
-| `Intern` | Yes | | |
-
-- Each **duty** is its own interface, so each role takes **only** its duties.
-- `Manager` has no `WriteCode()`, and `Intern` has no meeting or report methods.
 
 ---
 
@@ -517,20 +450,6 @@ Invoice generated.
 Download link sent.
 ```
 
-**How the code applies ISP**
-
-| Interface | Methods | `OnlineOrder` | `StorePickupOrder` | `DigitalOrder` |
-|-----------|---------|:-------------:|:------------------:|:--------------:|
-| `IPaymentInvoice` | `ProcessPayment`, `GenerateInvoice` | Yes | Yes | Yes |
-| `IShipProduct` | `ShipProduct` | Yes | | |
-| `ISendEmailNotification` | `SendEmailNotification` | Yes | | |
-| `ICollectFromStore` | `CollectFromStore` | | Yes | |
-| `ISendDownloadLink` | `SendDownloadLink` | | | Yes |
-
-- `IPaymentInvoice` groups `ProcessPayment` and `GenerateInvoice` because **every** order needs **both** together.
-- The steps that only **some** orders need (shipping, email, pickup, download link) are **separate interfaces**.
-- A digital order does not ship anything, and a store pickup order sends no download link, so no class carries a method it cannot perform.
-
 ---
 
 ## ISP Summary
@@ -541,8 +460,6 @@ Download link sent.
 | Printers | `IPrint`, `IScan`, `IFax` | `NormalPrinter`, `AdvancedPrinter` | A normal printer forced to scan and fax |
 | Employee roles | `ICodeWriter`, `IMeetingManager`, `IReportGenerator` | `Developer`, `Manager`, `Intern` | A manager or intern forced into duties they do not have |
 | Order types | `IPaymentInvoice`, `IShipProduct`, `ISendEmailNotification`, `ICollectFromStore`, `ISendDownloadLink` | `OnlineOrder`, `StorePickupOrder`, `DigitalOrder` | A digital or pickup order forced to ship |
-
-**How to apply ISP:** look at an interface and ask whether **every** class that implements it needs **every** method. If not, **split** the interface by purpose.
 
 ---
 
