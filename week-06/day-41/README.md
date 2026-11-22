@@ -13,7 +13,6 @@ Each season has an example and three problems (easy, medium, and hard).
 - [1. Overview](#1-overview)
 - [Part 1: Season 3, Interface Segregation Principle](#part-1-season-3-interface-segregation-principle)
   - [The Principle](#the-principle)
-  - [What Goes Wrong Without ISP](#what-goes-wrong-without-isp)
   - [Example: Dog and Fish](#example-dog-and-fish)
   - [Easy Problem: Printers](#easy-problem-printers)
   - [Medium Problem: Employee Roles](#medium-problem-employee-roles)
@@ -21,7 +20,6 @@ Each season has an example and three problems (easy, medium, and hard).
   - [ISP Summary](#isp-summary)
 - [Part 2: Season 4, Dependency Inversion Principle](#part-2-season-4-dependency-inversion-principle)
   - [The Principle](#the-principle-1)
-  - [What Goes Wrong Without DIP](#what-goes-wrong-without-dip)
   - [Example: Computer and Speaker](#example-computer-and-speaker)
   - [Easy Problem: Switch and Light](#easy-problem-switch-and-light)
   - [Medium Problem: Payment Service](#medium-problem-payment-service)
@@ -478,43 +476,6 @@ Download link sent.
 | **Low-level module** | The class that does the **detailed work** | `NormalSpeaker`, `Bulb`, `BkashPayment`, `EmailNotification` |
 | **Abstraction** | An interface that sits between them | `ISpeaker`, `ILight`, `IPayment`, `INotification` |
 
-```
-Without DIP:   High-level class  ───────►  Concrete low-level class
-
-With DIP:      High-level class  ───────►  Interface  ◄───────  Low-level classes
-```
-
-**Related terms**
-
-| Term | Meaning |
-|------|---------|
-| **Dependency Inversion Principle** | The **design rule**: depend on abstractions |
-| **Dependency Injection** | A **technique**: the dependency is **given to the class from outside**, here through the **constructor** (constructor injection) |
-
-## What Goes Wrong Without DIP
-
-An illustration of **tight coupling**:
-
-```csharp
-class Computer
-{
-    private NormalSpeaker speaker = new NormalSpeaker();      // tied to one concrete class
-
-    public void PlayMusic()
-    {
-        speaker.PlaySound();
-    }
-}
-```
-
-- `Computer` creates `NormalSpeaker` itself, so it can use **only** that speaker.
-- To use a `BluetoothSpeaker`, the code of `Computer` **must be edited**.
-- `Computer` cannot be tested with a different (for example fake) speaker.
-
-With DIP, `Computer` depends on the **`ISpeaker` interface** and receives the speaker **from outside**.
-
----
-
 ## Example: Computer and Speaker
 
 ```csharp
@@ -575,17 +536,6 @@ Normal Speaker is playing.
 Bluetooth Speaker is playing.
 ```
 
-**How the code applies DIP**
-
-| Part | Role |
-|------|------|
-| `Computer` | **High-level module**. It holds an `ISpeaker` and never mentions a concrete speaker |
-| `ISpeaker` | The **abstraction** |
-| `NormalSpeaker`, `BluetoothSpeaker` | **Low-level modules** that implement the abstraction |
-| `new Computer(new NormalSpeaker())` | The speaker is **injected through the constructor** |
-
-A new speaker type needs only **a new class** that implements `ISpeaker`. `Computer` does **not change**.
-
 ---
 
 ## Easy Problem: Switch and Light
@@ -637,16 +587,6 @@ public class Program
 ```
 Bulb is ON.
 ```
-
-**How the code applies DIP**
-
-| Part | Role |
-|------|------|
-| `Switch` | High-level module, depends on `ILight` |
-| `ILight` | Abstraction |
-| `Bulb` | Low-level module |
-
-Another light (for example a tube light) can be added with a new `ILight` class, and `Switch` stays the same.
 
 ---
 
@@ -723,17 +663,6 @@ Payment completed using Bkash.
 Payment completed using Nagad.
 Payment completed using Card.
 ```
-
-**How the code applies DIP**
-
-| Part | Role |
-|------|------|
-| `PaymentService` | High-level module, depends only on `IPayment` |
-| `IPayment` | Abstraction |
-| `BkashPayment`, `NagadPayment`, `CardPayment` | Low-level modules (the payment methods) |
-| `new PaymentService(new BkashPayment())` | The payment method is chosen **from outside** and injected |
-
-Adding a new payment method (for example a bank transfer) needs only **a new class** that implements `IPayment`. `PaymentService` is **not edited**. This also follows the **Open/Closed** principle.
 
 ---
 
@@ -829,17 +758,6 @@ Order placed successfully.
 Order confirmation sent by WhatsApp.
 ```
 
-**How the code applies DIP**
-
-| Part | Role |
-|------|------|
-| `OrderService` | High-level module. `PlaceOrder()` calls `notification.Send()` and does not know **how** the message is sent |
-| `INotification` | Abstraction |
-| `EmailNotification`, `SMSNotification`, `WhatsAppNotification` | Low-level modules |
-| Constructor injection | `new OrderService(new EmailNotification())` chooses the channel from outside |
-
-The order logic and the way of notifying are **separate**. A new channel (for example push notification) needs only **a new `INotification` class**, and `OrderService` does not change.
-
 ---
 
 ## DIP Summary
@@ -850,12 +768,6 @@ The order logic and the way of notifying are **separate**. A new channel (for ex
 | Switch and Light | `Switch` | `ILight` | `Bulb` |
 | Payment Service | `PaymentService` | `IPayment` | `BkashPayment`, `NagadPayment`, `CardPayment` |
 | Order Notifications | `OrderService` | `INotification` | `EmailNotification`, `SMSNotification`, `WhatsAppNotification` |
-
-**The pattern in every example**
-1. Create an **interface** (the abstraction).
-2. Write the **detailed classes** that implement it.
-3. Let the **main class** hold the **interface** (not a concrete class).
-4. **Pass** the chosen implementation **through the constructor**.
 
 ---
 
@@ -868,14 +780,6 @@ The order logic and the way of notifying are **separate**. A new channel (for ex
 | **L** | Liskov Substitution | 2 | `Intern` is not bonus eligible, and still works wherever an `Employee` is expected |
 | **I** | Interface Segregation | 3 | Small interfaces (`IPrint`, `IScan`, `IFax`). A class implements only what it needs |
 | **D** | Dependency Inversion | 4 | `PaymentService` depends on `IPayment`, and the implementation is injected |
-
-**ISP and DIP both rely on interfaces**, but for different goals:
-
-| | ISP | DIP |
-|---|-----|-----|
-| **Question** | "How should I **design** the interface?" | "What should a class **depend on**?" |
-| **Rule** | Make interfaces **small and focused** | Depend on **interfaces**, not on concrete classes |
-| **Benefit** | No forced, unused methods | Easy to **swap and extend** implementations |
 
 ---
 
