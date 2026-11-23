@@ -155,7 +155,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 06</b> — C# OOP</summary>
+<summary><b>Week 06</b> — C# OOP, C# Advanced</summary>
 
 <br>
 
@@ -167,6 +167,7 @@ dotnet-backend-journey/
 | 39  | C# OOP: SOLID Principles					 | [Day-39](week-06/day-39) |
 | 40  | Client Office Visit Report					 | [Day-40](week-06/day-40) |
 | 41  | C# OOP: SOLID Principles					 | [Day-41](week-06/day-41) |
+| 42  | C# Exception Handling						 | [Day-42](week-06/day-42) |
 
 </details>
 
