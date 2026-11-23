@@ -1,6 +1,6 @@
-# C# Exception Handling: Examples and Problem Solving
+# C# Advanced: Exception Handling
 
-**Date:** 19 November 2026
+**Date:** 23 November 2026
 
 Exception handling practice in C#: three step-by-step examples (from no handling to a full `try`, multiple `catch`, `finally`, and `throw`), followed by four problems (two easy and two medium).
 
@@ -15,8 +15,6 @@ Exception handling practice in C#: three step-by-step examples (from no handling
   - [Problem 2 (Easy): Calculator](#problem-2-easy-calculator)
   - [Problem 3 (Medium): Student Result](#problem-3-medium-student-result)
   - [Problem 4 (Medium): Order Summary](#problem-4-medium-order-summary)
-- [4. Concepts Used](#4-concepts-used)
-- [Summary](#summary)
 
 ---
 
@@ -29,17 +27,9 @@ Exception handling practice in C#: three step-by-step examples (from no handling
 | `finally` | Runs **always**, whether or not an error happened |
 | `throw` | **Raises** an exception on purpose, with a custom message |
 
-```
-try block runs
-   |-- no error  -> catch blocks are skipped -> finally runs
-   |-- error     -> the matching catch runs   -> finally runs
-```
-
 ---
 
 ## 2. Step-by-Step Examples
-
-The same program (read two numbers and divide them) is improved in three steps.
 
 ### Example 1: Normal Code (No Handling)
 
@@ -64,14 +54,6 @@ public class Program
     }
 }
 ```
-
-**Sample runs**
-
-| Input | What happens |
-|-------|--------------|
-| `10` and `2` | `Division result: 5`, then `Goodbye!` |
-| `10` and `0` | **Crashes** with an unhandled `DivideByZeroException`. `Goodbye!` is **never** printed |
-| `abc` | **Crashes** with an unhandled `FormatException`. `Goodbye!` is **never** printed |
 
 **Problem:** any wrong input stops the whole program.
 
@@ -128,11 +110,6 @@ System.DivideByZeroException: Attempted to divide by zero.
    at Program.Main(String[] args) ...
 Goodbye!
 ```
-
-**What changed**
-- The program **no longer crashes**, and `Goodbye!` is always printed (it is in `finally`).
-- `catch (Exception e)` catches **every** kind of error with the **same** reaction.
-- `{e}` prints the **full exception text** (type, message, and stack trace). `{e.Message}` would print the message only.
 
 ---
 
@@ -224,51 +201,9 @@ public class Program
 | `10` | `0` | `DivideByZeroException` | `You can not divide by 0. Please enter correct value. Thank you!` |
 | `10` | `2000` | `ArgumentException` (thrown by the code) | `Number 2 can not be greater than 1000.` |
 
-**What changed**
-
-| Feature | Explanation |
-|---------|-------------|
-| **Multiple `catch` blocks** | Each kind of error gets its **own, friendly message** |
-| **`throw new ArgumentException(...)`** | The program **raises its own error** when a rule is broken (empty input, or a number above 1000) |
-| **`?? ""`** | If `Console.ReadLine()` returns `null`, use an empty string instead |
-| **`string.IsNullOrEmpty`** | Checks for a missing or empty input before converting it |
-| **`finally`** | `Goodbye!` is printed **always** |
-
-**Order of the `catch` blocks**
-
-The first matching `catch` runs, so the order matters: **specific first, general last**.
-
-```
-ArgumentNullException      (child of ArgumentException, so it comes BEFORE ArgumentException)
-OverflowException
-FormatException
-DivideByZeroException
-ArgumentException
-Exception                  (the base class of all exceptions, always LAST)
-```
-
-| Exception | Parent class |
-|-----------|--------------|
-| `ArgumentNullException` | `ArgumentException` |
-| `ArgumentException` | `SystemException` |
-| `FormatException`, `OverflowException` | `SystemException` |
-| `DivideByZeroException` | `ArithmeticException` |
-| All of them | `Exception` |
-
-If a **parent** is placed **before** its **child** (for example `Exception` first), the compiler reports an error, because the child `catch` could never run.
-
 ---
 
 ## 3. Problems
-
-Every problem follows the same pattern:
-
-```
-1. Read the input
-2. Check the rules, and throw ArgumentException with a clear message if a rule is broken
-3. catch the exceptions (our own ArgumentException, and the built-in ones such as FormatException)
-4. finally: print a closing message
-```
 
 ### Problem 1 (Easy): Age Eligibility
 
@@ -448,11 +383,6 @@ public class Program
 
 Every run ends with `Calculator closed. Thank you!`.
 
-**Notes**
-- The numbers are read with `Convert.ToInt32` (whole numbers) and **stored in `double`**, so the division `10 / 3` gives a decimal result. An input such as `2.5` raises a `FormatException` (`Enter numbers.`).
-- `throw new DivideByZeroException()` raises the exception **by hand**, so the `/` case is checked before dividing.
-- `default:` in the `switch` handles any operator that is not one of the four.
-
 ---
 
 ### Problem 3 (Medium): Student Result
@@ -581,11 +511,6 @@ Result: A+
 
 Result checking completed.
 ```
-
-**Notes**
-- `\n` inside the strings adds a **blank line** before `Student Name` and before `Result checking completed.`
-- For marks like `150`, the student name is printed **first** and the range error comes after it, because the range is checked after the name line.
-- For `abc`, the `FormatException` happens at `Convert.ToInt32`, **before** the name line, so only the error message appears.
 
 ---
 
@@ -721,36 +646,3 @@ Order completed successfully!
 
 Thank you for shopping!
 ```
-
-**Notes**
-- The valid quantity is **1 to 100**: the check `quantity > 100` rejects only values above `100`.
-- `Convert.ToInt32` raises `FormatException` for text and `OverflowException` for a number that is too large.
-- `catch (Exception e)` is the **last** block, as a safety net for any unexpected error.
-
----
-
-## 4. Concepts Used
-
-| Concept | Where |
-|---------|-------|
-| **`try` / `catch` / `finally`** | All examples and problems |
-| **Multiple `catch` blocks** | Example 3, and Problems 1 to 4 |
-| **`throw new ArgumentException(...)`** | Raise an error when an input rule is broken |
-| **`throw new DivideByZeroException()`** | Raise the error by hand (Problem 2) |
-| **Built-in exceptions** | `FormatException`, `OverflowException`, `DivideByZeroException`, `ArgumentException` |
-| **Catch order** | Specific exceptions first, `Exception` last |
-| **Input checks** | `string.IsNullOrEmpty`, `string.IsNullOrWhiteSpace`, `?? ""` |
-| **Conversion methods** | `Convert.ToInt32`, `Convert.ToDouble` |
-| **`switch` and `if / else if`** | Problem 2 (operator), Problems 1 and 3 (ranges) |
-| **`e.Message` vs `{e}`** | Message only vs the full exception text |
-
----
-
-## Summary
-
-- **Without handling**, a wrong input **crashes** the program. With `try` / `catch`, the program **continues** and can show a **clear message**.
-- **`finally`** runs **always**, so the closing message (`Goodbye!`, `Thank you!`) is printed in every case.
-- Use **several `catch` blocks** to give a **different message** for each kind of error. Put **specific** exceptions first and **`Exception`** last.
-- Use **`throw`** to raise your own error when an **input rule** is broken (empty input, a negative age, marks outside 0 to 100, an invalid operator).
-- Built-in errors handled in the problems: **`FormatException`** (not a number), **`OverflowException`** (number too large), and **`DivideByZeroException`**.
-- Pattern used in every problem: **read the input, check the rules (throw on a break), catch the errors, and finish with `finally`.**
