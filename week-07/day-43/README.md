@@ -2,19 +2,11 @@
 
 **Date:** 24 November 2026
 
-Documentation of today's work on the **`List<T>`** collection in C#:
-
-1. Introduction and basics
-2. CRUD operations (create, read, update, delete)
-3. Searching and checking
-4. Sorting, reversing, and conversion
-
 ## Table of Contents
 - [1. Introduction and Basics](#1-introduction-and-basics)
 - [2. CRUD Operations](#2-crud-operations)
 - [3. Searching and Checking](#3-searching-and-checking)
 - [4. Sorting, Reversing, and Conversion](#4-sorting-reversing-and-conversion)
-- [5. Quick Reference](#5-quick-reference)
 - [Summary](#summary)
 
 ---
@@ -286,64 +278,6 @@ After ConvertAll():
 60 30 20 10 
 Total String Elements: 4
 ```
-
-(Each number is followed by a space, because the code uses `Console.Write(n + " ")`. The `\n\n` in the headings creates the blank lines.)
-
-### Step-by-step: how the list changes
-
-| Step | Code | `numbers` after the step | Notes |
-|------|------|--------------------------|-------|
-| 0 | Original | `50, 20, 40, 10, 30, 60` | |
-| 1 | `Sort()` | `10, 20, 30, 40, 50, 60` | Sorted **in place**, ascending |
-| 2 | `Reverse()` | `60, 50, 40, 30, 20, 10` | Order reversed **in place** |
-| 3 | `ToArray()` | `numbers` is unchanged | A **new array** with a copy of the items |
-| 4 | `GetRange(1, 3)` | `numbers` is unchanged | A **new list** `50, 40, 30` (3 items from index `1`) |
-| 5 | `RemoveRange(1, 2)` | `60, 30, 20, 10` | Removed `50` and `40` (2 items from index `1`) |
-| 6 | `ConvertAll(...)` | `numbers` is unchanged | A **new `List<string>`**: `"60", "30", "20", "10"` |
-
-### Methods explained
-
-| Method | What it does | Changes the original list? |
-|--------|--------------|----------------------------|
-| `Sort()` | Sorts the items in **ascending** order | **Yes** |
-| `Reverse()` | **Reverses** the current order of the items | **Yes** |
-| `ToArray()` | Copies the items into a **new array** | No |
-| `GetRange(index, count)` | Returns a **new list** with `count` items starting at `index` | No |
-| `RemoveRange(index, count)` | **Removes** `count` items starting at `index` | **Yes** |
-| `ConvertAll(converter)` | Returns a **new list** with every item converted (here `int` to `string`) | No |
-
-**Notes**
-- **Descending order:** `Reverse()` does not sort. It only **reverses the current order**. It gave descending order here because the list was **sorted ascending first**. So `Sort()` followed by `Reverse()` = descending.
-- **`GetRange(1, 3)`** takes **index** `1` and **count** `3` (not an end index): from `60, 50, 40, 30, 20, 10` it returns `50, 40, 30`.
-- **`RemoveRange(1, 2)`** removes `2` items from index `1`: `50` and `40`. Because `GetRange` made a copy, `numbers` still had all six items before this step.
-- **`ConvertAll(x => x.ToString())`** converts each `int` to a `string`. The new list has the **same number of items** (`4`) but a **different type**.
-
----
-
-## 5. Quick Reference
-
-| Method / member | Purpose | Returns | Changes the list? |
-|-----------------|---------|---------|-------------------|
-| `Add(item)` | Add at the end | nothing | Yes |
-| `Insert(index, item)` | Add at an index | nothing | Yes |
-| `list[i]` | Read an item | the item | No |
-| `list[i] = value` | Replace an item | nothing | Yes |
-| `Remove(item)` | Remove the first match | `bool` | Yes |
-| `RemoveAt(index)` | Remove at an index | nothing | Yes |
-| `RemoveRange(index, count)` | Remove several items | nothing | Yes |
-| `Count` | Number of items | `int` | No |
-| `Contains(value)` | Is the value present? | `bool` | No |
-| `IndexOf(value)` | First index (or `-1`) | `int` | No |
-| `LastIndexOf(value)` | Last index (or `-1`) | `int` | No |
-| `Find(condition)` | First match | item (or default) | No |
-| `FindAll(condition)` | All matches | new `List<T>` | No |
-| `Exists(condition)` | Any match? | `bool` | No |
-| `TrueForAll(condition)` | All match? | `bool` | No |
-| `Sort()` | Sort ascending | nothing | Yes |
-| `Reverse()` | Reverse the order | nothing | Yes |
-| `ToArray()` | Copy to an array | `T[]` | No |
-| `GetRange(index, count)` | Copy part of the list | new `List<T>` | No |
-| `ConvertAll(converter)` | Convert every item | new `List<TOutput>` | No |
 
 ---
 
