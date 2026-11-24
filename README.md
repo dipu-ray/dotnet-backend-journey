@@ -70,7 +70,7 @@ dotnet-backend-journey/
 ## 📝 Weekly Log
 
 <details>
-<summary><b>Week 01</b> — C# Basics & SQL</summary>
+<summary><b>Week 01</b> — C# Fundamentals & SQL</summary>
 
 <br>
 
@@ -87,7 +87,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 02</b> — SQL Intermediate & Advanced</summary>
+<summary><b>Week 02</b> — Structured Query Language (SQL)</summary>
 
 <br>
 
@@ -104,7 +104,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 03</b> — SQL Advanced Queries and C#</summary>
+<summary><b>Week 03</b> — SQL & C# Fundamentals Recap</summary>
 
 <br>
 
@@ -121,7 +121,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 04</b> — Software Logic, SQL & C#</summary>
+<summary><b>Week 04</b> — SaaS Product, SQL & C# OOP</summary>
 
 <br>
 
@@ -138,7 +138,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 05</b> — SaaS Product, Database, C# OOP</summary>
+<summary><b>Week 05</b> — SQL, C# OOP & Saas Product</summary>
 
 <br>
 
@@ -155,7 +155,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 06</b> — C# OOP, SaaS Product, C# Advanced</summary>
+<summary><b>Week 06</b> — C# Fundamentals & C# OOP</summary>
 
 <br>
 
@@ -168,6 +168,17 @@ dotnet-backend-journey/
 | 40  | Client Office Visit Report					 | [Day-40](week-06/day-40) |
 | 41  | C# OOP: SOLID Principles					 | [Day-41](week-06/day-41) |
 | 42  | C# Advanced: Exception Handling				 | [Day-42](week-06/day-42) |
+
+</details>
+
+<details>
+<summary><b>Week 07</b> — C# Advanced</summary>
+
+<br>
+
+| Day | Topic                                        | Notes                    |
+| :-- | :------------------------------------------- | :----------------------- |
+| 43  | C# Collections: List&lt;T&gt;				 | [Day-43](week-07/day-43) |
 
 </details>
 
