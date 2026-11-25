@@ -179,6 +179,7 @@ dotnet-backend-journey/
 | Day | Topic                                        | Notes                    |
 | :-- | :------------------------------------------- | :----------------------- |
 | 43  | C# Collections: List&lt;T&gt;				 | [Day-43](week-07/day-43) |
+| 44  | SaaS Product Issue Fixing and C# Dictionary	 | [Day-44](week-07/day-44) |
 
 </details>
 
