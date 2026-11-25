@@ -172,7 +172,7 @@ dotnet-backend-journey/
 </details>
 
 <details>
-<summary><b>Week 07</b> — C# Advanced</summary>
+<summary><b>Week 07</b> — C# Advanced & SaaS Product</summary>
 
 <br>
 
