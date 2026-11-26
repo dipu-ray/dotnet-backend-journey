@@ -7,7 +7,7 @@ Today's work:
 1. **SaaS Product:** fixing some issues (checking the module workflows, the **client due** problem, and data checking and entry)
 2. **C# Advanced:** **Collections**, the **`Dictionary`**
 
-> **Note:** I do not have the exact details of the SaaS issue (which client, which amounts, what the cause was), so Part 1 documents the **method and the workflow** and has **fill-in spaces** (`[ ... ]`) for the actual findings. The queries in Part 1 use **assumed table and column names** and must be adjusted to the real database.
+> **Note:** I do not have the exact details of the SaaS issue (which client, which amounts, what the cause was), so Part 1 documents the **method and the workflow** and has **fill-in spaces** (`[ ... ]`) for the actual findings.
 
 ## Table of Contents
 - [Part 1: SaaS Product, Fixing Issues](#part-1-saas-product-fixing-issues)
@@ -30,14 +30,13 @@ Today's work:
 |---|------|--------|
 | 1 | Visit and understand the **workflow**, one module at a time | Done |
 | 2 | **Check the client due** and find the problem | Done |
-| 3 | Fix the problem in the order: **1. check stock, 2. create the client invoice, 3. fix the client due** | [Done / In progress] |
+| 3 | Fix the problem in the order: **1. check stock, 2. create the client invoice, 3. fix the client due** | Done |
 | 4 | **Check and enter** some data in the SaaS product | Done |
 
 ### What I learned
 - The **modules are connected**: a **client invoice** affects **stock** and the **client due**, and a **payment** affects the due.
 - To fix a due problem, **find the exact difference** by calculating `invoices - payments`, then find the record that explains it.
 - Fix in a **safe order**: **stock first**, then the **invoice**, then the **due**.
-- [Add your own points]
 
 ---
 
