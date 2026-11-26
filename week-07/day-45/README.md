@@ -7,14 +7,11 @@ Today's work:
 1. **C# Collections:** the **`HashSet<T>`** (basic concepts, basic methods, and basic operations)
 2. **After the lunch break:** a visit to the **Animal Fair**
 
-> **Note:** I do not have the details of what was seen at the fair (stall names, products, people), so Part 2 records the structure of the visit from your notes and has **fill-in spaces** (`[ ... ]`) for the details.
-
 ## Table of Contents
 - [Part 1: C# Collections, HashSet](#part-1-c-collections-hashset)
   - [Section 1: Basic Concepts](#section-1-basic-concepts)
   - [Section 2: Basic Methods](#section-2-basic-methods)
   - [Section 3: Basic Operations](#section-3-basic-operations)
-  - [Quick Reference](#quick-reference)
 - [Part 2: Animal Fair Visit](#part-2-animal-fair-visit)
 - [Summary](#summary)
 
@@ -38,74 +35,76 @@ Today's work:
 
 ### 1. What is HashSet?
 
-A **`HashSet<T>`** is a collection that stores **unique items only**. If the same item is added twice, it is stored **once**.
+HashSet is a collection in C# that stores only unique values.
+It does not allow duplicate items.
 
-```csharp
-using System.Collections.Generic;       // HashSet<T> is in this namespace
-```
+### 2. Why Use HashSet?
 
-| Feature | Detail |
-|---------|--------|
-| **Unique items** | **No duplicates.** Adding an existing item does nothing |
-| **No index** | Items cannot be read by position (`set[0]` is **not** allowed) |
-| **No guaranteed order** | The order of the items is not fixed |
-| **Fast lookup** | It uses **hashing**, so `Contains` is very fast |
-| **Generic** | `HashSet<string>`, `HashSet<int>` |
-| **Dynamic size** | Grows and shrinks automatically |
-
-```
-Added:   Rahim, Karim, Sakib, Rahim
-Stored:  Rahim, Karim, Sakib        (the second "Rahim" is ignored)
-```
-
-### 2. Why use HashSet?
-
-| Use | Example |
-|-----|---------|
-| **Keep only unique values** | Unique student names, unique email addresses |
-| **Remove duplicates** from another collection | `new HashSet<int>(listWithDuplicates)` |
-| **Check quickly if an item exists** | Is this user already registered? |
-| **Set operations** | Union, intersection, and difference of two groups |
+- Stores only unique values.
+- Automatically prevents duplicate items.
+- Provides fast searching using Contains().
+- Useful for storing unique data.
 
 ### 3. HashSet vs List
 
-| | `List<T>` | `HashSet<T>` |
-|---|-----------|--------------|
-| Duplicates | **Allowed** | **Not allowed** |
-| Order | **Kept** (the order of adding) | **Not guaranteed** |
-| Access by index (`list[0]`) | **Yes** | **No** |
-| `Contains` speed | Slower (checks one by one) | **Very fast** (hashing) |
-| Add method | `Add` returns nothing | `Add` returns **`bool`** (`true` if added, `false` if it already existed) |
-| Set operations | Not built in | **Built in** (`UnionWith`, `IntersectWith`, `ExceptWith`) |
-| Use when | You need order, an index, or duplicates | You need **uniqueness** and **fast checks** |
+| Feature | HashSet | List |
+|---|---|---|
+| Duplicate | Not Allowed | Allowed |
+| Index | Not Available | Available |
+| Order | No guaranteed order | Insertion order |
+| Search | Generally Fast | Generally Slower |
+| Use | Unique Data | Multiple Data |
 
 ### 4. HashSet vs Dictionary
 
-| | `Dictionary<TKey, TValue>` | `HashSet<T>` |
-|---|----------------------------|--------------|
-| Stores | **Key-value pairs** | **Single values** |
-| Uniqueness | Keys are unique | **Values** are unique |
-| Lookup | By **key**, returns the **value** | `Contains(item)`, returns **true or false** |
-| Example | `1 -> "Rahim"` | `"Rahim"` |
-| Use when | You need to **find a value** from a key (ID to name) | You only need to know **whether an item exists**, and to keep items unique |
-
-Both use **hashing**, so both are fast.
+| Feature | HashSet | Dictionary |
+|---|---|---|
+| Data | Unique Values | Key-Value Pairs |
+| Duplicate | No Duplicate Values | No Duplicate Keys |
+| Access | Contains() | Using Key |
+| Use | Unique Items | Store Data with Keys |
 
 ### 5. Creating a HashSet
 
+First, import the required namespace:
+
 ```csharp
-// 1. Empty HashSet
-HashSet<string> students = new HashSet<string>();
-
-// 2. With values (collection initializer)
-HashSet<int> numbers = new HashSet<int>() { 10, 20, 30 };
-
-// 3. From another collection (duplicates are removed)
-List<int> list = new List<int> { 1, 2, 2, 3, 3, 3 };
-HashSet<int> unique = new HashSet<int>(list);      // 1, 2, 3
+using System.Collections.Generic;
 ```
 
-> By default, text comparison is **case sensitive**: `"rahim"` and `"Rahim"` are **different** items. To ignore case, use `new HashSet<string>(StringComparer.OrdinalIgnoreCase)`.
+#### Create an Empty HashSet
+
+```csharp
+HashSet<int> numbers = new HashSet<int>();
+```
+
+#### Create a HashSet with Initial Values
+
+```csharp
+HashSet<string> fruits = new HashSet<string>()
+{
+    "Apple",
+    "Banana",
+    "Mango"
+};
+```
+
+#### Add Items
+
+```csharp
+fruits.Add("Orange");
+```
+
+#### Display Items
+
+```csharp
+foreach (string fruit in fruits)
+{
+    Console.WriteLine(fruit);
+}
+```
+
+---
 
 ### Code: Basic Concepts example
 
@@ -223,17 +222,6 @@ Karim
 Total Students: 2
 ```
 
-### What the example shows
-
-| Part | Result | Lesson |
-|------|--------|--------|
-| `Add("Rahim")` a second time | `Rahim` appears **once** in the HashSet | A HashSet **ignores duplicates** |
-| `bool added = students.Add("Rahim")` | `false`, so `Rahim already exists!` | `Add` **returns `bool`**, which is a simple duplicate check |
-| `Contains("Karim")` | `true` | A quick existence check |
-| The `List` with `Rahim` twice | `Rahim` is printed **twice** | A **List allows duplicates** |
-| The `Dictionary` | Prints `ID` and `Name` | A Dictionary stores **key-value pairs** |
-| `Remove("Sakib")` | `Rahim` and `Karim` remain, `Count` is `2` | `Remove` deletes an item |
-
 ---
 
 ## Section 2: Basic Methods
@@ -323,39 +311,9 @@ Total Students: 2
 Total Students: 0
 ```
 
-### The set at each step
-
-| Step | Code | Set after the step | Count |
-|------|------|--------------------|-------|
-| 1 | `Add` four times (`Rahim` twice) | `Rahim, Karim, Sakib` | **3** (not 4) |
-| 2 | `Count` | Unchanged | 3 |
-| 3 | `Contains("Karim")` | Unchanged | 3 |
-| 4 | `Remove("Sakib")` | `Rahim, Karim` | 2 |
-| 5 | `Clear()` | *(empty)* | 0 |
-
-**Notes**
-- `Count` is **3**, although `Add` was called four times, because the duplicate `Rahim` was ignored.
-- `Add` and `Remove` return a `bool`, so the result can be checked: `if (students.Remove("Sakib")) { ... }`.
-- `Clear()` empties the set, but the set object still exists and can be used again.
-
 ---
 
 ## Section 3: Basic Operations
-
-Sets support **mathematical set operations**. The examples use two sets:
-
-```
-Set A = { 10, 20, 30, 40 }
-Set B = { 30, 40, 50, 60 }
-```
-
-```
-        A                 B
-   ┌─────────┐       ┌─────────┐
-   │ 10  20  │ 30 40 │  50  60 │
-   └─────────┘       └─────────┘
-                 common
-```
 
 ### Operations explained
 
@@ -366,15 +324,6 @@ Set B = { 30, 40, 50, 60 }
 | 13 | `IntersectWith(other)` | **Intersection**: only items that are in **both** sets | `30, 40` | **Yes** |
 | 14 | `ExceptWith(other)` | **Difference**: removes the items that are in `other` | `10, 20` (A without B) | **Yes** |
 | 15 | `ToList()` / `ToArray()` | Copies the items into a **List** or an **array** | `10, 20, 30, 40` | No |
-
-### Important: these methods change the set
-
-`UnionWith`, `IntersectWith`, and `ExceptWith` **modify the set they are called on**. To keep the original, **make a copy first** with the copy constructor:
-
-```csharp
-HashSet<int> union = new HashSet<int>(setA);     // a copy of setA
-union.UnionWith(setB);                           // changes the copy; setA stays the same
-```
 
 ### Code
 
@@ -488,39 +437,6 @@ class Program
 40
 ```
 
-### How each result is built
-
-| Operation | Starting copy of A | What happens | Result |
-|-----------|--------------------|--------------|--------|
-| **Union** | `10, 20, 30, 40` | Adds the items of B that are missing (`50`, `60`). `30` and `40` already exist | `10, 20, 30, 40, 50, 60` |
-| **Intersection** | `10, 20, 30, 40` | Removes the items that are **not** in B (`10`, `20`) | `30, 40` |
-| **Except** | `10, 20, 30, 40` | Removes the items that **are** in B (`30`, `40`) | `10, 20` |
-
-**Notes**
-- `ToList()` and `ToArray()` need **`using System.Linq;`**. They make a **copy**, so `setA` is not changed. The output shows that `setA` still has all four items after the other operations, because each operation worked on a **copy**.
-- `foreach` is the way to read a HashSet, because there is **no index**.
-- Converting to a **List** or an **array** is useful when an **index**, sorting, or a fixed order is needed.
-
----
-
-## Quick Reference
-
-| Task | Code |
-|------|------|
-| Create | `new HashSet<string>()` |
-| Create from a collection (removes duplicates) | `new HashSet<int>(list)` |
-| Add (returns `bool`) | `set.Add(item)` |
-| Remove (returns `bool`) | `set.Remove(item)` |
-| Exists? | `set.Contains(item)` |
-| Number of items | `set.Count` |
-| Remove all | `set.Clear()` |
-| Loop | `foreach (var item in set)` |
-| Union (modifies) | `set.UnionWith(other)` |
-| Intersection (modifies) | `set.IntersectWith(other)` |
-| Difference (modifies) | `set.ExceptWith(other)` |
-| To a List | `set.ToList()` (needs `System.Linq`) |
-| To an array | `set.ToArray()` (needs `System.Linq`) |
-
 ---
 
 # Part 2: Animal Fair Visit
@@ -533,9 +449,9 @@ After the lunch break, the work stopped for a **visit to the Animal Fair**.
 |-------|---------|
 | Event | **Animal Fair** |
 | Date | 26 November 2026 |
-| Time | After the lunch break, [from about ___ to ___] |
-| Place | [Venue and area] |
-| Went with | [Team members] |
+| Time | After the lunch break, from about 2PM to 6PM |
+| Place | Agargaon, Dhaka, Bangladesh |
+| Went with | Team members & with Sir |
 | Purpose | See the fair, and learn what was on show, including the **farm software stalls** |
 
 ## 2. What Was at the Fair
@@ -545,74 +461,6 @@ After the lunch break, the work stopped for a **visit to the Animal Fair**.
 | **Government stalls** | A number of stalls run by government offices |
 | **Animal stalls** | Stalls with animals, covering **almost all kinds of animals** |
 | **Farm software stalls** | **A few stalls (about 2 to 6)** showing software for **farms** |
-
-## 3. Government Stalls
-
-| # | Stall / department | What it offered or showed | Notes |
-|---|--------------------|---------------------------|-------|
-| 1 | [Name] | [Services, information, schemes] | [ ] |
-| 2 | [Name] | [ ] | [ ] |
-| 3 | [Name] | [ ] | [ ] |
-
-**Useful information collected:** [Services, support for farmers, contacts, leaflets]
-
-## 4. Animal Stalls
-
-Almost all kinds of animals were on show.
-
-| Animal / group | What I saw | Notes |
-|----------------|------------|-------|
-| [Cattle, goats, sheep] | [ ] | [ ] |
-| [Poultry, ducks, birds] | [ ] | [ ] |
-| [Fish] | [ ] | [ ] |
-| [Other animals] | [ ] | [ ] |
-
-**Things that stood out:** [Breeds, sizes, care methods, anything new]
-
-## 5. Farm Software Stalls
-
-A **small number of stalls (2 to 6)** showed **farm software**. This is closely related to the **business and farm management software** studied earlier, so the stalls are worth recording carefully.
-
-| # | Company / product | What it does | Main features | How it was demonstrated | Notes |
-|---|-------------------|--------------|---------------|-------------------------|-------|
-| 1 | [Name] | [ ] | [ ] | [ ] | [ ] |
-| 2 | [Name] | [ ] | [ ] | [ ] | [ ] |
-| 3 | [Name] | [ ] | [ ] | [ ] | [ ] |
-| 4 | [Name] | [ ] | [ ] | [ ] | [ ] |
-| 5 | [Name] | [ ] | [ ] | [ ] | [ ] |
-| 6 | [Name] | [ ] | [ ] | [ ] | [ ] |
-
-**What to compare between the products**
-
-| Point | What to note |
-|-------|--------------|
-| **Features** | Fields and crops, livestock, production, stock, expenses, sales, reports |
-| **Users** | Farmers, farm managers, workers |
-| **Platform** | Web, mobile app, or desktop |
-| **Language and ease of use** | Is it easy for farm workers to use? |
-| **Pricing** | Subscription, one-time, or free plan |
-| **Support** | Training, help, and contact |
-| **Good ideas to learn from** | [ ] |
-| **What is missing** | [ ] |
-
-## 6. Memories and Discussion
-
-At the end of the visit, the group talked about the fair and shared memories.
-
-| Topic | Notes |
-|-------|-------|
-| **Best moments** | [ ] |
-| **What I learned** | [ ] |
-| **Discussion about the fair** | [ ] |
-| **Ideas for our own work** (for example, features for farm software) | [ ] |
-| **Photos / memories** | [ ] |
-
-## 7. Summary of the Visit
-
-- The visit to the **Animal Fair** took place **after the lunch break**.
-- The fair had **government stalls**, **animal stalls** with almost all animals, and **2 to 6 farm software stalls**.
-- The **farm software stalls** were useful to compare with the business and farm management software studied earlier.
-- The day ended with **memories and a discussion** about the fair.
 
 ---
 
