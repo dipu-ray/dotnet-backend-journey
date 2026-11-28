@@ -42,33 +42,12 @@ static void Display<T>(T value)
 
 ### Why use generic methods?
 
-**Without generics**, the same logic has to be written again for each type:
-
-```csharp
-static void Display(int value)      { Console.WriteLine(value); }
-static void Display(string value)   { Console.WriteLine(value); }
-static void Display(double value)   { Console.WriteLine(value); }
-static void Display(bool value)     { Console.WriteLine(value); }
-```
-
-Or a method with an `object` parameter is used, which **loses the type** and **boxes** value types.
-
-**With generics**, one method handles all of them:
-
 | Benefit | Explanation |
 |---------|-------------|
 | **Code reuse** | One method for every type, with no copy and paste |
 | **Type safety** | The compiler checks the types. Wrong use is a **compile error**, not a run-time error |
 | **No casting** | The result already has the correct type |
 | **Performance** | No boxing and unboxing for value types (unlike `object`) |
-
-### Naming of type parameters
-
-| Name | Meaning |
-|------|---------|
-| `T` | The **T**ype (the usual name for one parameter) |
-| `U`, `V` | The second and third type parameters |
-| `TKey`, `TValue` | Descriptive names (for example in `Dictionary<TKey, TValue>`) |
 
 ---
 
@@ -105,25 +84,6 @@ Rahim
 True
 ```
 
-### How it works
-
-| Call | `T` becomes | Output |
-|------|-------------|--------|
-| `Display<int>(100)` | `int` | `100` |
-| `Display<string>("Rahim")` | `string` | `Rahim` |
-| `Display<double>(250.50)` | `double` | `250.5` |
-| `Display<bool>(true)` | `bool` | `True` |
-
-- The method is **written once**, and it works for four different types.
-- The type is written inside `< >` when calling: `Display<int>(...)`.
-- `250.50` prints as `250.5` because a `double` does not keep the trailing zero. `true` prints as `True`.
-
-### Steps to make a generic method
-
-1. Write the method with a **type parameter** after the name: `Display<T>`.
-2. Use **`T`** wherever a type is needed: in the parameters, the return type, or inside the body.
-3. **Call** the method, giving the real type: `Display<int>(100)`, or let the compiler find it (see [Type Inference](#7-type-inference)).
-
 ---
 
 ## 3. T Uses in a Generic Method
@@ -159,34 +119,6 @@ class Program
 Rahim
 250.5
 ```
-
-### How `T` is used
-
-| Place | Code | Meaning |
-|-------|------|---------|
-| **Parameter type** | `T value` | The parameter has the type that is chosen for `T` |
-| **Local variable type** | `T data = value;` | A variable of the same type `T` |
-
-When the method is called as `Display<int>(100)`, every `T` inside the method becomes `int`. For `Display<string>("Rahim")`, every `T` becomes `string`.
-
-### Seeing the real type
-
-`typeof(T)` gives the type that `T` was replaced with:
-
-```csharp
-static void ShowType<T>(T value)
-{
-    Console.WriteLine($"{value} is of type {typeof(T).Name}");
-}
-
-ShowType<int>(100);          // 100 is of type Int32
-ShowType<string>("Rahim");   // Rahim is of type String
-ShowType<double>(250.50);    // 250.5 is of type Double
-```
-
-### What can be done with `T`
-
-Inside the method, the compiler **does not know what `T` is**. It can be used as a **value that is stored, passed, returned, and printed**, and it has the members that **every object** has (`ToString()`, `Equals()`, `GetType()`). Operations such as `+` or `>` are **not allowed** on a plain `T`.
 
 ---
 
@@ -227,23 +159,6 @@ First: 10.5
 Second: 20.5
 ```
 
-### How it works
-
-| Call | `T` | `first` | `second` |
-|------|-----|---------|----------|
-| `Display<int>(10, 20)` | `int` | `10` | `20` |
-| `Display<string>("Rahim", "Karim")` | `string` | `"Rahim"` | `"Karim"` |
-| `Display<double>(10.5, 20.5)` | `double` | `10.5` | `20.5` |
-
-### Both parameters share one type
-
-```csharp
-Display<int>(10, "Karim");     // Error: "Karim" is not an int
-Display(10, "Karim");          // Error: the compiler cannot decide whether T is int or string
-```
-
-If the two values need **different types**, use **two type parameters** (next section).
-
 ---
 
 ## 5. Multiple Type Parameters (T, U)
@@ -282,22 +197,6 @@ Second: 250.5
 First: True
 Second: 100
 ```
-
-### How it works
-
-| Call | `T` | `U` | `first` | `second` |
-|------|-----|-----|---------|----------|
-| `Display<int, string>(101, "Rahim")` | `int` | `string` | `101` | `"Rahim"` |
-| `Display<string, double>("Price", 250.50)` | `string` | `double` | `"Price"` | `250.5` |
-| `Display<bool, int>(true, 100)` | `bool` | `int` | `true` | `100` |
-
-- The type arguments are given **in the same order** as the type parameters: the first type goes to `T`, the second to `U`.
-- `T` and `U` are **independent**. They can be the same type or different types.
-
-| | One type parameter (`<T>`) | Two type parameters (`<T, U>`) |
-|---|----------------------------|--------------------------------|
-| Parameters | Must all be the **same** type | Can be **different** types |
-| Example | `Display<int>(10, 20)` | `Display<int, string>(101, "Rahim")` |
 
 ---
 
@@ -338,22 +237,6 @@ Rahim
 250.5
 ```
 
-### How it works
-
-| Call | `T` | Returns | Stored in |
-|------|-----|---------|-----------|
-| `GetValue<int>(100)` | `int` | an `int` | `int number` |
-| `GetValue<string>("Rahim")` | `string` | a `string` | `string name` |
-| `GetValue<double>(250.50)` | `double` | a `double` | `double price` |
-
-- The **return type** is written as `T` (`static T GetValue<T>`), in the place where `void`, `int`, or `string` would normally be.
-- The returned value is **already the right type**, so `int number = GetValue<int>(100);` needs **no cast**. With an `object` return type, a cast such as `(int)` would be needed.
-
-| Return type | Meaning |
-|-------------|---------|
-| `void` | Returns nothing (for example `Display<T>`) |
-| `T` | Returns a value of the **same type as `T`** (for example `GetValue<T>`) |
-
 ---
 
 ## 7. Type Inference
@@ -391,36 +274,6 @@ Rahim
 True
 ```
 
-### How it works
-
-| Call | The compiler sees | `T` is inferred as |
-|------|-------------------|--------------------|
-| `Display(100)` | An integer argument | `int` |
-| `Display("Rahim")` | A text argument | `string` |
-| `Display(250.50)` | A decimal argument | `double` |
-| `Display(true)` | A `true` or `false` argument | `bool` |
-
-`Display(100)` means exactly the same as `Display<int>(100)`. The output is the same as the output of the first example, with shorter code.
-
-### When inference works and when it does not
-
-| Situation | Inference |
-|-----------|-----------|
-| `T` appears in a **parameter** (`Display<T>(T value)`) | **Works**, `T` comes from the argument |
-| Two parameters of the **same `T`** with **different types** (`Display(10, "Karim")`) | **Fails** (a compile error) |
-| `T` is **only** in the **return type** or the method has **no parameters** | **Fails**, the type must be given |
-
-```csharp
-static T CreateDefault<T>()
-{
-    return default(T);
-}
-
-// int a = CreateDefault();          // Error: T cannot be inferred
-int a = CreateDefault<int>();        // OK: the type is given explicitly, a = 0
-string b = CreateDefault<string>();  // OK: b = null
-```
-
 ---
 
 ## 8. Explicit Type Argument Uses
@@ -456,21 +309,6 @@ class Program
 Rahim
 250.5
 True
-```
-
-### When to write the type explicitly
-
-| Reason | Example |
-|--------|---------|
-| Inference **cannot** work (no parameter holds `T`) | `CreateDefault<int>()` |
-| You want to **force a specific type** | `GetValue<double>(5)` |
-| It makes the code **clearer** to read | `Display<int>(100)` |
-
-**Forcing a type**
-
-```csharp
-Console.WriteLine(GetValue(5) / 2);            // 2    (T is inferred as int, so integer division)
-Console.WriteLine(GetValue<double>(5) / 2);    // 2.5  (T is double, so decimal division)
 ```
 
 ### Inference vs explicit
