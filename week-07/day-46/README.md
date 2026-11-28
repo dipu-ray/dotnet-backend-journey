@@ -12,7 +12,6 @@
 - [7. Type Inference](#7-type-inference)
 - [8. Explicit Type Argument Uses](#8-explicit-type-argument-uses)
 - [9. All Topics Together](#9-all-topics-together)
-- [10. Quick Reference](#10-quick-reference)
 - [Summary](#summary)
 
 ---
@@ -386,47 +385,6 @@ Second: Karim
 Number: 500
 Name: Hasan
 ```
-
-### Where each topic appears
-
-| # | Topic | Where in the code |
-|---|-------|-------------------|
-| 1 | **Generic method making** | `Display<T>`, `ShowData<T, U>`, `GetValue<T>` |
-| 2 | **`T` uses** | `T data = value;` inside `Display<T>` |
-| 3 | **Parameter uses** | `T value`, `T first`, `U second` |
-| 4 | **Multiple type parameters** | `ShowData<T, U>(T first, U second)` |
-| 5 | **Return type** | `static T GetValue<T>(T value)` |
-| 6 | **Type inference** | `Display(100)`, `Display("Rahim")`, `GetValue("Hasan")` |
-| 7 | **Explicit type argument** | `Display<double>(250.50)`, `ShowData<int, string>(...)`, `GetValue<int>(500)` |
-
-### Line by line (the calls in `Main`)
-
-| Call | Type | How `T` was chosen | Output |
-|------|------|--------------------|--------|
-| `Display(100)` | `int` | Inferred | `Value: 100` |
-| `Display("Rahim")` | `string` | Inferred | `Value: Rahim` |
-| `Display<double>(250.50)` | `double` | Explicit | `Value: 250.5` |
-| `ShowData<int, string>(101, "Karim")` | `T = int`, `U = string` | Explicit | `First: 101` and `Second: Karim` |
-| `GetValue<int>(500)` | `int` | Explicit | `Number: 500` |
-| `GetValue("Hasan")` | `string` | Inferred | `Name: Hasan` |
-
-The code mixes **inferred** and **explicit** type arguments, and the result is the same either way.
-
----
-
-## 10. Quick Reference
-
-| Topic | Syntax | Example |
-|-------|--------|---------|
-| Generic method | `static void Name<T>(T value)` | `static void Display<T>(T value)` |
-| `T` as a local variable | `T data = value;` | |
-| Several parameters, one type | `Name<T>(T a, T b)` | `Display<int>(10, 20)` |
-| Multiple type parameters | `Name<T, U>(T a, U b)` | `Display<int, string>(101, "Rahim")` |
-| Generic return type | `static T Name<T>(T value)` | `int n = GetValue<int>(100);` |
-| Type inference | Call without `< >` | `Display(100)` |
-| Explicit type argument | Call with `< >` | `Display<int>(100)` |
-| Default value of `T` | `default(T)` | `0` for `int`, `null` for `string` |
-| The real type of `T` | `typeof(T)` | `typeof(T).Name` |
 
 ---
 
