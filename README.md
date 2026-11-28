@@ -181,6 +181,7 @@ dotnet-backend-journey/
 | 43  | C# Collections: List&lt;T&gt;				 | [Day-43](week-07/day-43) |
 | 44  | SaaS Product Issue Fixing and C# Dictionary	 | [Day-44](week-07/day-44) |
 | 45  | C# Collections: HashSet & Animal Fair Visit	 | [Day-45](week-07/day-45) |
+| 46  | C# Generics: Generic Methods				 | [Day-46](week-07/day-46) |
 
 </details>
 
